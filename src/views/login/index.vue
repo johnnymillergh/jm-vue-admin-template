@@ -140,8 +140,7 @@ export default {
       this.$store.dispatch('Login', params).then(() => {
         this.$router.push({ path: this.redirect || '/' })
       }).catch(error => {
-        console.log('error in login page')
-        this.$message.error(error)
+        console.log('Error in login page', error)
       }).finally(() => {
         this.loading = false
       })
