@@ -3,7 +3,7 @@
     <el-form
       ref="loginForm"
       :model="loginForm"
-      :rules="loginRules"
+      :rules="loginFormRules"
       class="login-form"
       auto-complete="on"
       label-position="left">
@@ -13,7 +13,11 @@
         <span class="svg-container">
           <svg-icon icon-class="user"/>
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="Username"/>
+        <el-input v-model.trim="loginForm.username"
+                  name="username"
+                  type="text"
+                  auto-complete="on"
+                  placeholder="Username"/>
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -21,7 +25,7 @@
         </span>
         <el-input
           :type="inputType"
-          v-model="loginForm.password"
+          v-model.trim="loginForm.password"
           name="password"
           auto-complete="on"
           placeholder="Password"
@@ -52,8 +56,9 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { login } from '@/api/auth/login'
 import LoginFooter from './components/LoginFooter'
+import StringUtil from '../../utils/string'
 
 export default {
   name: 'Login',
@@ -62,31 +67,27 @@ export default {
   },
   data () {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('Incorrect username'))
-      } else {
-        callback()
+      if (StringUtil.isEmpty(value)) {
+        return callback(new Error('Username is not blank'))
       }
-    }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('Password must at least contain 5 characters'))
-      } else {
-        callback()
-      }
+      login.validateUsername(value).then(() => {
+        return callback()
+      }).catch(reason => {
+        return callback(new Error(reason))
+      })
     }
     return {
       appName: this.$store.state.app.appName.replace(/-/g, ' ').toLocaleUpperCase(),
       appDescription: this.$store.state.app.description,
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       hintUsername: null,
       hintPassword: null,
-      loginRules: {
+      loginFormRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
+        password: [{ required: true, trigger: 'blur', message: 'Password id required' }]
       },
       loading: false,
       inputType: 'password',
@@ -109,7 +110,7 @@ export default {
     this.developmentEnvironment = process.env.NODE_ENV && (process.env.NODE_ENV === 'development')
     if (this.developmentEnvironment) {
       this.hintUsername = 'admin'
-      this.hintPassword = 'admin'
+      this.hintPassword = '123456'
     }
   },
   methods: {
@@ -120,20 +121,24 @@ export default {
         this.inputType = 'password'
       }
     },
-    handleLogin () {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+    async handleLogin () {
+      this.loading = true
+      const loginFormValidity = await this.$refs['loginForm'].validate()
+      if (!loginFormValidity) {
+        this.loading = false
+        return
+      }
+      const params = {
+        usernameOrEmailOrPhone: this.loginForm.username,
+        password: this.loginForm.password
+      }
+      this.$store.dispatch('Login', params).then(() => {
+        this.$router.push({ path: this.redirect || '/' })
+      }).catch(error => {
+        console.log('error in login page')
+        this.$message.error(error)
+      }).finally(() => {
+        this.loading = false
       })
     },
     handleRegister () {
