@@ -32,7 +32,7 @@ service.interceptors.request.use(
       duration: 5 * 1000,
       showClose: true
     })
-    Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 
@@ -78,7 +78,6 @@ service.interceptors.response.use(
       duration: 5 * 1000,
       showClose: true
     })
-    console.log(error)
     return Promise.reject(error)
   }
 )
