@@ -77,10 +77,8 @@ export default {
       }
       const param = { username: value }
       join.checkUsernameUniqueness(param).then(() => {
-        this.usernameValidity = true
         callback()
       }).catch(error => {
-        this.usernameValidity = false
         callback(new Error(error))
       })
     }
@@ -93,10 +91,8 @@ export default {
       }
       const param = { email: value }
       join.checkEmailUniqueness(param).then(() => {
-        this.emailValidity = true
         callback()
       }).catch(error => {
-        this.emailValidity = false
         callback(new Error(error))
       })
     }
@@ -126,16 +122,20 @@ export default {
         email: [{ required: true, validator: validateEmail, trigger: 'blur' }],
         password: [{ required: true, validator: validatePassword, trigger: ['change', 'blur'] }]
       },
-      createAccountLoading: false,
-      usernameValidity: false,
-      emailValidity: false
+      createAccountLoading: false
     }
   },
   methods: {
     async createAccount () {
       this.createAccountLoading = true
-      this.$refs['registerForm'].validate()
-      if (!(this.usernameValidity && this.emailValidity)) {
+      let registerFormValidity
+      try {
+        registerFormValidity = await this.$refs['registerForm'].validate()
+      } catch (error) {
+        registerFormValidity = error
+      }
+      console.log('registerFormValidity', registerFormValidity)
+      if (!registerFormValidity) {
         this.createAccountLoading = false
         return
       }
