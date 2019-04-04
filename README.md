@@ -2,7 +2,7 @@
 
 > A minimal vue admin template with Element UI & axios & iconfont & permission control & lint.
 
-[Click me](http://panjiachen.github.io/vue-admin-template)
+[Click me to preview](http://johnnymillergh.github.io/vue-admin-template-prod)
 
 ## Build Setup
 
@@ -23,7 +23,38 @@ npm run build
 npm run build --report
 ```
 
+## Coding Standards
 
+### JavaScript
+
+1. File naming rule: module name with kebab-case naming rule.
+
+2. Standard JavaScript code with export statement. The following JavaScript snippet declares some login APIs that will be used by pages.
+
+   ```javascript
+   import { get, post } from '@/utils/request'
+   
+   // The module to be exported should be named with PascalCase.
+   const Login = {
+     validateUsername: params => get('/auth/validateUsername/' + params, null),
+     login: params => post('/auth/login', params)
+   }
+   
+   // Use `export default` statement to export module.
+   export default Login
+   
+   ```
+
+   Therefore, the import statement to import the Login module should be like following JavaScript snippet.
+
+   ```javascript
+   // The module imported is without mustache brackets.
+   import Login from '@/api/auth/login'
+   ```
+
+   The `@` sign is the alias for `src` directory.
+
+3. …
 
 ## Parent Project
 
@@ -33,4 +64,4 @@ npm run build --report
 
 [Apache](<https://github.com/johnnymillergh/jm-vue-admin-template/blob/master/LICENSE>) license.
 
-Johnny Miller (锺俊) Copyright © 2019-Present 
+Johnny Miller (锺俊) Copyright © 2019-Present
