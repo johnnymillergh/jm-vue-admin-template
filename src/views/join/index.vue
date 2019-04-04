@@ -61,9 +61,9 @@
 </template>
 
 <script>
-import { join } from '@/api/auth/join'
+import Join from '@/api/auth/join'
 import StringUtil from '@/utils/string'
-import { UniversalStatus } from '@/constants/universal-status'
+import UniversalStatus from '@/constants/universal-status'
 
 export default {
   name: 'Join',
@@ -76,7 +76,7 @@ export default {
         return callback(new Error('length of username must be between 1 and 50'))
       }
       const param = { username: value }
-      join.checkUsernameUniqueness(param).then(() => {
+      Join.checkUsernameUniqueness(param).then(() => {
         callback()
       }).catch(error => {
         callback(new Error(error))
@@ -90,7 +90,7 @@ export default {
         return callback(new Error(`invalid ${rule.field}`))
       }
       const param = { email: value }
-      join.checkEmailUniqueness(param).then(() => {
+      Join.checkEmailUniqueness(param).then(() => {
         callback()
       }).catch(error => {
         callback(new Error(error))
@@ -139,7 +139,7 @@ export default {
         this.createAccountLoading = false
         return
       }
-      const response = await join.resister(this.registerForm)
+      const response = await Join.resister(this.registerForm)
       if (response.status !== UniversalStatus.SUCCESS.code) {
         this.createAccountLoading = false
         return

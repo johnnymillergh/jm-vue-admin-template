@@ -10,7 +10,9 @@
 </template>
 
 <script>
-import { formatDate } from '@/utils/datetime'
+import DatetimeUtil from '@/utils/datetime'
+// Alternative way to import DatetimeUtil using Webpack's require() method.
+// const DatetimeUtil = require('@/utils/datetime').default
 
 export default {
   name: 'LoginFooter',
@@ -18,7 +20,7 @@ export default {
     return {
       appAuthorArray: this.$store.state.app.author.split(' '),
       appVersion: this.$store.state.app.appVersion,
-      currentYear: formatDate(new Date(), 'yyyy')
+      currentYear: DatetimeUtil.formatDate(new Date(), 'yyyy')
     }
   }
 }

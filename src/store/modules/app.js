@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { getProjectProperty } from '@/utils/app'
+import AppUtil from '@/utils/app'
 
 const app = {
   state: {
@@ -11,19 +11,19 @@ const app = {
     /**
      * Name of application.
      */
-    appName: getProjectProperty().name,
+    appName: AppUtil.getProjectProperty().name,
     /**
      * Version of application.
      */
-    appVersion: getProjectProperty().version,
+    appVersion: AppUtil.getProjectProperty().version,
     /**
      * Description of application.
      */
-    description: getProjectProperty().description,
+    description: AppUtil.getProjectProperty().description,
     /**
      * Author of application.
      */
-    author: getProjectProperty().author
+    author: AppUtil.getProjectProperty().author
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

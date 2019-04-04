@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import { login } from '@/api/auth/login'
+import Login from '@/api/auth/login'
 import LoginFooter from './components/LoginFooter'
-import StringUtil from '../../utils/string'
+import StringUtil from '@/utils/string'
 
 export default {
   name: 'Login',
@@ -70,7 +70,7 @@ export default {
       if (StringUtil.isEmpty(value)) {
         return callback(new Error('Username is not blank'))
       }
-      login.validateUsername(value).then(() => {
+      Login.validateUsername(value).then(() => {
         return callback()
       }).catch(reason => {
         return callback(new Error(reason))

@@ -1,10 +1,12 @@
+const DatetimeUtil = {}
+
 /**
  * Format date by giving pattern.
  * @param formatPattern 'yyyy-MM-dd HH:mm:ss'
  * @param date Date object
  * @return {string} Formatted date string
  */
-export function formatDate (date, formatPattern) {
+DatetimeUtil.formatDate = function (date, formatPattern) {
   const object = {
     'M+': date.getMonth() + 1,
     'd+': date.getDate(),
@@ -26,3 +28,5 @@ export function formatDate (date, formatPattern) {
   }
   return formatPattern
 }
+
+export default DatetimeUtil

@@ -3,14 +3,18 @@ import Cookies from 'js-cookie'
 // Token key of JWT
 export const TokenKey = 'Authorization'
 
-export function setToken (token) {
+const AuthUtil = {}
+
+AuthUtil.setToken = function (token) {
   return Cookies.set(TokenKey, token)
 }
 
-export function getToken () {
+AuthUtil.getToken = function () {
   return Cookies.get(TokenKey)
 }
 
-export function removeToken () {
+AuthUtil.removeToken = function () {
   return Cookies.remove(TokenKey)
 }
+
+export default AuthUtil

@@ -1,10 +1,9 @@
-import { login } from '@/api/auth/login'
-import { getToken, removeToken } from '@/utils/auth'
-import { setToken } from '@/utils/auth'
+import Login from '@/api/auth/login'
+import AuthUtil from '@/utils/auth'
 
 const user = {
   state: {
-    token: getToken(),
+    token: AuthUtil.getToken(),
     name: '',
     avatar: '',
     roles: []
@@ -31,9 +30,9 @@ const user = {
   actions: {
     Login ({ commit }, params) {
       return new Promise((resolve, reject) => {
-        login.login(params).then(response => {
+        Login.login(params).then(response => {
           const token = response.data.tokenType + ' ' + response.data.token
-          setToken(token)
+          AuthUtil.setToken(token)
           commit('SET_TOKEN', token)
           resolve()
         }).catch(error => {
@@ -64,7 +63,7 @@ const user = {
       return new Promise((resolve, reject) => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
-        removeToken()
+        AuthUtil.removeToken()
         resolve()
       })
     },
@@ -73,7 +72,7 @@ const user = {
     FedLogOut ({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
-        removeToken()
+        AuthUtil.removeToken()
         resolve()
       })
     }

@@ -20,7 +20,7 @@ class Status {
  * @date 2019-03-30
  * @time 12:15
  */
-export const UniversalStatus = {
+const UniversalStatus = {
   /**
    * Success
    */
@@ -107,6 +107,7 @@ export const UniversalStatus = {
   /**
    * Get status by code.
    * @param code {Number} Code that server responded.
+   * @throws Status not found error if the argument code is not defined.
    */
   getStatusByCode: code => {
     let status = null
@@ -115,8 +116,12 @@ export const UniversalStatus = {
         status = UniversalStatus[statusKey]
       }
     })
+    if (!status) {
+      throw new Error('Status not found.')
+    }
     return status
   }
 }
 
 Object.freeze(UniversalStatus)
+export default UniversalStatus
