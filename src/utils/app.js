@@ -11,4 +11,36 @@ AppUtil.getProjectProperty = function () {
   return JSON.parse(unescape(process.env.PACKAGE_JSON))
 }
 
+/**
+ * Get the name of app.
+ * @return {string} Name of app
+ */
+AppUtil.getName = function () {
+  return AppUtil.getProjectProperty().name
+}
+
+/**
+ * Get the version of app.
+ * @return {string} Version of app
+ */
+AppUtil.getVersionInfo = function () {
+  return AppUtil.getProjectProperty().version
+}
+
+/**
+ * Get the description of app.
+ * @return {string} Description of app
+ */
+AppUtil.getDescription = function () {
+  return AppUtil.getProjectProperty().description
+}
+
+/**
+ * Get the author of app.
+ * @return {string} Author of app
+ */
+AppUtil.getAuthor = function () {
+  return AppUtil.getProjectProperty().author
+}
+
 export default AppUtil

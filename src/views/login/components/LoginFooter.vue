@@ -1,7 +1,7 @@
 <template>
-  <div class="footer-container">
+  <div>
     <h1 class="footer-font">
-      {{ appAuthorArray[0]+' '+appAuthorArray[1]+' '+appAuthorArray[2] }} © {{ currentYear }}
+      {{ appAuthorArray[0]+' '+appAuthorArray[1]+' '+appAuthorArray[2] }} © {{ getYearRange() }}
     </h1>
     <h1 class="footer-font">
       Version {{ appVersion }}
@@ -11,7 +11,7 @@
 
 <script>
 import DatetimeUtil from '@/utils/datetime'
-// Alternative way to import DatetimeUtil using Webpack's require() method.
+// Alternative way to import DatetimeUtil dynamically by using Webpack's require() method.
 // const DatetimeUtil = require('@/utils/datetime').default
 
 export default {
@@ -20,20 +20,25 @@ export default {
     return {
       appAuthorArray: this.$store.state.app.author.split(' '),
       appVersion: this.$store.state.app.appVersion,
+      startYear: '2019',
       currentYear: DatetimeUtil.formatDate(new Date(), 'yyyy')
+    }
+  },
+  methods: {
+    getYearRange () {
+      if (this.currentYear === this.startYear) {
+        return this.currentYear
+      }
+      return this.startYear + '-' + this.currentYear
     }
   }
 }
 </script>
 
 <style scoped>
-.footer-container {
-}
-
 .footer-font {
   font-size: 12px;
   text-align: center;
-  color: #6a737d;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  color: #969fa9;
 }
 </style>

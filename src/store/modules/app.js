@@ -11,19 +11,19 @@ const app = {
     /**
      * Name of application.
      */
-    appName: AppUtil.getProjectProperty().name,
+    appName: AppUtil.getName(),
     /**
      * Version of application.
      */
-    appVersion: AppUtil.getProjectProperty().version,
+    appVersion: AppUtil.getVersionInfo(),
     /**
      * Description of application.
      */
-    description: AppUtil.getProjectProperty().description,
+    description: AppUtil.getDescription(),
     /**
      * Author of application.
      */
-    author: AppUtil.getProjectProperty().author
+    author: AppUtil.getAuthor()
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

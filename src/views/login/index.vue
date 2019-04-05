@@ -262,7 +262,7 @@ $light_gray2: #b0b0b0;
     bottom: 15px;
     left: 0;
     right: 0;
-    width: 210px;
+    width: 240px;
     margin: 0 auto;
   }
 }
