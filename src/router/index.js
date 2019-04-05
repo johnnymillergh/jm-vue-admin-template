@@ -11,6 +11,7 @@ import Layout from '../views/layout/Layout'
 import nestedRouter from './modules/nested'
 import formRouter from './modules/form'
 import exampleRouter from './modules/example'
+import systemControlsRouter from './modules/system-controls'
 
 /**
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -79,6 +80,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  systemControlsRouter,
   formRouter,
   nestedRouter,
   exampleRouter,
