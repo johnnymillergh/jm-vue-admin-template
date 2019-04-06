@@ -2,7 +2,7 @@
 
 > A minimal vue admin template with Element UI & axios & iconfont & permission control & lint.
 
-[Click me to preview](http://johnnymillergh.github.io/vue-admin-template-prod)
+[Click me to preview](http://johnnymillergh.github.io/jm-vue-admin-template-prod)
 
 ## Build Setup
 
