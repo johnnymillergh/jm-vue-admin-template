@@ -42,7 +42,7 @@ const systemControlsRouter = {
       name: 'UsersAndGroups',
       component: () => import('@/views/system-controls/general/security-and-permission'),
       meta: {
-        title: 'Security & Permission',
+        title: 'Users & Groups',
         keepAlive: true
       }
     }
