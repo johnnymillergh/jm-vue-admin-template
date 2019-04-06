@@ -22,6 +22,7 @@ import Layout from '@/views/layout/Layout'
 const systemControlsRouter = {
   path: '/system-controls',
   component: Layout,
+  redirect: 'noredirect',
   name: 'System Controls',
   meta: {
     title: 'System Controls',
@@ -29,22 +30,31 @@ const systemControlsRouter = {
   },
   children: [
     {
-      path: 'security-and-permission',
-      name: 'SecurityAndPermission',
-      component: () => import('@/views/system-controls/general/security-and-permission'),
+      path: 'general',
+      name: 'General',
+      redirect: 'noredirect',
+      component: () => import('@/views/common-router-view'),
       meta: {
-        title: 'Security & Permission',
-        keepAlive: true
-      }
-    },
-    {
-      path: 'users-and-groups',
-      name: 'UsersAndGroups',
-      component: () => import('@/views/system-controls/general/security-and-permission'),
-      meta: {
-        title: 'Users & Groups',
-        keepAlive: true
-      }
+        title: 'General'
+      },
+      children: [
+        {
+          path: 'security-and-permission',
+          name: 'SecurityAndPermission',
+          component: () => import('@/views/system-controls/general/security-and-permission'),
+          meta: {
+            title: 'Security & Permission'
+          }
+        },
+        {
+          path: 'users-and-groups',
+          name: 'UsersAndGroups',
+          component: () => import('@/views/system-controls/general/users-and-groups'),
+          meta: {
+            title: 'Users & Groups'
+          }
+        }
+      ]
     }
   ]
 }

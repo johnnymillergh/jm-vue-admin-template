@@ -4,16 +4,15 @@
       <el-tab-pane label="Permission Controls">
         <heading text="API Glance"/>
         <el-row>
-          <el-transfer
-            v-model="value4"
-            filterable
-            :left-default-checked="[2, 3]"
-            :right-default-checked="[1]"
-            :titles="['New APIs', 'Consistence APIs']"
-            :button-texts="['To left', 'To right']"
-            :format="{ noChecked: '${total}', hasChecked: '${checked}/${total}' }"
-            @change="handleChange"
-            :data="data">
+          <el-transfer v-model="value4"
+                       filterable
+                       :left-default-checked="[2, 3]"
+                       :right-default-checked="[1]"
+                       :titles="['New APIs', 'Consistence APIs']"
+                       :button-texts="['To left', 'To right']"
+                       :format="{ noChecked: '${total}', hasChecked: '${checked}/${total}' }"
+                       @change="handleChange"
+                       :data="data">
           </el-transfer>
         </el-row>
         <el-row style="margin-top: 10px; margin-bottom: 5px">
