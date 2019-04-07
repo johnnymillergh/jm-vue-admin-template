@@ -1,5 +1,8 @@
 <template>
-  <div>UsersAndGroups</div>
+  <div>
+    UsersAndGroups
+    <span>{{ Math.random() }}</span>
+  </div>
 </template>
 
 <script>

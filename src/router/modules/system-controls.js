@@ -30,31 +30,20 @@ const systemControlsRouter = {
   },
   children: [
     {
-      path: 'general',
-      name: 'General',
-      redirect: 'noredirect',
-      component: () => import('@/views/common-router-view'),
+      path: 'security-and-permission',
+      name: 'SecurityAndPermission',
+      component: () => import('@/views/system-controls/security-and-permission'),
       meta: {
-        title: 'General'
-      },
-      children: [
-        {
-          path: 'security-and-permission',
-          name: 'SecurityAndPermission',
-          component: () => import('@/views/system-controls/general/security-and-permission'),
-          meta: {
-            title: 'Security & Permission'
-          }
-        },
-        {
-          path: 'users-and-groups',
-          name: 'UsersAndGroups',
-          component: () => import('@/views/system-controls/general/users-and-groups'),
-          meta: {
-            title: 'Users & Groups'
-          }
-        }
-      ]
+        title: 'Security & Permission'
+      }
+    },
+    {
+      path: 'users-and-groups',
+      name: 'UsersAndGroups',
+      component: () => import('@/views/system-controls/users-and-groups'),
+      meta: {
+        title: 'Users & Groups'
+      }
     }
   ]
 }
