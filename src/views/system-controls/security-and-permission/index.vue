@@ -27,8 +27,10 @@
             <el-card shadow="never" style="height: 290px">
               <el-form label-width="120px">
                 <el-form-item label="Status">
-                  <el-radio v-model="apiStatus" :label="ApiStatus.IDLED.status" border>Idled</el-radio>
-                  <el-radio v-model="apiStatus" :label="ApiStatus.IN_USED.status" border>In use</el-radio>
+                  <el-radio-group v-model="apiStatus" @change="onChangeApiStatus">
+                    <el-radio :label="ApiStatus.IDLED.status" border>Idled</el-radio>
+                    <el-radio :label="ApiStatus.IN_USED.status" border>In use</el-radio>
+                  </el-radio-group>
                 </el-form-item>
                 <el-form-item label="URL">
                   <el-select v-model="selectedUrl" @change="onSelectUrl" placeholder="Select" style="width: 598px">
@@ -128,6 +130,10 @@ export default {
       SecurityAndPermission.getApiByControllerClass(params).then(response => {
         this.apiList = response.data
       })
+    },
+    onChangeApiStatus () {
+      this.selectedUrl = this.method = this.description = null
+      this.onSelectController()
     },
     onSelectUrl () {
       const selectedApi = this.apiList[this.selectedUrl]
