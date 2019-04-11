@@ -123,6 +123,7 @@ export default {
       if (this.selectedController === null) {
         return
       }
+      this.clearSelectedUrl()
       const params = {
         controllerClass: this.selectedController.packageName + '.' + this.selectedController.className,
         apiStatus: this.apiStatus
@@ -132,13 +133,16 @@ export default {
       })
     },
     onChangeApiStatus () {
-      this.selectedUrl = this.method = this.description = null
+      this.clearSelectedUrl()
       this.onSelectController()
     },
     onSelectUrl () {
       const selectedApi = this.apiList[this.selectedUrl]
       this.method = selectedApi.method
       this.description = selectedApi.description
+    },
+    clearSelectedUrl () {
+      this.selectedUrl = this.method = this.description = null
     }
   }
 }
