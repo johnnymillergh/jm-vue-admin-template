@@ -11,7 +11,7 @@
                 <el-input v-model="searchText" size="mini" placeholder="Type class name to search"/>
               </div>
               <div style="height: 202px; overflow: auto; padding: 5px">
-                <el-table :data="getFilteredControllerList()" stripe highlight-current-row>
+                <el-table :data="getFilteredControllerList()" stripe highlight-current-row @row-click="onClickTableRow">
                   <el-table-column label="#" width="50px">
                     <template slot-scope="scope">
                       <el-radio v-model="selectedController" :label="scope.row" @change="onSelectController"><i></i>
@@ -113,6 +113,10 @@ export default {
     },
     handleClick () {
     },
+    onClickTableRow (row) {
+      this.selectedController = row
+      this.onSelectController()
+    },
     onSelectController () {
       if (this.selectedController === null) {
         return
@@ -122,7 +126,6 @@ export default {
         apiStatus: this.apiStatus
       }
       SecurityAndPermission.getApiByControllerClass(params).then(response => {
-        console.log('response', response)
         this.apiList = response.data
       })
     },
