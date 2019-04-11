@@ -82,7 +82,7 @@ const UniversalStatus = {
   /**
    * User disabled
    */
-  USER_DISABLED: new Status(403, 'User disabled.'),
+  USER_DISABLED: new Status(40301, 'User disabled.'),
   /**
    * Username or password error
    */

@@ -19,7 +19,7 @@ import '@/icons'
 // Permission control
 import '@/permission'
 // Universal status enumerations
-import '@/constants/universal-status'
+import '@/constants/system/universal-status'
 
 // Simulation data
 /**

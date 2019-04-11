@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import AuthUtil from '@/utils/auth'
 import { TokenKey } from '@/utils/auth'
-import UniversalStatus from '@/constants/universal-status'
+import UniversalStatus from '@/constants/system/universal-status'
 import { Message, MessageBox, Notification } from 'element-ui'
 
 // 1. Create an axios instance

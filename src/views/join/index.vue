@@ -63,7 +63,7 @@
 <script>
 import Join from '@/api/auth/join'
 import StringUtil from '@/utils/string'
-import UniversalStatus from '@/constants/universal-status'
+import UniversalStatus from '@/constants/system/universal-status'
 
 export default {
   name: 'Join',

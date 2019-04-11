@@ -1,5 +1,5 @@
 import { param2Obj } from './utils'
-import UniversalStatus from '../src/constants/universal-status'
+import UniversalStatus from '../src/constants/system/universal-status'
 
 const tokens = {
   admin: {

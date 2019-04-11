@@ -4,6 +4,8 @@
 
 const path = require('path')
 
+const localServerPort = 8080
+
 module.exports = {
   dev: {
     // Paths
@@ -13,10 +15,17 @@ module.exports = {
     // Remember to config proxyTable when new API is added.
     proxyTable: {
       '/auth': {
-        target: 'http://localhost:8080',
+        target: `http://localhost:${localServerPort}`,
         changeOrigin: true,
         pathRewrite: {
           '^/auth': '/springboottemplate/auth'
+        }
+      },
+      '/apiManagement': {
+        target: `http://localhost:${localServerPort}`,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/apiManagement': '/springboottemplate/apiManagement'
         }
       }
     },
