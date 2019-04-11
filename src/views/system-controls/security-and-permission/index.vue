@@ -11,7 +11,11 @@
                 <el-input v-model="searchText" size="mini" placeholder="Type class name to search"/>
               </div>
               <div style="height: 202px; overflow: auto; padding: 5px">
-                <el-table :data="getFilteredControllerList()" stripe highlight-current-row @row-click="onClickTableRow">
+                <el-table :data="getFilteredControllerList()"
+                          stripe
+                          highlight-current-row
+                          @row-click="onClickTableRow"
+                          v-loading="controllerListLoading">
                   <el-table-column label="#" width="50px">
                     <template slot-scope="scope">
                       <el-radio v-model="selectedController" :label="scope.row" @change="onSelectController"><i></i>
@@ -25,11 +29,11 @@
           </el-col>
           <el-col :span="16">
             <el-card shadow="never" style="height: 290px">
-              <el-form label-width="120px">
+              <el-form label-width="120px" v-loading="apiSelectFormLoading">
                 <el-form-item label="Status">
                   <el-radio-group v-model="apiStatus" @change="onChangeApiStatus">
-                    <el-radio :label="ApiStatus.IDLED.status" border>Idled</el-radio>
-                    <el-radio :label="ApiStatus.IN_USED.status" border>In use</el-radio>
+                    <el-radio :label="ApiStatus.IDLED.status" border>Idled {{ getIdledApiCount() }}</el-radio>
+                    <el-radio :label="ApiStatus.IN_USED.status" border>In use {{ getInUseApiCount() }}</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="URL">
@@ -86,12 +90,16 @@ export default {
   },
   data () {
     return {
+      controllerListLoading: false,
+      apiSelectFormLoading: false,
       searchText: null,
       controllerList: null,
       selectedController: null,
       apiList: null,
       ApiStatus: ApiStatus,
       apiStatus: ApiStatus.IDLED.status,
+      idledApiCount: null,
+      inUseApiCount: null,
       selectedUrl: null,
       method: null,
       description: null
@@ -99,11 +107,14 @@ export default {
   },
   methods: {
     getController () {
+      this.controllerListLoading = true
       SecurityAndPermission.getController().then(response => {
         this.controllerList = response.data
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
+      }).finally(() => {
+        this.controllerListLoading = false
       })
     },
     getFilteredControllerList () {
@@ -128,9 +139,23 @@ export default {
         controllerClass: this.selectedController.packageName + '.' + this.selectedController.className,
         apiStatus: this.apiStatus
       }
+      this.apiSelectFormLoading = true
       SecurityAndPermission.getApiByControllerClass(params).then(response => {
-        this.apiList = response.data
+        this.apiList = response.data.apiList
+        this.idledApiCount = response.data.idledApiCount
+        this.inUseApiCount = response.data.inUseApiCount
+      }).catch(error => {
+        console.error(error)
+        this.$message.error(error)
+      }).finally(() => {
+        this.apiSelectFormLoading = false
       })
+    },
+    getIdledApiCount () {
+      return this.idledApiCount !== null ? '(' + this.idledApiCount + ')' : null
+    },
+    getInUseApiCount () {
+      return this.inUseApiCount !== null ? '(' + this.inUseApiCount + ')' : null
     },
     onChangeApiStatus () {
       this.clearSelectedUrl()
@@ -142,7 +167,7 @@ export default {
       this.description = selectedApi.description
     },
     clearSelectedUrl () {
-      this.selectedUrl = this.method = this.description = null
+      this.idledApiCount = this.inUseApiCount = this.selectedUrl = this.method = this.description = null
     }
   }
 }
