@@ -59,8 +59,25 @@
               </el-col>
             </el-row>
             <heading text="API Analysis"/>
-            <el-row style="height: 150px; background: #409EFF">
-              Pie Chart for API Analysis Here.
+            <el-row type="flex" justify="space-between" style="height: 320px" v-loading="apiAnalysisLoading">
+              <el-col :span="9">
+                <pie-chart :pie-chart-data="pieChartData"/>
+              </el-col>
+              <el-col :span="15">
+                <div style="margin-bottom: 10px">Change scope to view different report.</div>
+                <el-form label-width="120px" v-loading="apiSelectFormLoading">
+                  <el-form-item label="Scope">
+                    <el-select v-model="scope" @change="onSelectScope" placeholder="All" clearable filterable>
+                      <el-option v-for="(item,index) in controllerList"
+                                 :label="item.className"
+                                 :value="item.packageName+'.'+item.className"
+                                 :key="index"/>
+                    </el-select>
+                  </el-form-item>
+                </el-form>
+                <div style="font-size: 24px">Total of Scope</div>
+                <div style="font-size: 128px">{{scopeTotal}}</div>
+              </el-col>
             </el-row>
             <heading text="API Details"/>
             <el-row style="height: 450px; background: #409EFF">
@@ -91,14 +108,17 @@
 import Heading from '@/components/Heading'
 import ApiStatus from '@/constants/system/api-status'
 import SecurityAndPermission from '@/api/system-controls/security-and-permission'
+import PieChart from './components/PieChart'
 
 export default {
   name: 'SecurityAndPermission',
   components: {
-    Heading
+    Heading,
+    PieChart
   },
   mounted () {
     this.getController()
+    this.getApiAnalysis()
   },
   data () {
     return {
@@ -106,7 +126,11 @@ export default {
       showRoleControls: false,
       showAuthorization: false,
       controllerListLoading: false,
+      apiAnalysisLoading: false,
       apiSelectFormLoading: false,
+      pieChartData: null,
+      scope: null,
+      scopeTotal: null,
       searchText: null,
       controllerList: null,
       selectedController: null,
@@ -146,6 +170,23 @@ export default {
         this.$message.error(error)
       }).finally(() => {
         this.controllerListLoading = false
+      })
+    },
+    getApiAnalysis () {
+      this.apiAnalysisLoading = true
+      const params = {
+        classFullName: this.scope
+      }
+      SecurityAndPermission.getApiAnalysis(params).then(response => {
+        this.pieChartData = []
+        this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: response.data.idledApiCount })
+        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: response.data.inUseApiCount })
+        this.scopeTotal = response.data.totalApiCount
+      }).catch(error => {
+        console.error(error)
+        this.$message.error(error)
+      }).finally(() => {
+        this.apiAnalysisLoading = false
       })
     },
     getFilteredControllerList () {
@@ -197,6 +238,9 @@ export default {
     },
     clearSelectedUrl () {
       this.idledApiCount = this.inUseApiCount = this.selectedUrl = this.method = this.description = null
+    },
+    onSelectScope () {
+      this.getApiAnalysis()
     }
   }
 }
