@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '../views/layout/Layout'
+import Layout from '../layout/Layout'
 import nestedRouter from './modules/nested'
 import formRouter from './modules/form'
 import exampleRouter from './modules/example'
@@ -8,11 +8,10 @@ import systemControlsRouter from './modules/system-controls'
 
 Vue.use(Router)
 
-// In development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slowly.
-// Only enable lazy-loading in production environment.
-// Detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
-
 /**
+ * constantRouterMap is a base page that does not have permission requirements. All roles can be accessed.
+ * Note: sub-menu only appear when route children.length >= 1.
+ *
  * ELEMENT DESCRIPTION
  *
  * hidden: true                If hidden:true will not show in the sidebar (default is false).

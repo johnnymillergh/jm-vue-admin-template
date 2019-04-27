@@ -1,4 +1,4 @@
-import Layout from '@/views/layout/Layout'
+import Layout from '@/layout/Layout'
 
 /**
  * ELEMENT DESCRIPTION
