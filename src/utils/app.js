@@ -8,7 +8,7 @@ const AppUtil = {}
  * @time 15:36
  */
 AppUtil.getProjectProperty = function () {
-  return JSON.parse(unescape(process.env.PACKAGE_JSON))
+  return JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON))
 }
 
 /**

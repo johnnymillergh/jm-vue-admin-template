@@ -1,14 +1,13 @@
 import axios from 'axios'
 import store from '@/store'
-import AuthUtil from '@/utils/auth'
-import { TokenKey } from '@/utils/auth'
+import AuthUtil, { TokenKey } from '@/utils/auth'
 import UniversalStatus from '@/constants/system/universal-status'
 import { Message, MessageBox, Notification } from 'element-ui'
 
 // 1. Create an axios instance
 const service = axios.create({
   // Base URL of API
-  baseURL: process.env.BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API,
   // Request timeout: 30s
   timeout: 30000
 })
