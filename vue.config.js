@@ -1,28 +1,51 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+// Page title
+const name = defaultSettings.title || 'JM Vue Admin Template'
+// Dev port
+const port = 8081
+process.env.VUE_APP_PACKAGE_JSON = escape(JSON.stringify(require('./package.json')))
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-// Page title
-const name = defaultSettings.title || 'JM Vue Admin Template'
-// Dev port
-const port = 8081
-
-process.env.VUE_APP_PACKAGE_JSON = escape(JSON.stringify(require('./package.json')))
+/**
+ * Choose public path by environment.
+ * @param NODE_ENV
+ * @return {string} public path
+ */
+function choosePublicPath (NODE_ENV) {
+  const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name
+  switch (NODE_ENV) {
+    case 'development':
+      return applicationName ? './' + applicationName + '-dev' : './'
+    case 'test':
+      return applicationName ? './' + applicationName + '-test' : './'
+    case 'production':
+      return applicationName ? './' + applicationName + '-prod' : './'
+    default:
+      return './'
+  }
+}
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
+   * ATTENTION: You will need to set publicPath if you plan to deploy your site under a sub path,
    * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
    * then publicPath should be set to "/bar/".
    * In most cases please use '/' !!!
-   * Detail: https://cli.vuejs.org/config/#publicpath
+   * <a href="https://cli.vuejs.org/config/#publicpath">Click me to view detail</a>
+   *
+   * ATTENTION: If static server is Nginx, the public path should be relative (with dot slash ./).
+   *            If static server is http-server (Node), the public path should be absolute (with slash /).
+   * The value of publicPath can also be set to an empty string ('') or a relative path (./) so that all assets are
+   * linked using relative paths. This allows the built bundle to be deployed under any public path,
+   * or used in a file system based environment like a Cordova hybrid app.
    */
-  publicPath: '/',
+  publicPath: choosePublicPath(process.env.NODE_ENV),
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -34,6 +57,10 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    /**
+     * ATTENTION: Proxy does not work, if environment is not development.
+     * TODO: Don't configure proxy in vue.config.js! Split proxy table into separate .js file.
+     */
     proxy: {
       '/auth': {
         target: `${process.env.VUE_APP_BASE_URL}`,
