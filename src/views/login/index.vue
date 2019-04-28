@@ -97,7 +97,8 @@ export default {
   },
   watch: {
     /**
-     * Watch global route (URL). If URL changes, then generate a redirect route which will be routed to when user signed in.
+     * Watch global route (URL). If URL changes,
+     * then generate a redirect route which will be routed to when user signed in.
      */
     $route: {
       handler: function (route) {
@@ -140,7 +141,7 @@ export default {
       this.$store.dispatch('Login', params).then(() => {
         this.$router.push({ path: this.redirect || '/' })
       }).catch(error => {
-        console.log('Error in login page', error)
+        console.error('Error in login page', error)
       }).finally(() => {
         this.loading = false
       })

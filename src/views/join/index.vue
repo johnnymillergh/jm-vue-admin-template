@@ -134,7 +134,6 @@ export default {
       } catch (error) {
         registerFormValidity = error
       }
-      console.log('registerFormValidity', registerFormValidity)
       if (!registerFormValidity) {
         this.createAccountLoading = false
         return

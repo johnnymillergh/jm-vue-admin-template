@@ -33,7 +33,6 @@ export default {
     pieChartData: {
       deep: true,
       handler (val) {
-        console.log('val', val)
         this.setOption(val)
       }
     }
