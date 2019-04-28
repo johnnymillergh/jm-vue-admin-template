@@ -187,7 +187,6 @@ $light_gray: #eee;
     color: #454545;
   }
 }
-
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

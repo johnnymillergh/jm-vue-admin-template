@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="join-container">
     <header class="header" role="banner"/>
     <div class="setup-header">
       <h1>Join {{ appName }}</h1>
@@ -13,7 +13,7 @@
     <div class="register-container">
       <el-row type="flex" justify="center">
         <el-col :span="16">
-          <h2 class="create-account">Create your personal account</h2>
+          <h1 class="heading1">Create your personal account</h1>
           <el-form ref="registerForm"
                    :model="registerForm"
                    :rules="registerFormRules"
@@ -33,7 +33,7 @@
         <el-col :span="8">
           <el-card shadow="hover" style="border: 1px solid #dcdfe6;">
             <div slot="header" class="clearfix">
-              <h2>You’ll love {{ appName }}</h2>
+              <h2 class="heading2">You’ll love {{ appName }}</h2>
             </div>
             <p>{{ placeholderText }}</p>
           </el-card>
@@ -41,7 +41,7 @@
       </el-row>
       <el-row type="flex">
         <el-col :span="16" style="margin-bottom: 10px">
-          <h2 class="create-account" style="margin-bottom: 20px">Verify</h2>
+          <h1 class="heading1" style="margin-bottom: 20px">Verify</h1>
           <el-card shadow="never" style="width: 466px; border: 1px solid #dcdfe6;">
             <p>[Validation code here.] {{ placeholderText }}</p>
           </el-card>
@@ -161,84 +161,78 @@ $bg: #73777f;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 $light_gray2: #b0b0b0;
-.header {
-  background-color: #24292e;
-  color: hsla(0, 0%, 100%, .7);
-  padding-bottom: 12px;
-  padding-top: 12px;
-  z-index: 32;
-  height: 72px;
-}
+.join-container {
+  .header {
+    background-color: #24292e;
+    color: hsla(0, 0%, 100%, .7);
+    padding-bottom: 12px;
+    padding-top: 12px;
+    z-index: 32;
+    height: 72px;
+  }
 
-.setup-header {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 32px;
-  padding-left: 16px;
-  padding-right: 16px;
-  max-width: 1012px;
-}
+  .setup-header {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 1012px;
 
-.steps {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 16px;
-  max-width: 1012px;
-}
+    h1 {
+      font-size: 45px;
+      font-weight: 400;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
 
-.register-container {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 32px 16px;
-  max-width: 1012px;
-}
+    .lead {
+      color: #586069;
+      font-size: 20px;
+      font-weight: 300;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+  }
 
-.lead {
-  color: #586069;
-  font-size: 20px;
-  font-weight: 300;
-  margin-top: 0;
-  margin-bottom: 30px;
-}
+  .steps {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+    max-width: 1012px;
+  }
 
-.create-account {
-  font-size: 24px !important;
-  font-weight: 300 !important;
-}
+  .register-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 32px 16px;
+    max-width: 1012px;
 
-.fixed-width-input {
-  width: 466px;
-}
+    .heading1 {
+      font-size: 24px !important;
+      font-weight: 300 !important;
+    }
 
-.setup-info-module {
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .075);
-  margin-bottom: 30px;
-  width: 294px;
-}
+    .heading2 {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
 
-.term-privacy {
-  border-bottom: 1px solid #eee;
-  border-top: 1px solid #eee;
-  margin: 15px 0;
-}
+    .fixed-width-input {
+      width: 466px;
+    }
 
-h1 {
-  font-size: 45px;
-  font-weight: 400;
-  letter-spacing: -1px;
-  line-height: 1.1;
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-h2 {
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: -1px;
-  line-height: 1.1;
-  margin-bottom: 0;
-  margin-top: 0;
+    .term-privacy {
+      border-bottom: 1px solid #eee;
+      border-top: 1px solid #eee;
+      margin: 15px 0;
+    }
+  }
 }
 </style>
