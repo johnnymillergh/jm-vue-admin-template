@@ -6,8 +6,9 @@
   "author": "Johnny Miller (锺俊) <johnnysviva@outlook.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build:prod": "vue-cli-service build",
     "build:test": "vue-cli-service build --mode test",
+    "build:stage": "vue-cli-service build --mode stage",
+    "build:prod": "vue-cli-service build",
     "preview": "node build/index.js --preview",
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",

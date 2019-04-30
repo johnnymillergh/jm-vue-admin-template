@@ -1,33 +1,37 @@
 'use strict'
 const path = require('path')
-const defaultSettings = require('./src/settings.js')
-// Page title
-const name = defaultSettings.title || 'JM Vue Admin Template'
 // Dev port
 const port = 8081
 process.env.VUE_APP_PACKAGE_JSON = escape(JSON.stringify(require('./package.json')))
+
+function getAppName () {
+  const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name.replace(/-/g, ' ').toLocaleUpperCase()
+  if (process.env.ENV !== 'prod') {
+    return applicationName.concat(' (', process.env.ENV, ')')
+  }
+  return applicationName
+}
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
 /**
- * Choose public path by environment.
- * @param NODE_ENV
+ * Generate public path by environment.
  * @return {string} public path
  */
-function choosePublicPath (NODE_ENV) {
-  const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name
-  switch (NODE_ENV) {
-    case 'development':
-      return applicationName ? './' + applicationName + '-dev' : './'
-    case 'test':
-      return applicationName ? './' + applicationName + '-test' : './'
-    case 'production':
-      return applicationName ? './' + applicationName + '-prod' : './'
-    default:
-      return './'
+function generatePublicPath () {
+  // ATTENTION: Relative path prefix should start with a dot './'
+  const pathPrefix = './'
+  const env = process.env.ENV
+  if (env === 'prod') {
+    return pathPrefix
   }
+  const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name
+  if (applicationName) {
+    return applicationName ? pathPrefix.concat(applicationName, '-', env, '/') : pathPrefix
+  }
+  return pathPrefix
 }
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
@@ -45,7 +49,7 @@ module.exports = {
    * linked using relative paths. This allows the built bundle to be deployed under any public path,
    * or used in a file system based environment like a Cordova hybrid app.
    */
-  publicPath: choosePublicPath(process.env.NODE_ENV),
+  publicPath: generatePublicPath(),
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -79,10 +83,20 @@ module.exports = {
     }
     // after: require('./mock/mock-server.js')
   },
+  // configureWebpack: {
+  //   // provide the app's title in webpack's name field, so that
+  //   // it can be accessed in index.html to inject the correct title.
+  //   name: getAppName(),
+  //   resolve: {
+  //     alias: {
+  //       '@': resolve('src')
+  //     }
+  //   }
+  // },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
-    name: name,
+    name: getAppName(),
     resolve: {
       alias: {
         '@': resolve('src')
