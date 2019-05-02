@@ -21,7 +21,9 @@ function resolve (dir) {
  * @return {string} public path
  */
 function generatePublicPath () {
-  // ATTENTION: Relative path prefix should start with a dot './'
+  // FIXME: ATTENTION: Relative path prefix should start with a dot './'
+  //  DON'T add the dot when the environment is development, or browser will throw en error like this:
+  //  Uncaught SyntaxError: Unexpected token <
   const pathPrefix = './'
   const env = process.env.ENV
   if (env === 'prod') {
