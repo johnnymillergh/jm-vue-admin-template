@@ -5,6 +5,7 @@ import nestedRouter from './modules/nested'
 import formRouter from './modules/form'
 import exampleRouter from './modules/example'
 import systemControlsRouter from './modules/system-controls'
+import componentDemoRouter from './modules/component-demo'
 
 Vue.use(Router)
 
@@ -96,6 +97,7 @@ export const asyncRouterMap = [
   formRouter,
   nestedRouter,
   exampleRouter,
+  componentDemoRouter,
   // New router table should be added above: { path: '*', redirect: '/404', hidden: true }
   { path: '*', redirect: '/404', hidden: true }
 ]
