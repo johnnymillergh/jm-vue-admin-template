@@ -6,8 +6,8 @@ process.env.VUE_APP_PACKAGE_JSON = escape(JSON.stringify(require('./package.json
 
 function getAppName () {
   const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name.replace(/-/g, ' ').toLocaleUpperCase()
-  if (process.env.ENV !== 'prod') {
-    return applicationName.concat(' (', process.env.ENV, ')')
+  if (process.env.VUE_APP_ENV !== 'prod') {
+    return applicationName.concat(' (', process.env.VUE_APP_ENV, ')')
   }
   return applicationName
 }
@@ -25,7 +25,7 @@ function generatePublicPath () {
   //  DON'T add the dot when the environment is development, or browser will throw en error like this:
   //  Uncaught SyntaxError: Unexpected token <
   const pathPrefix = './'
-  const env = process.env.ENV
+  const env = process.env.VUE_APP_ENV
   if (env === 'prod') {
     return pathPrefix
   }

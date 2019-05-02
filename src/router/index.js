@@ -56,7 +56,7 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index'),
       name: 'Dashboard',
       meta: {
-        title: 'Dashboard',
+        title: generateDashboardTitle(),
         icon: 'dashboard',
         noCache: true,
         affix: true
@@ -74,6 +74,15 @@ export const constantRouterMap = [
     ]
   }
 ]
+
+/**
+ * Generate dashboard title with environment tag when the environment is not production.
+ * @return {string} dashboard title
+ */
+function generateDashboardTitle () {
+  const dashboardTitle = 'Dashboard'
+  return process.env.VUE_APP_ENV !== 'prod' ? dashboardTitle.concat(' (', process.env.VUE_APP_ENV, ')') : dashboardTitle
+}
 
 export default new Router({
   // mode: 'history',
