@@ -60,6 +60,14 @@ const componentDemoRouter = {
       meta: {
         title: 'Drag Dialog'
       }
+    },
+    {
+      path: 'markdown',
+      name: 'Markdown',
+      component: () => import('@/views/component-demo/markdown'),
+      meta: {
+        title: 'Markdown'
+      }
     }
   ]
 }
