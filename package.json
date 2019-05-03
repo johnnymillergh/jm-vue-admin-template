@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
-    "codemirror": "^5.46.0",
+    "codemirror": "5.46.0",
     "echarts": "4.2.1",
     "element-ui": "2.7.2",
     "fuse.js": "3.4.4",
@@ -25,7 +25,7 @@
     "mockjs": "1.0.1-beta3",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
-    "tui-editor": "^1.4.0",
+    "tui-editor": "1.4.0",
     "vue": "2.6.10",
     "vue-i18n": "7.3.2",
     "vue-router": "3.0.6",
