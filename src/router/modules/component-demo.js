@@ -26,7 +26,7 @@ const componentDemoRouter = {
   name: 'Component Demo',
   meta: {
     title: 'Component Demo',
-    icon: 'repairing'
+    icon: 'cube'
   },
   children: [
     {
