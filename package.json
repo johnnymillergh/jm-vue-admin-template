@@ -1,7 +1,7 @@
 {
   "name": "jm-vue-admin-template",
   "version": "1.0.1",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Johnny Miller (锺俊) <johnnysviva@outlook.com>",
   "scripts": {
