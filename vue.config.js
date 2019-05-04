@@ -24,7 +24,7 @@ function generatePublicPath () {
   // FIXME: ATTENTION: Relative path prefix should start with a dot './'
   //  DON'T add the dot when the environment is development, or browser will throw en error like this:
   //  Uncaught SyntaxError: Unexpected token <
-  const pathPrefix = './'
+  const pathPrefix = '/jm-vue-admin-template-prod'
   const env = process.env.VUE_APP_ENV
   if (env === 'prod') {
     return pathPrefix

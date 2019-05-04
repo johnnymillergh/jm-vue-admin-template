@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import AuthUtil, { TokenKey } from '@/utils/auth'
 import UniversalStatus from '@/constants/system/universal-status'
-import { Message, MessageBox, Notification } from 'element-ui'
+import { MessageBox, Notification } from 'element-ui'
 
 // 1. Create an axios instance
 const service = axios.create({
@@ -40,33 +40,21 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const resp = response.data
-    if (resp.status !== UniversalStatus.SUCCESS.code) {
-      console.error('Server responded an error (%s). Response: ', resp.timestamp, resp)
-
-      if (resp.status === UniversalStatus.TOKEN_PARSE_ERROR.code ||
-        resp.status === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
-        resp.status === UniversalStatus.TOKEN_EXPIRED.code) {
-        MessageBox.confirm(
-          'Your account has been logged out. Continue to stay or sign in again.',
-          'Activity Warning',
-          {
-            confirmButtonText: 'Sign in again',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }
-        ).then(() => {
-          store.dispatch('FedLogOut').then(() => {
-            // 为了重新实例化vue-router对象 避免bug
-            location.reload()
-          })
-        })
-      }
-      const rejectedReason = `Server responded an error! ` +
-        `Status: ${resp.status} (${UniversalStatus.getStatusByCode(resp.status).message}), message: ${resp.message}`
-      Message.error(rejectedReason)
-      return Promise.reject(resp.message)
-    } else {
-      return Promise.resolve(resp)
+    switch (resp.status) {
+      case UniversalStatus.SUCCESS.code:
+        return Promise.resolve(resp)
+      case UniversalStatus.FAILURE.code:
+        return Promise.reject(resp.message)
+      case UniversalStatus.WARNING.code:
+        return Promise.reject(resp.message)
+      case UniversalStatus.TOKEN_EXPIRED.code:
+        return onLogout(resp)
+      case UniversalStatus.TOKEN_PARSE_ERROR.code:
+        return onLogout(resp)
+      case UniversalStatus.TOKEN_OUT_OF_CONTROL.code:
+        return onLogout(resp)
+      default:
+        return Promise.reject(resp.message)
     }
   },
   error => {
@@ -81,6 +69,29 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+/**
+ * On logout. Make a toast and reload page.
+ * @param resp response body
+ * @return {Promise<string>} rejected reason
+ */
+function onLogout (resp) {
+  MessageBox.confirm(
+    'Your account has been logged out. Continue to stay or sign in again.',
+    'Activity Warning',
+    {
+      confirmButtonText: 'Sign in again',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    }
+  ).then(() => {
+    store.dispatch('FedLogOut').then(() => {
+      // Reload page
+      location.reload()
+    })
+  })
+  return Promise.reject(resp.message)
+}
 
 /**
  * Send a GET request.

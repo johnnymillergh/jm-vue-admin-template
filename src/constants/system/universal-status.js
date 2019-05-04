@@ -21,30 +21,21 @@ class Status {
  * @time 12:15
  */
 const UniversalStatus = {
+  // Successful
   /**
    * Success
    */
   SUCCESS: new Status(200, 'Success'),
   /**
-   * Log out successfully
-   */
-  LOGOUT: new Status(20001, 'Log out successfully'),
-  /**
-   * Error or failure
-   */
-  ERROR: new Status(500, 'Error. A generic status for an error in the server itself.'),
-  /**
    * Failure
    */
-  FAILURE: new Status(50001, 'Failure'),
+  FAILURE: new Status(250, 'Failure'),
   /**
    * Warning
    */
-  WARNING: new Status(50002, 'Warning'),
-  /**
-   * Role not found
-   */
-  ROLE_NOT_FOUND: new Status(50003, 'Role not found.'),
+  WARNING: new Status(251, 'Warning'),
+
+  // Client error
   /**
    * Unauthorized
    */
@@ -69,41 +60,51 @@ const UniversalStatus = {
   /**
    * Param not matched
    */
-  PARAM_NOT_MATCH: new Status(40001, 'Param not matched. The request could not be fulfilled' +
+  PARAM_NOT_MATCH: new Status(460, 'Param not matched. The request could not be fulfilled' +
     ' due to the incorrect syntax of the request.'),
   /**
    * Param not null
    */
-  PARAM_NOT_NULL: new Status(40002, 'Param not null.'),
+  PARAM_NOT_NULL: new Status(461, 'Param not null.'),
   /**
    * Param invalid
    */
-  PARAM_INVALID: new Status(40003, 'Param invalid.'),
+  PARAM_INVALID: new Status(462, 'Param invalid.'),
   /**
    * User disabled
    */
-  USER_DISABLED: new Status(40301, 'User disabled.'),
+  USER_DISABLED: new Status(463, 'User disabled.'),
+
+  // Server error
+  /**
+   * Error or failure
+   */
+  ERROR: new Status(500, 'Error. A generic status for an error in the server itself.'),
+  /**
+   * Role not found
+   */
+  ROLE_NOT_FOUND: new Status(552, 'Role not found.'),
   /**
    * Username or password error
    */
-  USERNAME_OR_PASSWORD_ERROR: new Status(50004, 'Username or password error.'),
+  USERNAME_OR_PASSWORD_ERROR: new Status(553, 'Username or password error.'),
   /**
    * Token expired
    */
-  TOKEN_EXPIRED: new Status(50005, 'Token expired.'),
+  TOKEN_EXPIRED: new Status(554, 'Token expired.'),
   /**
    * Token parse error
    */
-  TOKEN_PARSE_ERROR: new Status(50006, 'Token parse error.'),
+  TOKEN_PARSE_ERROR: new Status(555, 'Token parse error.'),
   /**
    * Token out of control
    */
-  TOKEN_OUT_OF_CONTROL: new Status(50007, 'Token out of control. ' +
+  TOKEN_OUT_OF_CONTROL: new Status(556, 'Token out of control. ' +
     'Current user has logged in before. Please try to reset current password or sign in again.'),
   /**
    * Kick out self warning. Cannot kick self out.
    */
-  KICK_OUT_SELF: new Status(50008, 'Cannot kick self out. Please try to sign in again.'),
+  KICK_OUT_SELF: new Status(557, 'Cannot kick self out. Please try to sign in again.'),
   /**
    * Get status by code.
    * @param code {Number} Code that server responded.
