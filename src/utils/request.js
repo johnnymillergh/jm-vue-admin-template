@@ -9,7 +9,17 @@ const service = axios.create({
   // Base URL of API
   baseURL: process.env.VUE_APP_BASE_API,
   // Request timeout: 30s
-  timeout: 30000
+  timeout: 30000,
+  /**
+   * `validateStatus` defines whether to resolve or reject the promise for a given HTTP response status code.
+   * The value of status must be less then 999.
+   * @param status HTTP status code
+   * @return {boolean} If `validateStatus` returns `true` (or is set to `null` or `undefined`),
+   * the promise will be resolved; otherwise, the promise will be rejected.
+   */
+  validateStatus: function (status) {
+    return typeof status === 'number'
+  }
 })
 
 // 2. Request interceptor's configuration
@@ -19,7 +29,6 @@ service.interceptors.request.use(
       // Send request with JWT
       config.headers[TokenKey] = AuthUtil.getToken()
     }
-    config.params
     return config
   },
   error => {
@@ -39,8 +48,9 @@ service.interceptors.request.use(
 // 3. Response interceptor's configuration
 service.interceptors.response.use(
   response => {
+    const status = response.status
     const resp = response.data
-    switch (resp.status) {
+    switch (status) {
       case UniversalStatus.SUCCESS.code:
         return Promise.resolve(resp)
       case UniversalStatus.FAILURE.code:
@@ -54,14 +64,14 @@ service.interceptors.response.use(
       case UniversalStatus.TOKEN_OUT_OF_CONTROL.code:
         return onLogout(resp)
       default:
-        return Promise.reject(resp.message)
+        return Promise.reject(resp)
     }
   },
   error => {
     console.error('Error occurred when getting response. ', error)
     Notification({
       title: 'Response-Handling Error',
-      message: 'Error occurred when getting response. ' + error.message,
+      message: 'Error occurred when handle response. ' + error.message,
       type: 'error',
       duration: 5 * 1000,
       showClose: true
