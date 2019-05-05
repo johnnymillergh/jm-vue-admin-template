@@ -52,7 +52,7 @@ service.interceptors.response.use(
     const resp = response.data
     switch (status) {
       case UniversalStatus.SUCCESS.code:
-        return Promise.resolve(resp)
+        return Promise.resolve(resp.data)
       case UniversalStatus.FAILURE.code:
         return Promise.reject(resp.message)
       case UniversalStatus.WARNING.code:

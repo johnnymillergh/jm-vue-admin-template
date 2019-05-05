@@ -163,8 +163,8 @@ export default {
     },
     getController () {
       this.controllerListLoading = true
-      SecurityAndPermission.getController().then(response => {
-        this.controllerList = response.data.controllerList
+      SecurityAndPermission.getController().then(data => {
+        this.controllerList = data.controllerList
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
@@ -177,11 +177,11 @@ export default {
       const params = {
         classFullName: this.scope
       }
-      SecurityAndPermission.getApiAnalysis(params).then(response => {
+      SecurityAndPermission.getApiAnalysis(params).then(data => {
         this.pieChartData = []
-        this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: response.data.idledApiCount })
-        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: response.data.inUseApiCount })
-        this.scopeTotal = response.data.totalApiCount
+        this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: data.idledApiCount })
+        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: data.inUseApiCount })
+        this.scopeTotal = data.totalApiCount
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
@@ -210,10 +210,10 @@ export default {
         apiStatus: this.apiStatus
       }
       this.apiSelectFormLoading = true
-      SecurityAndPermission.getApiByControllerClass(params).then(response => {
-        this.apiList = response.data.apiList
-        this.idledApiCount = response.data.idledApiCount
-        this.inUseApiCount = response.data.inUseApiCount
+      SecurityAndPermission.getApiByControllerClass(params).then(data => {
+        this.apiList = data.apiList
+        this.idledApiCount = data.idledApiCount
+        this.inUseApiCount = data.inUseApiCount
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
