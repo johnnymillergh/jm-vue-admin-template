@@ -62,7 +62,10 @@
             </el-row>
             <el-row style="margin-top: 10px; margin-bottom: 5px">
               <el-col align="right">
-                <el-button type="warning" @click="setApiInUse">Set it in Use</el-button>
+                <el-button type="warning"
+                           @click="setApiInUse"
+                           :disabled="apiStatus === ApiStatus.IN_USED.status">Set it in Use
+                </el-button>
               </el-col>
             </el-row>
             <heading text="API Analysis"/>
@@ -276,12 +279,14 @@ export default {
         }
       }).catch(error => {
         this.$message.error(error)
+      }).finally(() => {
         this.refreshPage()
       })
     },
     refreshPage () {
       this.getApiAnalysis()
-      this.getController()
+      // this.getController()
+      this.onSelectController()
     }
   }
 }
