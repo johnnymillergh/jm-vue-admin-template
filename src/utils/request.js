@@ -18,7 +18,7 @@ const service = axios.create({
    * the promise will be resolved; otherwise, the promise will be rejected.
    */
   validateStatus: function (status) {
-    return typeof status === 'number'
+    return status === 200
   }
 })
 
@@ -48,11 +48,13 @@ service.interceptors.request.use(
 // 3. Response interceptor's configuration
 service.interceptors.response.use(
   response => {
-    const status = response.status
     const resp = response.data
-    switch (status) {
-      case UniversalStatus.SUCCESS.code:
-        return Promise.resolve(resp.data)
+    return Promise.resolve(resp)
+  },
+  error => {
+    console.log('Response-Handling error', error.response)
+    const resp = error.response.data
+    switch (error.response.status) {
       case UniversalStatus.FAILURE.code:
         return Promise.reject(resp.message)
       case UniversalStatus.WARNING.code:
@@ -66,17 +68,14 @@ service.interceptors.response.use(
       default:
         return Promise.reject(resp)
     }
-  },
-  error => {
-    console.error('Error occurred when getting response. ', error)
-    Notification({
-      title: 'Response-Handling Error',
-      message: 'Error occurred when handle response. ' + error.message,
-      type: 'error',
-      duration: 5 * 1000,
-      showClose: true
-    })
-    return Promise.reject(error)
+    // Notification({
+    //   title: 'Response-Handling Error',
+    //   message: 'Error occurred when handle response. ' + error.message,
+    //   type: 'error',
+    //   duration: 5 * 1000,
+    //   showClose: true
+    // })
+    // return Promise.reject(error)
   }
 )
 

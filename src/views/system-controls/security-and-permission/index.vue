@@ -31,23 +31,30 @@
               </el-col>
               <el-col :span="16">
                 <el-card shadow="never" style="height: 290px">
-                  <el-form label-width="120px" v-loading="apiSelectFormLoading">
+                  <el-form ref="setApiInUseForm"
+                           :model="setApiInUseForm"
+                           :rules="setApiInUseFormRules"
+                           label-width="120px"
+                           v-loading="apiSelectFormLoading">
                     <el-form-item label="Status">
                       <el-radio-group v-model="apiStatus" @change="onChangeApiStatus">
                         <el-radio :label="ApiStatus.IDLED.status" border>Idled {{ getIdledApiCount() }}</el-radio>
                         <el-radio :label="ApiStatus.IN_USED.status" border>In use {{ getInUseApiCount() }}</el-radio>
                       </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="URL">
-                      <el-select v-model="selectedUrl" @change="onSelectUrl" placeholder="Select" style="width: 598px">
+                    <el-form-item label="URL" prop="selectedApiIndex">
+                      <el-select v-model="setApiInUseForm.selectedApiIndex"
+                                 @change="onSelectUrl"
+                                 placeholder="Select"
+                                 style="width: 598px">
                         <el-option v-for="(item,index) in apiList" :label="item.url" :value="index" :key="index"/>
                       </el-select>
                     </el-form-item>
-                    <el-form-item label="Method">
-                      <el-input v-model="method" readonly/>
+                    <el-form-item label="Method" prop="method">
+                      <el-input v-model="setApiInUseForm.method" readonly/>
                     </el-form-item>
-                    <el-form-item label="Description">
-                      <el-input v-model="description" readonly/>
+                    <el-form-item label="Description" prop="description">
+                      <el-input v-model="setApiInUseForm.description" readonly/>
                     </el-form-item>
                   </el-form>
                 </el-card>
@@ -55,7 +62,7 @@
             </el-row>
             <el-row style="margin-top: 10px; margin-bottom: 5px">
               <el-col align="right">
-                <el-button type="warning">Set it in Use</el-button>
+                <el-button type="warning" @click="setApiInUse">Set it in Use</el-button>
               </el-col>
             </el-row>
             <heading text="API Analysis"/>
@@ -139,9 +146,16 @@ export default {
       apiStatus: ApiStatus.IDLED.status,
       idledApiCount: null,
       inUseApiCount: null,
-      selectedUrl: null,
-      method: null,
-      description: null
+      setApiInUseForm: {
+        selectedApiIndex: null,
+        method: null,
+        description: null
+      },
+      setApiInUseFormRules: {
+        selectedApiIndex: [{ required: true, trigger: 'change', message: 'Select a URL' }],
+        method: [{ required: true, trigger: 'change', message: 'HTTP method is not provided' }],
+        description: [{ required: true, trigger: 'change', message: 'Description is required' }]
+      }
     }
   },
   methods: {
@@ -163,8 +177,8 @@ export default {
     },
     getController () {
       this.controllerListLoading = true
-      SecurityAndPermission.getController().then(data => {
-        this.controllerList = data.controllerList
+      SecurityAndPermission.getController().then(response => {
+        this.controllerList = response.data.controllerList
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
@@ -177,11 +191,11 @@ export default {
       const params = {
         classFullName: this.scope
       }
-      SecurityAndPermission.getApiAnalysis(params).then(data => {
+      SecurityAndPermission.getApiAnalysis(params).then(response => {
         this.pieChartData = []
-        this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: data.idledApiCount })
-        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: data.inUseApiCount })
-        this.scopeTotal = data.totalApiCount
+        this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: response.data.idledApiCount })
+        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: response.data.inUseApiCount })
+        this.scopeTotal = response.data.totalApiCount
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
@@ -210,10 +224,10 @@ export default {
         apiStatus: this.apiStatus
       }
       this.apiSelectFormLoading = true
-      SecurityAndPermission.getApiByControllerClass(params).then(data => {
-        this.apiList = data.apiList
-        this.idledApiCount = data.idledApiCount
-        this.inUseApiCount = data.inUseApiCount
+      SecurityAndPermission.getApiByControllerClass(params).then(response => {
+        this.apiList = response.data.apiList
+        this.idledApiCount = response.data.idledApiCount
+        this.inUseApiCount = response.data.inUseApiCount
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
@@ -232,15 +246,42 @@ export default {
       this.onSelectController()
     },
     onSelectUrl () {
-      const selectedApi = this.apiList[this.selectedUrl]
-      this.method = selectedApi.method
-      this.description = selectedApi.description
+      const selectedApi = this.apiList[this.setApiInUseForm.selectedApiIndex]
+      this.setApiInUseForm.method = selectedApi.method
+      this.setApiInUseForm.description = selectedApi.description
     },
     clearSelectedUrl () {
-      this.idledApiCount = this.inUseApiCount = this.selectedUrl = this.method = this.description = null
+      this.idledApiCount = this.inUseApiCount = this.setApiInUseForm.selectedApiIndex = this.setApiInUseForm.method = this.setApiInUseForm.description = null
     },
     onSelectScope () {
       this.getApiAnalysis()
+    },
+    async setApiInUse () {
+      let setApiInUseFormValidity
+      try {
+        setApiInUseFormValidity = await this.$refs['setApiInUseForm'].validate()
+      } catch (error) {
+        setApiInUseFormValidity = error
+      }
+      if (!setApiInUseFormValidity) {
+        return
+      }
+      const params = this.apiList[this.setApiInUseForm.selectedApiIndex]
+      SecurityAndPermission.setApiInUse(params).then(response => {
+        this.$message.success(response.message)
+        this.setApiInUseForm = {
+          selectedApiIndex: null,
+          method: null,
+          description: null
+        }
+      }).catch(error => {
+        this.$message.error(error)
+        this.refreshPage()
+      })
+    },
+    refreshPage () {
+      this.getApiAnalysis()
+      this.getController()
     }
   }
 }

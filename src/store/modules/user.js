@@ -30,8 +30,8 @@ const user = {
   actions: {
     Login ({ commit }, params) {
       return new Promise((resolve, reject) => {
-        Login.login(params).then(data => {
-          const token = data.tokenType + ' ' + data.token
+        Login.login(params).then(response => {
+          const token = response.data.tokenType + ' ' + response.data.token
           AuthUtil.setToken(token)
           commit('SET_TOKEN', token)
           resolve()
