@@ -2,9 +2,11 @@
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar class="sidebar-container"/>
-    <div class="main-container">
-      <navigation-bar/>
-      <tags-view/>
+    <div :class="{hasTagsView:needTagsView}" class="main-container">
+      <div class="fixed-header">
+        <navigation-bar/>
+        <tags-view v-if="needTagsView"/>
+      </div>
       <app-main/>
     </div>
   </div>
@@ -13,6 +15,7 @@
 <script>
 import { AppMain, NavigationBar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import { fixedHeader } from '@/settings'
 
 export default {
   name: 'Layout',
@@ -39,6 +42,11 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      needTagsView: fixedHeader
+    }
+  },
   methods: {
     handleClickOutside () {
       this.$store.dispatch('closeSideBar', { withoutAnimation: false })
@@ -49,6 +57,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 @import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
 
 .app-wrapper {
   @include clearfix;
@@ -70,5 +79,14 @@ export default {
   height: 100%;
   position: absolute;
   z-index: 999;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
 }
 </style>
