@@ -341,6 +341,8 @@ export default {
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
+      }).finally(() => {
+        this.refreshPage()
       })
     },
     async onClickSetApiInUse () {
