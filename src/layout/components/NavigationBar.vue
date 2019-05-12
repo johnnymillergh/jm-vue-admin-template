@@ -6,7 +6,7 @@
       <search id="header-search" class="right-menu-item"/>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/avatar/vue-js-avatar.png" class="user-avatar">
+          <img src="@/assets/avatar/man.png" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="width: 178px;" class="dropdown-list">
