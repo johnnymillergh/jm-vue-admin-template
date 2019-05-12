@@ -39,7 +39,7 @@
                     <el-form-item label="Status">
                       <el-radio-group v-model="apiStatus" @change="onChangeApiStatus">
                         <el-radio :label="ApiStatus.IDLED.status" border>Idled {{ getIdledApiCount() }}</el-radio>
-                        <el-radio :label="ApiStatus.IN_USED.status" border>In use {{ getInUseApiCount() }}</el-radio>
+                        <el-radio :label="ApiStatus.IN_USE.status" border>In use {{ getInUseApiCount() }}</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="URL" prop="selectedApiIndex">
@@ -62,9 +62,13 @@
             </el-row>
             <el-row style="margin-top: 10px; margin-bottom: 5px">
               <el-col align="right">
+                <el-button type="danger"
+                           @click="onClickEnableAll"
+                           :disabled="apiStatus === ApiStatus.IN_USE.status">Enable all
+                </el-button>
                 <el-button type="warning"
-                           @click="setApiInUse"
-                           :disabled="apiStatus === ApiStatus.IN_USED.status">Set it in Use
+                           @click="onClickSetApiInUse"
+                           :disabled="apiStatus === ApiStatus.IN_USE.status">Set API in Use
                 </el-button>
               </el-col>
             </el-row>
@@ -197,7 +201,7 @@ export default {
       SecurityAndPermission.getApiAnalysis(params).then(response => {
         this.pieChartData = []
         this.pieChartData.push({ name: this.ApiStatus.IDLED.name, value: response.data.idledApiCount })
-        this.pieChartData.push({ name: this.ApiStatus.IN_USED.name, value: response.data.inUseApiCount })
+        this.pieChartData.push({ name: this.ApiStatus.IN_USE.name, value: response.data.inUseApiCount })
         this.scopeTotal = response.data.totalApiCount
       }).catch(error => {
         console.error(error)
@@ -259,7 +263,7 @@ export default {
     onSelectScope () {
       this.getApiAnalysis()
     },
-    async setApiInUse () {
+    async onClickSetApiInUse () {
       let setApiInUseFormValidity
       try {
         setApiInUseFormValidity = await this.$refs['setApiInUseForm'].validate()

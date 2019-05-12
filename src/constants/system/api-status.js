@@ -15,9 +15,9 @@ const ApiStatus = {
    */
   IDLED: new Status(0, 'Idled', 'Idled API (not stored in db)'),
   /**
-   * API in used (stored in db).
+   * API is in use (stored in db).
    */
-  IN_USED: new Status(1, 'In use', 'API in used (stored in db)'),
+  IN_USE: new Status(1, 'In use', 'API in used (stored in db)'),
   /**
    * Get array of api status.
    * @return {Array} an array of api status.
