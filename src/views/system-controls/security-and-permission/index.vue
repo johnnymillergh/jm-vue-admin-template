@@ -64,7 +64,7 @@
               <el-col align="right">
                 <el-button type="danger"
                            @click="onClickEnableAll"
-                           :disabled="apiStatus === ApiStatus.IN_USE.status">Enable all
+                           :disabled="enableAllButtonDisabled()">Enable all
                 </el-button>
                 <el-button type="warning"
                            @click="onClickSetApiInUse"
@@ -186,9 +186,10 @@ export default {
       this.controllerListLoading = true
       SecurityAndPermission.getController().then(response => {
         this.controllerList = response.data.controllerList
+        this.selectedController = null
       }).catch(error => {
         console.error(error)
-        this.$message.error(error)
+        this.$message.error(error.message)
       }).finally(() => {
         this.controllerListLoading = false
       })
@@ -262,6 +263,23 @@ export default {
     },
     onSelectScope () {
       this.getApiAnalysis()
+    },
+    enableAllButtonDisabled () {
+      return this.apiStatus === this.ApiStatus.IN_USE.status || this.selectedController === null
+    },
+    onClickEnableAll () {
+      if (this.selectedController === null) {
+        return
+      }
+      const params = {
+        controllerClass: this.selectedController.packageName + '.' + this.selectedController.className
+      }
+      SecurityAndPermission.setAllApiInUse(params).then(response => {
+        this.$message.success(response.message)
+      }).catch(error => {
+        console.error(error)
+        this.$message.error(error)
+      })
     },
     async onClickSetApiInUse () {
       let setApiInUseFormValidity
