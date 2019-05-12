@@ -4,7 +4,7 @@ import AuthUtil from '@/utils/auth'
 const user = {
   state: {
     token: AuthUtil.getToken(),
-    name: '',
+    fullName: '',
     avatar: '',
     roles: []
   },
@@ -16,8 +16,8 @@ const user = {
     SET_TOKEN_TYPE: (state, tokenType) => {
       state.tokenType = tokenType
     },
-    SET_NAME: (state, name) => {
-      state.name = name
+    SET_FULL_NAME: (state, fullName) => {
+      state.fullName = fullName
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -34,6 +34,7 @@ const user = {
           const token = response.data.tokenType + ' ' + response.data.token
           AuthUtil.setToken(token)
           commit('SET_TOKEN', token)
+          commit('SET_FULL_NAME', response.data.fullName)
           resolve()
         }).catch(error => {
           reject(error)
@@ -45,13 +46,11 @@ const user = {
     GetInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
         commit('SET_ROLES', 'Admin')
-        commit('SET_NAME', 'Johnny Miller')
-        commit('SET_AVATAR', 'avatar')
         resolve({
           data: {
             roles: ['admin'],
             introduction: 'I am a super administrator',
-            avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+            avatar: '',
             name: 'Super Admin'
           }
         })

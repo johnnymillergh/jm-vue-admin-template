@@ -11,7 +11,7 @@
         </div>
         <el-dropdown-menu slot="dropdown" style="width: 178px;" class="dropdown-list">
           <span class="signed-in-text">Signed in as</span>
-          <p class="username">{{ username }}</p>
+          <p class="username">{{ fullName }}</p>
           <div class="line-separator"></div>
           <p class="user-status">💪 Coding & Building</p>
           <router-link class="inlineBlock" to="/">
@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'fullName',
       'sidebar',
       'avatar'
     ])
