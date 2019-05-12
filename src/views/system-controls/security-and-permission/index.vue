@@ -10,7 +10,7 @@
                 <el-card shadow="never" style="height: 290px" :body-style="{padding: '0'}">
                   <div slot="header" class="clearfix">
                     <div style="margin-bottom: 5px">Controller List</div>
-                    <el-input v-model="searchText" size="mini" placeholder="Type class name to search"/>
+                    <el-input v-model="searchText" size="mini" placeholder="Type class name to search" clearable/>
                   </div>
                   <div style="height: 202px; overflow: auto; padding: 5px">
                     <el-table :data="getFilteredControllerList()"
@@ -94,9 +94,37 @@
               </el-col>
             </el-row>
             <heading text="API Details"/>
-            <el-row style="height: 450px; background: #409EFF">
-              API detail table here.
-            </el-row>
+            <el-table class="table-wrapper"
+                      :data="getFilteredApiDetailList()"
+                      v-loading="apiListLoading"
+                      style="width: 100%"
+                      height="450"
+                      highlight-current-row
+                      stripe>
+              <el-table-column prop="url" width="300">
+                <template slot="header" slot-scope="scope">
+                  <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search"/>
+                </template>
+              </el-table-column>
+              <el-table-column prop="method" label="HTTP Method" width="120" align="center"/>
+              <el-table-column prop="description" label="Description" width="180"/>
+              <el-table-column prop="gmtCreated" label="Created" width="180"/>
+              <el-table-column prop="gmtModified" label="Modified" width="180"/>
+              <el-table-column fixed="right" label="Operations" width="120">
+                <template slot-scope="scope">
+                  <el-button @click="onClickApiDetail" type="text" size="small">Detail</el-button>
+                  <el-button @click="onClickEditApi" type="text" size="small">Edit</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-pagination @size-change="handleSizeChange"
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="currentPage"
+                           :page-size.sync="pageSize"
+                           :page-sizes="[10, 30, 50, 100]"
+                           layout="prev, next, jumper, sizes"
+                           background>
+            </el-pagination>
           </div>
         </transition>
       </el-tab-pane>
@@ -119,9 +147,9 @@
 </template>
 
 <script>
+import SecurityAndPermission from '@/api/system-controls/security-and-permission'
 import Heading from '@/components/Heading'
 import ApiStatus from '@/constants/system/api-status'
-import SecurityAndPermission from '@/api/system-controls/security-and-permission'
 import PieChart from './components/PieChart'
 
 export default {
@@ -133,6 +161,7 @@ export default {
   mounted () {
     this.getController()
     this.getApiAnalysis()
+    this.getApiList()
   },
   data () {
     return {
@@ -142,7 +171,10 @@ export default {
       controllerListLoading: false,
       apiAnalysisLoading: false,
       apiSelectFormLoading: false,
+      apiListLoading: false,
       pieChartData: null,
+      apiDetailList: null,
+      searchApiText: null,
       scope: null,
       scopeTotal: null,
       searchText: null,
@@ -162,7 +194,9 @@ export default {
         selectedApiIndex: [{ required: true, trigger: 'change', message: 'Select a URL' }],
         method: [{ required: true, trigger: 'change', message: 'HTTP method is not provided' }],
         description: [{ required: true, trigger: 'change', message: 'Description is required' }]
-      }
+      },
+      currentPage: 1,
+      pageSize: 10
     }
   },
   methods: {
@@ -181,6 +215,12 @@ export default {
           this.showRoleControls = this.showPermissionControls = false
           break
       }
+    },
+    handleSizeChange () {
+      this.getApiList()
+    },
+    handleCurrentChange () {
+      this.getApiList()
     },
     getController () {
       this.controllerListLoading = true
@@ -211,12 +251,34 @@ export default {
         this.apiAnalysisLoading = false
       })
     },
+    getApiList () {
+      this.apiListLoading = true
+      const params = {
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      }
+      SecurityAndPermission.getApiList(params).then(response => {
+        this.apiDetailList = response.data
+      }).catch(error => {
+        console.error(error)
+        this.$message.error(error)
+      }).finally(() => {
+        this.apiListLoading = false
+      })
+    },
     getFilteredControllerList () {
       if (this.controllerList === null) {
         return null
       }
       return this.controllerList.filter(data => !this.searchText ||
         data.className.toLowerCase().includes(this.searchText.toLowerCase()))
+    },
+    getFilteredApiDetailList () {
+      if (this.apiDetailList === null) {
+        return null
+      }
+      return this.apiDetailList.filter(data => !this.searchApiText ||
+        data.url.toLowerCase().includes(this.searchApiText.toLowerCase()))
     },
     onClickTableRow (row) {
       this.selectedController = row
@@ -309,6 +371,10 @@ export default {
       this.getApiAnalysis()
       // this.getController()
       this.onSelectController()
+    },
+    onClickApiDetail () {
+    },
+    onClickEditApi () {
     }
   }
 }
