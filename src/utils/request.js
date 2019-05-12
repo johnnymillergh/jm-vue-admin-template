@@ -18,6 +18,7 @@ const service = axios.create({
    * the promise will be resolved; otherwise, the promise will be rejected.
    */
   validateStatus: function (status) {
+    // Only the HTTP status code is equal to 200, axios would resolve the promise
     return status === 200
   }
 })
@@ -48,6 +49,7 @@ service.interceptors.request.use(
 // 3. Response interceptor's configuration
 service.interceptors.response.use(
   response => {
+    // Only the HTTP status code is equal to 200, axios would resolve the promise
     const resp = response.data
     return Promise.resolve(resp)
   },
