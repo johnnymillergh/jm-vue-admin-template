@@ -123,14 +123,36 @@ export const get = function (url, params) {
 }
 
 /**
- * Send a POST request.
+ * Send a POST request with payload.
  * @param url URL
- * @param params Params
+ * @param params Payload
  * @return {Promise<any>} Response data
  */
 export function post (url, params) {
   return new Promise((resolve, reject) => {
     service.post(url, params)
+      .then(resp => {
+        resolve(resp)
+      })
+      .catch(rejectedReason => {
+        reject(rejectedReason)
+      })
+  })
+}
+
+/**
+ * Send a legacy POST request with URL search params
+ * @param url URL
+ * @param params URL search params
+ * @return {Promise<any>} Response data
+ */
+export function legacyPost (url, params) {
+  const urlSearchParams = new URLSearchParams()
+  Object.keys(params).forEach(key => {
+    urlSearchParams.append(key, params[key])
+  })
+  return new Promise((resolve, reject) => {
+    service.post(url, urlSearchParams)
       .then(resp => {
         resolve(resp)
       })
