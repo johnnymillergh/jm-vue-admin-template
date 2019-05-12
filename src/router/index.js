@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '../layout/Layout'
+import Layout from '../layout/index'
 import nestedRouter from './modules/nested'
 import formRouter from './modules/form'
 import exampleRouter from './modules/example'
