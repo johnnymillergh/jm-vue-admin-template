@@ -80,8 +80,8 @@ export default {
       appName: this.$store.state.app.appName.replace(/-/g, ' ').toLocaleUpperCase(),
       appDescription: this.$store.state.app.description,
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: null,
+        password: null
       },
       hintUsername: null,
       hintPassword: null,
