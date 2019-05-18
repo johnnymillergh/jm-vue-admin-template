@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const proxyConfiguration = require('./proxy.config.js')
 // Dev port
 const port = 8081
 process.env.VUE_APP_PACKAGE_JSON = escape(JSON.stringify(require('./package.json')))
@@ -67,22 +68,7 @@ module.exports = {
      * ATTENTION: Proxy does not work, if environment is not development.
      * TODO: Don't configure proxy in vue.config.js! Split proxy table into separate .js file.
      */
-    proxy: {
-      '/auth': {
-        target: `${process.env.VUE_APP_BASE_URL}`,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/auth': `/${process.env.VUE_APP_BASE_API}/auth`
-        }
-      },
-      '/apiManagement': {
-        target: `${process.env.VUE_APP_BASE_URL}`,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/apiManagement': `/${process.env.VUE_APP_BASE_API}/apiManagement`
-        }
-      }
-    }
+    proxy: proxyConfiguration
     // after: require('./mock/mock-server.js')
   },
   // configureWebpack: {
