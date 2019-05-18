@@ -7,7 +7,7 @@
       class="login-form"
       auto-complete="on"
       label-position="left">
-      <h3 class="app-title">{{ appName }}</h3>
+      <h3 class="app-title">{{ appName }}<span v-show="shoeEnvironment">{{ environmentAlias }}</span></h3>
       <h4 class="app-description">{{ appDescription }}</h4>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -92,7 +92,9 @@ export default {
       loading: false,
       inputType: 'password',
       redirect: undefined,
-      developmentEnvironment: false
+      developmentEnvironment: false,
+      shoeEnvironment: false,
+      environmentAlias: null
     }
   },
   watch: {
@@ -113,6 +115,8 @@ export default {
       this.hintUsername = 'admin'
       this.hintPassword = '123456'
     }
+    this.shoeEnvironment = process.env.VUE_APP_ENV !== 'prod'
+    this.environmentAlias = process.env.VUE_APP_ENV !== 'prod' ? ' (' + process.env.VUE_APP_ENV + ')' : null
   },
   methods: {
     showPassword () {
