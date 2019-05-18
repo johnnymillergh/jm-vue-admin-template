@@ -371,8 +371,8 @@ export default {
     },
     refreshPage () {
       this.getApiAnalysis()
-      // this.getController()
       this.onSelectController()
+      this.getApiList()
     },
     onClickApiDetail () {
     },
