@@ -6,7 +6,8 @@ const SecurityAndPermission = {
   getApiAnalysis: params => get('/apiManagement/getApiAnalysis', params),
   setApiInUse: params => post('/apiManagement/setApiInUse', params),
   setAllApiInUse: params => legacyPost('/apiManagement/setAllApiInUse', params),
-  getApiList: params => post('/apiManagement/getApiList', params)
+  getApiList: params => post('/apiManagement/getApiList', params),
+  getRoleList: params => post('/role/get-list', params)
 }
 
 export default SecurityAndPermission
