@@ -19,7 +19,7 @@
     "axios": "0.18.0",
     "codemirror": "5.46.0",
     "echarts": "4.2.1",
-    "element-ui": "2.7.2",
+    "element-ui": "2.8.2",
     "fuse.js": "3.4.4",
     "js-cookie": "2.2.0",
     "mockjs": "1.0.1-beta3",

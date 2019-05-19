@@ -25,7 +25,7 @@ function generatePublicPath () {
   // FIXME: ATTENTION: Relative path prefix should start with a dot './'
   //  DON'T add the dot when the environment is development, or browser will throw en error like this:
   //  Uncaught SyntaxError: Unexpected token <
-  const pathPrefix = './'
+  const pathPrefix = '/'
   const env = process.env.VUE_APP_ENV
   if (env === 'prod') {
     return pathPrefix
@@ -59,7 +59,9 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    // FIXME: Disable to open browser automatically,
+    //  due to error: URIError: Failed to decode param '/%3C%=%20BASE_URL%20%%3Efavicon.ico'
+    // open: true,
     overlay: {
       warnings: false,
       errors: true
@@ -69,18 +71,7 @@ module.exports = {
      * TODO: Don't configure proxy in vue.config.js! Split proxy table into separate .js file.
      */
     proxy: proxyConfiguration
-    // after: require('./mock/mock-server.js')
   },
-  // configureWebpack: {
-  //   // provide the app's title in webpack's name field, so that
-  //   // it can be accessed in index.html to inject the correct title.
-  //   name: getAppName(),
-  //   resolve: {
-  //     alias: {
-  //       '@': resolve('src')
-  //     }
-  //   }
-  // },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
