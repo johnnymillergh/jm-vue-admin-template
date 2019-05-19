@@ -43,10 +43,9 @@
                :visible.sync="createDialogVisible"
                title="Create a Role"
                @dragDialog="handleDrag"
+               @close="onClickCancel"
                width="500px"
-               :show-close="false"
-               :close-on-click-modal="false"
-               :close-on-press-escape="false">
+               :close-on-click-modal="false">
       <el-form ref="roleForm"
                :model="roleForm"
                :rules="createRoleFormRules"
@@ -218,8 +217,7 @@ export default {
     onClickCancel () {
       this.createDialogVisible = false
       if (this.roleForm.id !== null) {
-        this.$refs['roleForm'].resetFields()
-        this.roleForm.id = null
+        this.roleForm = { id: null, name: null, description: null }
       }
     }
   }
