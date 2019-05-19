@@ -49,10 +49,10 @@
                class="create-role-form"
                label-width="120px">
         <el-form-item prop="name" label="Name">
-          <el-input v-model.trim="createRoleForm.name"/>
+          <el-input v-model="createRoleForm.name" placeholder="Enter name" clearable/>
         </el-form-item>
         <el-form-item prop="description" label="Description">
-          <el-input v-model="createRoleForm.description" type="textarea" :rows="3" placeholder="Please input">
+          <el-input v-model="createRoleForm.description" type="textarea" :rows="3" placeholder="Enter description">
           </el-input>
         </el-form-item>
       </el-form>
@@ -135,7 +135,18 @@ export default {
       })
     },
     onClickSearch () {
-      this.$message.info('onClickSearch')
+      if (StringUtil.isEmpty(this.searchText)) {
+        this.getRoleList()
+        return
+      }
+      const params = {
+        roleName: this.searchText
+      }
+      SecurityAndPermission.searchRole(params).then(response => {
+        this.roleList = [response.data]
+      }).catch(error => {
+        this.$message.error(error)
+      })
     },
     onClickEditRole () {
       this.createDialogVisible = true
