@@ -68,7 +68,6 @@ module.exports = {
     },
     /**
      * ATTENTION: Proxy does not work, if environment is not development.
-     * TODO: Don't configure proxy in vue.config.js! Split proxy table into separate .js file.
      */
     proxy: proxyConfiguration
   },
