@@ -7,7 +7,9 @@ const SecurityAndPermission = {
   setApiInUse: params => post('/apiManagement/setApiInUse', params),
   setAllApiInUse: params => legacyPost('/apiManagement/setAllApiInUse', params),
   getApiList: params => post('/apiManagement/getApiList', params),
-  getRoleList: params => post('/role/get-list', params)
+  getRoleList: params => post('/role/get-list', params),
+  checkRoleName: params => get('/role//check-role-name', params),
+  createRole: params => post('/role/create-role', params)
 }
 
 export default SecurityAndPermission

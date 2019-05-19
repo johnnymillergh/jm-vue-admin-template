@@ -82,7 +82,15 @@ export default {
       if (StringUtil.isEmpty(value)) {
         return callback(new Error('Name is required'))
       }
-      return callback()
+      if (value.length > 50) {
+        return callback(new Error('length cannot exceed 50'))
+      }
+      const params = { roleName: value }
+      SecurityAndPermission.checkRoleName(params).then(() => {
+        return callback()
+      }).catch(error => {
+        return callback(new Error(error))
+      })
     }
     return {
       roleListLoading: false,
@@ -143,7 +151,18 @@ export default {
       } catch (error) {
         createRoleFormValidity = error
       }
-      this.$message.info('createRoleFormValidity = ' + createRoleFormValidity)
+      if (!createRoleFormValidity) {
+        return
+      }
+      SecurityAndPermission.createRole(this.createRoleForm).then(response => {
+        this.$message.success(response.message)
+        this.$refs['createRoleForm'].resetFields()
+        this.onClickCancel()
+        this.getRoleList()
+      }).catch(error => {
+        this.$message.error(error)
+        console.log('Error occurred when creating role', error)
+      })
     },
     onClickCancel () {
       this.createDialogVisible = false
