@@ -19,8 +19,8 @@
               v-loading="roleListLoading"
               style="width: 100%"
               height="450"
-              highlight-current-row
-              stripe>
+              stripe
+              highlight-current-row>
       <el-table-column prop="name" label="Name" width="180"/>
       <el-table-column prop="description" label="Description"/>
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
