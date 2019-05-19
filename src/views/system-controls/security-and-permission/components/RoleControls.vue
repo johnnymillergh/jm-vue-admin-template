@@ -10,7 +10,7 @@
       <el-col :span="6">
         <el-button-group>
           <el-button type="primary" icon="el-icon-search" @click="onClickSearch">Search</el-button>
-          <el-button type="primary" icon="el-icon-edit-outline" @click="onClickEditRole">Create Role</el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" @click="onClickCreateRole">Create Role</el-button>
         </el-button-group>
       </el-col>
     </el-row>
@@ -26,8 +26,9 @@
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
       <el-table-column fixed="right" label="Operations" width="120">
-        <template>
-          <el-button @click="onClickEditRole" type="text" size="small">Edit</el-button>
+        <template slot-scope="scope">
+          <el-button @click="onClickEditRole(scope.row)" type="text" size="small">Edit</el-button>
+          <el-button @click="onClickDeleteRole(scope.row.id)" type="text" size="small">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,18 +43,26 @@
                :visible.sync="createDialogVisible"
                title="Create a Role"
                @dragDialog="handleDrag"
-               :close-on-click-modal="false" width="500px">
-      <el-form ref="createRoleForm"
-               :model="createRoleForm"
+               width="500px"
+               :show-close="false"
+               :close-on-click-modal="false"
+               :close-on-press-escape="false">
+      <el-form ref="roleForm"
+               :model="roleForm"
                :rules="createRoleFormRules"
                class="create-role-form"
                label-width="120px">
         <el-form-item prop="name" label="Name">
-          <el-input v-model="createRoleForm.name" placeholder="Enter name" clearable/>
+          <el-input v-model="roleForm.name" placeholder="Enter name" clearable/>
         </el-form-item>
         <el-form-item prop="description" label="Description">
-          <el-input v-model="createRoleForm.description" type="textarea" :rows="3" placeholder="Enter description">
-          </el-input>
+          <el-input v-model="roleForm.description" type="textarea" :rows="3" placeholder="Enter description"/>
+        </el-form-item>
+        <el-form-item v-show="roleForm.id!==null" label="Created">
+          <el-input v-model="gmtCreated" readonly/>
+        </el-form-item>
+        <el-form-item v-show="roleForm.id!==null" label="Modified">
+          <el-input v-model="gmtModified" readonly/>
         </el-form-item>
       </el-form>
       <el-row type="flex" justify="end">
@@ -85,7 +94,10 @@ export default {
       if (value.length > 50) {
         return callback(new Error('length cannot exceed 50'))
       }
-      const params = { roleName: value }
+      const params = {
+        id: this.roleForm.id,
+        name: value
+      }
       SecurityAndPermission.checkRoleName(params).then(() => {
         return callback()
       }).catch(error => {
@@ -99,10 +111,14 @@ export default {
       searchText: null,
       roleList: null,
       createDialogVisible: false,
-      createRoleForm: {
+      edited: false,
+      roleForm: {
+        id: null,
         name: null,
         description: null
       },
+      gmtCreated: null,
+      gmtModified: null,
       createRoleFormRules: {
         name: [{ required: true, trigger: 'blur', validator: validateName }],
         description: [{ required: true, trigger: 'blur', message: 'Description is required' }]
@@ -148,8 +164,19 @@ export default {
         this.$message.error(error)
       })
     },
-    onClickEditRole () {
+    onClickCreateRole () {
       this.createDialogVisible = true
+    },
+    onClickEditRole (row) {
+      this.createDialogVisible = true
+      this.roleForm.id = row.id
+      this.roleForm.name = row.name
+      this.roleForm.description = row.description
+      this.gmtCreated = row.gmtCreated
+      this.gmtModified = row.gmtModified
+    },
+    onClickDeleteRole (id) {
+      console.log('id', id)
     },
     // v-el-drag-dialog onDrag callback function
     handleDrag () {
@@ -158,16 +185,29 @@ export default {
     async onClickSave () {
       let createRoleFormValidity = false
       try {
-        createRoleFormValidity = await this.$refs['createRoleForm'].validate()
+        createRoleFormValidity = await this.$refs['roleForm'].validate()
       } catch (error) {
         createRoleFormValidity = error
       }
       if (!createRoleFormValidity) {
         return
       }
-      SecurityAndPermission.createRole(this.createRoleForm).then(response => {
+      if (this.roleForm.id !== null) {
+        SecurityAndPermission.editRole(this.roleForm).then(response => {
+          this.$message.success(response.message)
+          this.$refs['roleForm'].resetFields()
+          this.roleForm.id = null
+          this.onClickCancel()
+          this.getRoleList()
+        }).catch(error => {
+          this.$message.error(error)
+          console.log('Error occurred when creating role', error)
+        })
+        return
+      }
+      SecurityAndPermission.createRole(this.roleForm).then(response => {
         this.$message.success(response.message)
-        this.$refs['createRoleForm'].resetFields()
+        this.$refs['roleForm'].resetFields()
         this.onClickCancel()
         this.getRoleList()
       }).catch(error => {
@@ -177,6 +217,10 @@ export default {
     },
     onClickCancel () {
       this.createDialogVisible = false
+      if (this.roleForm.id !== null) {
+        this.$refs['roleForm'].resetFields()
+        this.roleForm.id = null
+      }
     }
   }
 }
