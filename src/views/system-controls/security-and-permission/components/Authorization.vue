@@ -1,8 +1,8 @@
 <template>
   <div class="authorization-container">
     <el-steps class="steps" :active="activeStep" finish-status="success" align-center>
-      <el-step title="Step 1" description="Choose Permission"/>
-      <el-step title="Step 2" description="Choose Role"/>
+      <el-step title="Step 1" description="Choose Role"/>
+      <el-step title="Step 2" description="Choose Permission"/>
       <el-step title="Step 3" description="Processing"/>
       <el-step title="Step 4" description="Done"/>
     </el-steps>

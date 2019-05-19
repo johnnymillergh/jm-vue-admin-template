@@ -15,7 +15,14 @@
         <el-col class="permission-detail-item" :key="index">
           <el-card shadow="never">
             <div slot="header">
-              <div class="permission-header">{{item.controllerName}}</div>
+              <el-row>
+                <el-col :span="12" class="permission-header">
+                  {{item.controllerName}}
+                </el-col>
+                <el-col :span="12" align="right">
+                  <el-button type="danger">Revoke</el-button>
+                </el-col>
+              </el-row>
             </div>
             {{item.description}}
           </el-card>
@@ -85,8 +92,7 @@ export default {
       padding: 5px;
 
       .permission-header {
-        margin-bottom: 5px;
-        font-weight: bold
+        font-size: 36px;
       }
     }
   }
