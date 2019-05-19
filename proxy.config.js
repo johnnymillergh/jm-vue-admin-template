@@ -6,11 +6,11 @@ module.exports = {
       '^/auth': `/${process.env.VUE_APP_BASE_API}/auth`
     }
   },
-  '/apiManagement': {
+  '/api-management': {
     target: `${process.env.VUE_APP_BASE_URL}`,
     changeOrigin: true,
     pathRewrite: {
-      '^/apiManagement': `/${process.env.VUE_APP_BASE_API}/apiManagement`
+      '^/api-management': `/${process.env.VUE_APP_BASE_API}/api-management`
     }
   },
   '/role': {
