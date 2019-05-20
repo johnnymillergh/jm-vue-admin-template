@@ -10,14 +10,21 @@
                  value-key="id"
                  placeholder="Select"
                  multiple
-                 collapse-tags>
+                 collapse-tags
+                 filterable>
         <el-option v-for="(item,index) in roleList" :key="index" :label="item.roleName" :value="item"/>
       </el-select>
     </el-row>
     <el-row type="flex" justify="center">
       <el-card class="selected-role-container" shadow="hover">
         <template v-for="(item,index) in selectedRoles">
-          <el-tag class="selected-role-item" :type="getTagType(item)" :key="index">{{item.roleName}}</el-tag>
+          <el-tag class="selected-role-item"
+                  :type="getTagType(item)"
+                  @close="onCloseTag(index)"
+                  :key="index"
+                  closable>
+            {{item.roleName}}
+          </el-tag>
         </template>
       </el-card>
     </el-row>
@@ -58,6 +65,9 @@ export default {
     },
     getTagType (selectedRole) {
       return this.tagTypes[selectedRole.id % 5]
+    },
+    onCloseTag (index) {
+      this.selectedRoles.splice(index, 1)
     }
   }
 }
