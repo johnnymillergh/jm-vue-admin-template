@@ -14,7 +14,7 @@
     <el-row type="flex" justify="center">
       <el-button-group>
         <el-button @click="onClickPrevious" icon="el-icon-arrow-left" style="width: 120px">Previous</el-button>
-        <el-button @click="onClickNext" style="width: 120px">Next<i class="el-icon-arrow-right el-icon-right"></i>
+        <el-button @click="onClickNext" style="width: 120px">Next<i class="el-icon-arrow-right" style="margin-left: 5px"></i>
         </el-button>
       </el-button-group>
     </el-row>
