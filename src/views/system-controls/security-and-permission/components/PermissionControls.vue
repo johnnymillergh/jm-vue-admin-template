@@ -98,7 +98,7 @@
               highlight-current-row
               stripe>
       <el-table-column prop="url" width="300">
-        <template slot="header" slot-scope="scope">
+        <template slot="header">
           <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search"/>
         </template>
       </el-table-column>
@@ -107,7 +107,7 @@
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
       <el-table-column fixed="right" label="Operations" width="120">
-        <template slot-scope="scope">
+        <template>
           <el-button @click="onClickApiDetail" type="text" size="small">Detail</el-button>
           <el-button @click="onClickEditApi" type="text" size="small">Edit</el-button>
         </template>
