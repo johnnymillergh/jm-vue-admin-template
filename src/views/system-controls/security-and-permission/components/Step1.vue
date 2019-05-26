@@ -18,13 +18,14 @@
     <el-row type="flex" justify="center">
       <el-card class="selected-role-container" shadow="hover">
         <template v-for="(item,index) in selectedRoles">
-          <el-tag class="selected-role-item"
-                  :type="getTagType(item)"
-                  @close="onCloseTag(index)"
-                  :key="index"
-                  closable>
-            {{item.name}}
-          </el-tag>
+          <el-tooltip :key="index" class="item" effect="dark" :content="item.description" placement="top-start">
+            <el-tag class="selected-role-item"
+                    :type="getTagType(item)"
+                    @close="onCloseTag(index)"
+                    closable>
+              {{item.name}}
+            </el-tag>
+          </el-tooltip>
         </template>
       </el-card>
     </el-row>
@@ -123,8 +124,6 @@ export default {
 <style lang="scss" scoped>
 .step1-container {
   .heading-text {
-    /*display: block;*/
-    /*width: 300px;*/
     margin: 10px auto;
     font-size: 48px;
     font-weight: lighter;
