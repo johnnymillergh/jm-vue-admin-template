@@ -60,11 +60,13 @@
       <el-col align="right">
         <el-button type="danger"
                    @click="onClickEnableAll"
-                   :disabled="enableAllButtonDisabled()">Enable all
+                   :disabled="enableAllButtonDisabled()"
+                   v-click-control>Enable all
         </el-button>
         <el-button type="warning"
                    @click="onClickSetApiInUse"
-                   :disabled="apiStatus === ApiStatus.IN_USE.status">Set API in Use
+                   :disabled="apiStatus === ApiStatus.IN_USE.status"
+                   v-click-control>Set API in Use
         </el-button>
       </el-col>
     </el-row>

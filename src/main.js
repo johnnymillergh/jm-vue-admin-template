@@ -13,14 +13,13 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
-
 // icon
 import '@/icons'
 // Permission control
 import '@/permission'
 // Universal status enumerations
 import '@/constants/system/universal-status'
-
+import ClickControl from '@/directives/click-control'
 // Simulation data
 /**
  * This project originally used easy-mock to simulate data,
@@ -33,6 +32,7 @@ import '@/constants/system/universal-status'
 // import '../mock'
 
 Vue.use(ElementUI, { locale })
+Vue.use(ClickControl)
 
 Vue.config.productionTip = false
 
