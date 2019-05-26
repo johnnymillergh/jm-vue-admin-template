@@ -11,7 +11,8 @@ const SecurityAndPermission = {
   checkRoleName: params => post('/role/check-role-name', params),
   createRole: params => post('/role/create-role', params),
   editRole: params => post('/role/edit-role', params),
-  searchRole: params => get('/role/search-role', params)
+  searchRole: params => get('/role/search-role', params),
+  getRoles: params => post('/authorization/get-roles', params)
 }
 
 export default SecurityAndPermission

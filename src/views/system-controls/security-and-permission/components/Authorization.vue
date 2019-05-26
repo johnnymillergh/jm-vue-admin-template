@@ -8,13 +8,15 @@
     </el-steps>
     <el-card class="step-detail" shadow="never">
       <transition mode="out-in">
-        <component :is="componentName"/>
+        <component :is="componentName" :component-name="componentName"
+                   :step1-selected-roles="selectedRoles" @step1-role-select="onRoleSelect"/>
       </transition>
     </el-card>
     <el-row type="flex" justify="center">
       <el-button-group>
         <el-button @click="onClickPrevious" icon="el-icon-arrow-left" style="width: 120px">Previous</el-button>
-        <el-button @click="onClickNext" style="width: 120px">Next<i class="el-icon-arrow-right" style="margin-left: 5px"></i>
+        <el-button @click="onClickNext" style="width: 120px">Next<i class="el-icon-arrow-right"
+                                                                    style="margin-left: 5px"></i>
         </el-button>
       </el-button-group>
     </el-row>
@@ -38,11 +40,8 @@ export default {
   data () {
     return {
       activeStep: 0,
-      showStep1: true,
-      showStep2: false,
-      showStep3: false,
-      showStep4: false,
-      componentName: 'Step1'
+      componentName: 'Step1',
+      selectedRoles: []
     }
   },
   methods: {
@@ -64,6 +63,10 @@ export default {
           this.componentName = 'Step1'
           return
         case 1:
+          if (this.selectedRoles.length === 0) {
+            this.activeStep--
+            return
+          }
           this.componentName = 'Step2'
           return
         case 2:
@@ -73,6 +76,9 @@ export default {
           this.componentName = 'Step4'
           return
       }
+    },
+    onRoleSelect (selectedRoles) {
+      this.selectedRoles = selectedRoles
     }
   }
 }

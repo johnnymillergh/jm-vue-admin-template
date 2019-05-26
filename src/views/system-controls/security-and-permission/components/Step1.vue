@@ -12,7 +12,7 @@
                  multiple
                  collapse-tags
                  filterable>
-        <el-option v-for="(item,index) in roleList" :key="index" :label="item.roleName" :value="item"/>
+        <el-option v-for="(item,index) in roleList" :key="index" :label="item.name" :value="item"/>
       </el-select>
     </el-row>
     <el-row type="flex" justify="center">
@@ -23,7 +23,7 @@
                   @close="onCloseTag(index)"
                   :key="index"
                   closable>
-            {{item.roleName}}
+            {{item.name}}
           </el-tag>
         </template>
       </el-card>
@@ -33,35 +33,78 @@
 
 <script>
 import LazySelect from '@/directives/lazy-select'
+import SecurityAndPermission from '@/api/system-controls/security-and-permission'
 
 export default {
   name: 'Step1',
   directives: { LazySelect },
+  props: {
+    componentName: { type: String, require: true },
+    step1SelectedRoles: { type: Array, require: true }
+  },
+  watch: {
+    componentName: {
+      deep: true,
+      handler (val) {
+        if (val === 'Step1') {
+          this.getRoleList()
+        }
+      }
+    },
+    selectedRoles: {
+      deep: true,
+      handler (val) {
+        this.$emit('step1-role-select', val)
+      }
+    },
+    step1SelectedRoles: {
+      deep: true,
+      handler (val) {
+        this.selectedRoles = val
+      }
+    }
+  },
   data () {
     return {
-      roleList: [{
-        id: 1,
-        roleName: 'Option1'
-      }, {
-        id: 2,
-        roleName: 'Option2'
-      }, {
-        id: 3,
-        roleName: 'Option3'
-      }, {
-        id: 4,
-        roleName: 'Option4'
-      }, {
-        id: 5,
-        roleName: 'Option5'
-      }],
+      roleList: [],
       selectedRoles: [],
-      tagTypes: ['', 'success', 'info', 'warning', 'danger']
+      tagTypes: ['', 'success', 'info', 'warning', 'danger'],
+      currentPage: 1,
+      pageSize: 10,
+      limitReached: false
     }
   },
   methods: {
+    getRoleList () {
+      const params = {
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      }
+      SecurityAndPermission.getRoles(params).then(response => {
+        this.roleList = [...this.roleList, ...response.data]
+      }).catch(error => {
+        this.$message.error(error)
+        console.error('Error occurred.', error)
+      })
+    },
     lazyLoad () {
-      console.log('lazy-select')
+      if (this.limitReached) {
+        return
+      }
+      const params = {
+        currentPage: ++this.currentPage,
+        pageSize: this.pageSize
+      }
+      SecurityAndPermission.getRoles(params).then(response => {
+        if (response.data.length > 0) {
+          this.roleList = [...this.roleList, ...response.data]
+        } else {
+          this.limitReached = true
+        }
+      }).catch(error => {
+        this.$message.error(error)
+        console.error('Error occurred.', error)
+      })
     },
     getTagType (selectedRole) {
       return this.tagTypes[selectedRole.id % 5]
@@ -69,6 +112,10 @@ export default {
     onCloseTag (index) {
       this.selectedRoles.splice(index, 1)
     }
+  },
+  mounted () {
+    this.selectedRoles = this.step1SelectedRoles
+    this.getRoleList()
   }
 }
 </script>
