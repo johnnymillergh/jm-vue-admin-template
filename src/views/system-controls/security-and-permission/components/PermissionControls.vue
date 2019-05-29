@@ -99,13 +99,13 @@
               height="450"
               highlight-current-row
               stripe>
-      <el-table-column prop="url" width="300">
+      <el-table-column prop="url" width="350">
         <template slot="header">
           <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search"/>
         </template>
       </el-table-column>
       <el-table-column prop="method" label="HTTP Method" width="120" align="center"/>
-      <el-table-column prop="description" label="Description" width="180"/>
+      <el-table-column prop="description" label="Description"/>
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
       <el-table-column fixed="right" label="Operations" width="120">

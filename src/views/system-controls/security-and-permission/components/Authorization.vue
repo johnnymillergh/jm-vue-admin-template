@@ -8,7 +8,7 @@
     </el-steps>
     <el-card class="step-detail" shadow="never">
       <transition mode="out-in">
-        <component :is="componentName" :component-name="componentName"
+        <component :is="componentName"
                    :step1-selected-roles="selectedRoles" @step1-role-select="onRoleSelect"/>
       </transition>
     </el-card>
@@ -115,7 +115,7 @@ export default {
   }
 
   .step-detail {
-    height: 400px;
+    height: 550px;
     margin-bottom: 10px;
   }
 

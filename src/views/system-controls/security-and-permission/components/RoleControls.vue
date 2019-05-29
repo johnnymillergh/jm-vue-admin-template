@@ -65,7 +65,7 @@
         </el-form-item>
       </el-form>
       <el-row type="flex" justify="end">
-        <el-button type="primary" icon="el-icon-success" @click="onClickSave">Save</el-button>
+        <el-button type="primary" icon="el-icon-success" @click="onClickSave" v-click-control>Save</el-button>
         <el-button icon="el-icon-error" @click="onClickCancel">Cancel</el-button>
       </el-row>
     </el-dialog>

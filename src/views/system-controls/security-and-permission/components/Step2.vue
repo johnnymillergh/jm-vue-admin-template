@@ -1,13 +1,21 @@
 <template>
   <div class="step2-container">
-    <el-form>
+    <el-form :inline="true">
       <el-form-item label="Permission Scope">
-        <el-select class="permission-scope-select" v-model="selectedPermissionScope" placeholder="Select" multiple>
-          <el-option v-for="item in options"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"/>
+        <el-select class="permission-scope-select"
+                   v-model="selectedPermissionScope"
+                   placeholder="Select"
+                   multiple
+                   collapse-tags
+                   filterable>
+          <el-option v-for="(item,index) in permissionScopeList"
+                     :label="item.className"
+                     :value="item.packageName+'.'+item.className"
+                     :key="index"/>
         </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onClickLoad" v-click-control>Load</el-button>
       </el-form-item>
     </el-form>
     <el-row class="permission-detail-container">
@@ -16,7 +24,7 @@
           <el-card shadow="never">
             <div slot="header">
               <el-row>
-                <el-col :span="12" class="permission-header">
+                <el-col :span="12" class="permission-title">
                   {{item.controllerName}}
                 </el-col>
                 <el-col :span="12" align="right">
@@ -24,7 +32,7 @@
                 </el-col>
               </el-row>
             </div>
-            {{item.description}}
+            <div>{{item.apiList}}</div>
           </el-card>
         </el-col>
       </template>
@@ -33,47 +41,44 @@
 </template>
 
 <script>
+import SecurityAndPermission from '@/api/system-controls/security-and-permission'
+import PermissionType from '@/constants/system/permission-type'
+
 export default {
   name: 'Step2',
+  props: {},
   data () {
     return {
       selectedPermissionScope: [],
-      options: [{
-        value: 'Option1',
-        label: 'Option1'
-      }, {
-        value: 'Option2',
-        label: 'Option2'
-      }, {
-        value: 'Option3',
-        label: 'Option3'
-      }, {
-        value: 'Option4',
-        label: 'Option4'
-      }, {
-        value: 'Option5',
-        label: 'Option5'
-      }],
-      permissionDetailList: [{
-        controllerName: 'Controller1',
-        description: 'Description1 Description1 Description1 Description1 Description1'
-      }, {
-        controllerName: 'Controller2',
-        description: 'Description2 Description2 Description2 Description2 Description2'
-      }, {
-        controllerName: 'Controller3',
-        description: 'Description3 Description3 Description3 Description3 Description3'
-      }, {
-        controllerName: 'Controller4',
-        description: 'Description4 Description4 Description4'
-      }, {
-        controllerName: 'Controller5',
-        description: 'Description5 Description5'
-      }, {
-        controllerName: 'Controller6',
-        description: 'Description6 Description6'
-      }]
+      permissionScopeList: [],
+      permissionDetailList: [],
+      permissionType: PermissionType.BUTTON.type
     }
+  },
+  methods: {
+    getPermissionScope () {
+      SecurityAndPermission.getController().then(response => {
+        this.permissionScopeList = response.data.controllerList
+      }).catch(error => {
+        this.$message.error(error.message)
+        console.error(error)
+      })
+    },
+    onClickLoad () {
+      if (this.selectedPermissionScope.length === 0) {
+        return
+      }
+      const params = {
+        controllerFullClassName: this.selectedPermissionScope,
+        permissionType: this.permissionType
+      }
+      SecurityAndPermission.getPermissions(params).then(response => {
+        this.permissionDetailList = response.data.controllerList
+      })
+    }
+  },
+  mounted () {
+    this.getPermissionScope()
   }
 }
 </script>
@@ -91,8 +96,12 @@ export default {
     .permission-detail-item {
       padding: 5px;
 
-      .permission-header {
+      .permission-title {
         font-size: 36px;
+      }
+
+      .permission-subtitle {
+        font-size: 24px;
       }
     }
   }

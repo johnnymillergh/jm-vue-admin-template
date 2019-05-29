@@ -40,18 +40,9 @@ export default {
   name: 'Step1',
   directives: { LazySelect },
   props: {
-    componentName: { type: String, require: true },
     step1SelectedRoles: { type: Array, require: true }
   },
   watch: {
-    componentName: {
-      deep: true,
-      handler (val) {
-        if (val === 'Step1') {
-          this.getRoleList()
-        }
-      }
-    },
     selectedRoles: {
       deep: true,
       handler (val) {
