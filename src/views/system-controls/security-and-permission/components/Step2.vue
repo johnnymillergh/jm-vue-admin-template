@@ -90,7 +90,7 @@ export default {
   }
 
   .permission-detail-container {
-    height: 300px;
+    height: 450px;
     overflow: auto;
 
     .permission-detail-item {

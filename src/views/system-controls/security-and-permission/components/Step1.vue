@@ -125,9 +125,9 @@ export default {
   }
 
   .selected-role-container {
-    margin: 10px;
+    margin-top: 40px;
     width: 600px;
-    height: 230px;
+    height: 330px;
   }
 
   .selected-role-item {
