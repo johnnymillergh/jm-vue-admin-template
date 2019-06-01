@@ -54,7 +54,7 @@ export default {
       componentName: 'Step1',
       selectedRoles: [],
       selectedPermissionScopes: [],
-      selectedPermissions: []
+      selectedPermissions: new Map()
     }
   },
   methods: {

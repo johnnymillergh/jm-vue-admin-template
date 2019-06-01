@@ -11,7 +11,11 @@
 
 <script>
 export default {
-  name: 'Step3'
+  name: 'Step3',
+  data () {
+    return {
+    }
+  }
 }
 </script>
 
