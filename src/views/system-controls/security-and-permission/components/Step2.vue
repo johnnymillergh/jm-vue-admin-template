@@ -3,11 +3,12 @@
     <el-form :inline="true">
       <el-form-item label="Permission Scope">
         <el-select class="permission-scope-select"
-                   v-model="selectedPermissionScope"
+                   v-model="selectedPermissionScopes"
                    placeholder="Select"
                    multiple
                    collapse-tags
-                   filterable>
+                   filterable
+                   clearable>
           <el-option v-for="(item,index) in permissionScopeList"
                      :label="item.className"
                      :value="item.packageName+'.'+item.className"
@@ -28,11 +29,23 @@
                   {{item.controllerName}}
                 </el-col>
                 <el-col :span="12" align="right">
-                  <el-button type="danger">Revoke</el-button>
+                  <el-button type="primary" @click="onClickInvoke(index)">Invoke</el-button>
+                  <el-button type="danger" @click="onClickRevoke(index)">Revoke</el-button>
                 </el-col>
               </el-row>
             </div>
-            <div>{{item.apiList}}</div>
+            <el-table class="table-wrapper"
+                      ref="apiList"
+                      :data="item.apiList"
+                      @selection-change="onSelectionChange"
+                      style="width: 100%"
+                      height="100%"
+                      stripe
+                      highlight-current-row>
+              <el-table-column type="selection" width="55"/>
+              <el-table-column prop="url" label="Name"/>
+              <el-table-column prop="description" label="Description"/>
+            </el-table>
           </el-card>
         </el-col>
       </template>
@@ -46,10 +59,44 @@ import PermissionType from '@/constants/system/permission-type'
 
 export default {
   name: 'Step2',
-  props: {},
+  props: {
+    step2SelectedPermissionScopes: { type: Array, require: true },
+    step2SelectedPermissions: { type: Array, require: true }
+  },
+  watch: {
+    selectedPermissionScopes: {
+      deep: true,
+      handler (val) {
+        this.$emit('step2-permission-scopes-select', val)
+      }
+    },
+    step2SelectedPermissionScopes: {
+      deep: true,
+      handler (val) {
+        this.selectedPermissionScopes = val
+        if (this.selectedPermissionScopes.length === 0) {
+          this.onClearPermissionScopes()
+        }
+        this.onClickLoad()
+      }
+    },
+    selectedPermissions: {
+      deep: true,
+      handler (val) {
+        this.$emit('step2-permission-select', val)
+      }
+    },
+    step2SelectedPermissions: {
+      deep: true,
+      handler (val) {
+        this.selectedPermissions = val
+      }
+    }
+  },
   data () {
     return {
-      selectedPermissionScope: [],
+      selectedPermissionScopes: [],
+      selectedPermissions: [],
       permissionScopeList: [],
       permissionDetailList: [],
       permissionType: PermissionType.BUTTON.type
@@ -64,21 +111,57 @@ export default {
         console.error(error)
       })
     },
+    onClearPermissionScopes () {
+      this.selectedPermissions = []
+      this.permissionDetailList = []
+    },
     onClickLoad () {
-      if (this.selectedPermissionScope.length === 0) {
+      if (this.selectedPermissionScopes.length === 0) {
         return
       }
       const params = {
-        controllerFullClassName: this.selectedPermissionScope,
+        controllerFullClassName: this.selectedPermissionScopes,
         permissionType: this.permissionType
       }
       SecurityAndPermission.getPermissions(params).then(response => {
         this.permissionDetailList = response.data.controllerList
       })
+      // TODO: if only selected one role, then should check the APIs that have been authorized to it.
+    },
+    onClickInvoke (index) {
+      if (this.$refs.apiList instanceof Array) {
+        this.permissionDetailList[index].apiList.forEach(item => {
+          this.$refs.apiList[index].toggleRowSelection(item)
+        })
+        return
+      }
+      this.permissionDetailList[index].apiList.forEach(item => {
+        this.$refs.apiList.toggleRowSelection(item)
+      })
+    },
+    onClickRevoke (index) {
+      if (this.$refs.apiList instanceof Array) {
+        this.$refs.apiList[index].clearSelection()
+        return
+      }
+      this.$refs.apiList.clearSelection()
+    },
+    onSelectionChange () {
+      if (this.$refs.apiList instanceof Array) {
+        this.selectedPermissions = []
+        this.$refs.apiList.forEach(item => {
+          this.selectedPermissions = [...this.selectedPermissions, ...item.selection]
+        })
+        return
+      }
+      this.selectedPermissions = this.$refs.apiList.selection
     }
   },
   mounted () {
+    this.selectedPermissionScopes = this.step2SelectedPermissionScopes
+    this.selectedPermissions = this.step2SelectedPermissions
     this.getPermissionScope()
+    this.onClickLoad()
   }
 }
 </script>

@@ -22,6 +22,7 @@
             <el-tag class="selected-role-item"
                     :type="getTagType(item)"
                     @close="onCloseTag(index)"
+                    @click="onClickTag(item)"
                     closable>
               {{item.name}}
             </el-tag>
@@ -100,6 +101,11 @@ export default {
     },
     getTagType (selectedRole) {
       return this.tagTypes[selectedRole.id % 5]
+    },
+    onClickTag (selectedRole) {
+      // TODO: need to add click event to open a dialog showing the permissions which has been authorized to the role
+      console.error('need to add click event to open a dialog showing the permissions which has been authorized to the role',
+        selectedRole)
     },
     onCloseTag (index) {
       this.selectedRoles.splice(index, 1)

@@ -100,8 +100,9 @@
               highlight-current-row
               stripe>
       <el-table-column prop="url" width="350">
-        <template slot="header">
-          <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search"/>
+        <!-- FIXME: cannot delete slot-scope property, or search function will not work! -->
+        <template slot="header" slot-scope="/* eslint-disable vue/no-unused-vars */scope">
+          <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search" clearable/>
         </template>
       </el-table-column>
       <el-table-column prop="method" label="HTTP Method" width="120" align="center"/>
