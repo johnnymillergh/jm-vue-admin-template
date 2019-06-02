@@ -6,7 +6,6 @@
       <el-step title="Step 3" description="Processing"/>
       <el-step title="Step 4" description="Done"/>
     </el-steps>
-    {{selectedPermissions.size}}
     <el-card class="step-detail" shadow="never">
       <transition mode="out-in">
         <component :is="componentName"
@@ -55,7 +54,7 @@ export default {
       componentName: 'Step1',
       selectedRoles: [],
       selectedPermissionScopes: [],
-      selectedPermissions: new Map()
+      selectedPermissions: []
     }
   },
   methods: {

@@ -34,18 +34,22 @@
                 </el-col>
               </el-row>
             </div>
-            <el-table class="table-wrapper"
-                      ref="apiList"
-                      :data="item.apiList"
-                      @selection-change="onSelectionChange"
-                      style="width: 100%"
-                      height="100%"
-                      stripe
-                      highlight-current-row>
-              <el-table-column type="selection" width="55"/>
-              <el-table-column prop="url" label="Name"/>
-              <el-table-column prop="description" label="Description"/>
-            </el-table>
+            <el-checkbox-group v-model="selectedPermissions">
+              <el-table class="table-wrapper"
+                        ref="apiList"
+                        :data="item.apiList"
+                        style="width: 100%"
+                        height="100%"
+                        stripe
+                        highlight-current-row>
+                <el-table-column prop="url" label="Name">
+                  <template slot-scope="scope">
+                    <el-checkbox :label="scope.row.permissionId">{{scope.row.url}}</el-checkbox>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="description" label="Description"/>
+              </el-table>
+            </el-checkbox-group>
           </el-card>
         </el-col>
       </template>
@@ -61,7 +65,7 @@ export default {
   name: 'Step2',
   props: {
     step2SelectedPermissionScopes: { type: Array, require: true },
-    step2SelectedPermissions: { type: Map, require: true }
+    step2SelectedPermissions: { type: Array, require: true }
   },
   watch: {
     selectedPermissionScopes: {
@@ -80,6 +84,12 @@ export default {
         this.onClickLoad()
       }
     },
+    selectedPermissions: {
+      deep: true,
+      handler (val) {
+        this.$emit('step2-permission-select', val)
+      }
+    },
     step2SelectedPermissions: {
       deep: true,
       handler (val) {
@@ -90,7 +100,7 @@ export default {
   data () {
     return {
       selectedPermissionScopes: [],
-      selectedPermissions: new Map(),
+      selectedPermissions: [],
       permissionScopeList: [],
       permissionDetailList: [],
       permissionType: PermissionType.BUTTON.type
@@ -106,7 +116,7 @@ export default {
       })
     },
     onClearPermissionScopes () {
-      this.selectedPermissions = new Map()
+      this.selectedPermissions = []
       this.permissionDetailList = []
     },
     onClickLoad () {
@@ -124,6 +134,12 @@ export default {
       })
       // TODO: if only selected one role, then should check the APIs that have been authorized to it.
     },
+    toggleSelectedPermissions () {
+      if (this.$refs.apiList instanceof Array) {
+
+        return
+      }
+    },
     onClickInvoke (index) {
       if (this.$refs.apiList instanceof Array) {
         this.permissionDetailList[index].apiList.forEach(item => {
@@ -136,62 +152,11 @@ export default {
       })
     },
     onClickRevoke (index) {
-      this.permissionDetailList[index].apiList.forEach(item => {
-        this.selectedPermissions.delete(item.permissionId)
-      })
       if (this.$refs.apiList instanceof Array) {
         this.$refs.apiList[index].clearSelection()
         return
       }
       this.$refs.apiList.clearSelection()
-    },
-    emitSelectedPermissions () {
-      this.$emit('step2-permission-select', this.selectedPermissions)
-    },
-    onSelectionChange () {
-      if (this.$refs.apiList instanceof Array) {
-        this.$refs.apiList.forEach((item, index) => {
-          this.selectedPermissions.set(index, item.selection)
-        })
-        this.emitSelectedPermissions()
-        return
-      }
-      this.selectedPermissions.set(0, this.$refs.apiList.selection)
-      // this.$refs.apiList.selection.forEach(item => {
-      //   this.selectedPermissions.set(item.permissionId, item)
-      // })
-      this.emitSelectedPermissions()
-    },
-    toggleSelectedPermissions () {
-      if (this.$refs.apiList instanceof Array) {
-        this.$refs.apiList.forEach((item, index) => {
-          if (this.selectedPermissions.get(index)) {
-            this.selectedPermissions.get(index).forEach(api => {
-              item.toggleRowSelection(api)
-            })
-          }
-          // this.selectedPermissions.forEach((value, key) => {
-          //   const selected = this.permissionDetailList[index].apiList.find(element => {
-          //     return element.permissionId === key
-          //   })
-          //   if (selected) {
-          //     item.toggleRowSelection(selected)
-          //   }
-          // })
-        })
-        return
-      }
-      this.selectedPermissions.get(0).forEach(api => {
-        this.$refs.apiList.toggleRowSelection(api)
-      })
-      // this.selectedPermissions.forEach((value, key) => {
-      //   const selected = this.permissionDetailList[0].apiList.find(element => {
-      //     return element.permissionId === key
-      //   })
-      //   if (selected) {
-      //     this.$refs.apiList.toggleRowSelection(selected)
-      //   }
-      // })
     }
   },
   mounted () {
