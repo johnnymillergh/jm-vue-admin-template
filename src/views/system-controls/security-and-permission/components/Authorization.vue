@@ -8,7 +8,7 @@
     </el-steps>
     <el-card class="step-detail" shadow="never">
       <transition mode="out-in">
-        <component :is="componentName"
+        <component :is="componentName" ref="step"
                    :step1-selected-roles="selectedRoles" @step1-role-select="onRoleSelect"
                    :step2-selected-permission-scopes="selectedPermissionScopes"
                    @step2-permission-scopes-select="onPermissionScopesSelect"
@@ -97,6 +97,9 @@ export default {
             return
           }
           this.componentName = 'Step3'
+          setTimeout(() => {
+            this.$refs.step.startProcessing()
+          }, 2000)
           return
         case 3:
           this.componentName = 'Step4'

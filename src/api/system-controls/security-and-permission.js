@@ -14,7 +14,7 @@ const SecurityAndPermission = {
   searchRole: params => get('/role/search-role', params),
   getRoles: params => post('/authorization/get-roles', params),
   getPermissions: params => post('/authorization/get-permissions', params),
-  submitAuthorization: params => post('/submit-authorization', params)
+  submitAuthorization: params => post('/authorization/submit-authorization', params)
 }
 
 export default SecurityAndPermission
