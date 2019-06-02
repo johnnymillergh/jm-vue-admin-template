@@ -74,7 +74,7 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getRoles(params).then(response => {
-        this.roleList = [...this.roleList, ...response.data]
+        this.roleList = [...this.roleList, ...response.data.roleList]
       }).catch(error => {
         this.$message.error(error)
         console.error('Error occurred.', error)
@@ -89,8 +89,8 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getRoles(params).then(response => {
-        if (response.data.length > 0) {
-          this.roleList = [...this.roleList, ...response.data]
+        if (response.data.roleList.length > 0) {
+          this.roleList = [...this.roleList, ...response.data.roleList]
         } else {
           this.limitReached = true
         }

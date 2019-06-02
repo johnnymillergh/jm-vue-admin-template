@@ -136,6 +136,9 @@ export default {
       })
     },
     onClickRevoke (index) {
+      this.permissionDetailList[index].apiList.forEach(item => {
+        this.selectedPermissions.delete(item.permissionId)
+      })
       if (this.$refs.apiList instanceof Array) {
         this.$refs.apiList[index].clearSelection()
         return
@@ -147,41 +150,48 @@ export default {
     },
     onSelectionChange () {
       if (this.$refs.apiList instanceof Array) {
-        this.$refs.apiList.forEach(item => {
-          item.selection.forEach(selected => {
-            this.selectedPermissions.set(selected.permissionId, selected)
-          })
+        this.$refs.apiList.forEach((item, index) => {
+          this.selectedPermissions.set(index, item.selection)
         })
         this.emitSelectedPermissions()
         return
       }
-      this.$refs.apiList.selection.forEach(item => {
-        this.selectedPermissions.set(item.permissionId, item)
-      })
+      this.selectedPermissions.set(0, this.$refs.apiList.selection)
+      // this.$refs.apiList.selection.forEach(item => {
+      //   this.selectedPermissions.set(item.permissionId, item)
+      // })
       this.emitSelectedPermissions()
     },
     toggleSelectedPermissions () {
       if (this.$refs.apiList instanceof Array) {
         this.$refs.apiList.forEach((item, index) => {
-          this.selectedPermissions.forEach((value, key) => {
-            const selected = this.permissionDetailList[index].apiList.find(element => {
-              return element.permissionId === key
+          if (this.selectedPermissions.get(index)) {
+            this.selectedPermissions.get(index).forEach(api => {
+              item.toggleRowSelection(api)
             })
-            if (selected) {
-              item.toggleRowSelection(selected)
-            }
-          })
+          }
+          // this.selectedPermissions.forEach((value, key) => {
+          //   const selected = this.permissionDetailList[index].apiList.find(element => {
+          //     return element.permissionId === key
+          //   })
+          //   if (selected) {
+          //     item.toggleRowSelection(selected)
+          //   }
+          // })
         })
         return
       }
-      this.selectedPermissions.forEach((value, key) => {
-        const selected = this.permissionDetailList[0].apiList.find(element => {
-          return element.permissionId === key
-        })
-        if (selected) {
-          this.$refs.apiList.toggleRowSelection(selected)
-        }
+      this.selectedPermissions.get(0).forEach(api => {
+        this.$refs.apiList.toggleRowSelection(api)
       })
+      // this.selectedPermissions.forEach((value, key) => {
+      //   const selected = this.permissionDetailList[0].apiList.find(element => {
+      //     return element.permissionId === key
+      //   })
+      //   if (selected) {
+      //     this.$refs.apiList.toggleRowSelection(selected)
+      //   }
+      // })
     }
   },
   mounted () {

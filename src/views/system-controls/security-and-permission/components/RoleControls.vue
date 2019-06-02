@@ -141,7 +141,7 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getRoleList(params).then(response => {
-        this.roleList = response.data
+        this.roleList = response.data.roleList
       }).catch(error => {
         this.$message.error(error)
         console.error('!!!!!', error)

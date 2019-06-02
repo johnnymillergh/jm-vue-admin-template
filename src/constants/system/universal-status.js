@@ -25,15 +25,7 @@ const UniversalStatus = {
   /**
    * Success
    */
-  SUCCESS: new Status(200, 'Success'),
-  /**
-   * Failure
-   */
-  FAILURE: new Status(250, 'Failure'),
-  /**
-   * Warning
-   */
-  WARNING: new Status(251, 'Warning'),
+  SUCCESS: new Status(200, 'Success. The standard response for successful HTTP requests.'),
 
   // Client error
   /**
@@ -74,6 +66,14 @@ const UniversalStatus = {
    * User disabled
    */
   USER_DISABLED: new Status(463, 'User disabled.'),
+  /**
+   * Failure
+   */
+  FAILURE: new Status(464, 'Failure. Business failure or operation failure.'),
+  /**
+   * Warning
+   */
+  WARNING: new Status(465, 'Warning. Operation may by possible danger or trouble.'),
 
   // Server error
   /**

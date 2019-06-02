@@ -220,7 +220,7 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getApiList(params).then(response => {
-        this.apiDetailList = response.data
+        this.apiDetailList = response.data.apiList
       }).catch(error => {
         console.error(error)
         this.$message.error(error)
