@@ -42,7 +42,7 @@
                         height="100%"
                         stripe
                         highlight-current-row>
-                <el-table-column prop="url" label="Name">
+                <el-table-column prop="url" label="URL">
                   <template slot-scope="scope">
                     <el-checkbox :label="scope.row.permissionId">{{scope.row.url}}</el-checkbox>
                   </template>
