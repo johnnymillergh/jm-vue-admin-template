@@ -34,7 +34,7 @@
                 </el-col>
               </el-row>
             </div>
-            <el-checkbox-group v-model="selectedPermissions">
+            <el-checkbox-group v-model="selectedPermissionIdList">
               <el-table class="table-wrapper"
                         ref="apiList"
                         :data="item.apiList"
@@ -65,7 +65,7 @@ export default {
   name: 'Step2',
   props: {
     step2SelectedPermissionScopes: { type: Array, require: true },
-    step2SelectedPermissions: { type: Array, require: true }
+    step2SelectedPermissionIdList: { type: Array, require: true }
   },
   watch: {
     selectedPermissionScopes: {
@@ -84,23 +84,23 @@ export default {
         this.onClickLoad()
       }
     },
-    selectedPermissions: {
+    selectedPermissionIdList: {
       deep: true,
       handler (val) {
         this.$emit('step2-permission-select', val)
       }
     },
-    step2SelectedPermissions: {
+    step2SelectedPermissionIdList: {
       deep: true,
       handler (val) {
-        this.selectedPermissions = val
+        this.selectedPermissionIdList = val
       }
     }
   },
   data () {
     return {
       selectedPermissionScopes: [],
-      selectedPermissions: [],
+      selectedPermissionIdList: [],
       permissionScopeList: [],
       permissionDetailList: [],
       permissionType: PermissionType.BUTTON.type
@@ -116,7 +116,7 @@ export default {
       })
     },
     onClearPermissionScopes () {
-      this.selectedPermissions = []
+      this.selectedPermissionIdList = []
       this.permissionDetailList = []
     },
     onClickLoad () {
@@ -134,29 +134,29 @@ export default {
     },
     onClickInvoke (index) {
       this.permissionDetailList[index].apiList.forEach(item => {
-        const permissionId = this.selectedPermissions.find(permissionId => {
+        const permissionId = this.selectedPermissionIdList.find(permissionId => {
           return permissionId === item.permissionId
         })
         if (!permissionId) {
-          this.selectedPermissions.push(item.permissionId)
+          this.selectedPermissionIdList.push(item.permissionId)
         }
       })
     },
     onClickRevoke (index) {
       this.permissionDetailList[index].apiList.forEach(item => {
-        const permissionId = this.selectedPermissions.find(permissionId => {
+        const permissionId = this.selectedPermissionIdList.find(permissionId => {
           return permissionId === item.permissionId
         })
         if (permissionId) {
-          const index = this.selectedPermissions.indexOf(permissionId)
-          this.selectedPermissions.splice(index, 1)
+          const index = this.selectedPermissionIdList.indexOf(permissionId)
+          this.selectedPermissionIdList.splice(index, 1)
         }
       })
     }
   },
   mounted () {
     this.selectedPermissionScopes = this.step2SelectedPermissionScopes
-    this.selectedPermissions = this.step2SelectedPermissions
+    this.selectedPermissionIdList = this.step2SelectedPermissionIdList
     this.getPermissionScope()
     this.onClickLoad()
   }

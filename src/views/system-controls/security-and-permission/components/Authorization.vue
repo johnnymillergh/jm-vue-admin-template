@@ -12,7 +12,8 @@
                    :step1-selected-roles="selectedRoles" @step1-role-select="onRoleSelect"
                    :step2-selected-permission-scopes="selectedPermissionScopes"
                    @step2-permission-scopes-select="onPermissionScopesSelect"
-                   :step2-selected-permissions="selectedPermissions" @step2-permission-select="onPermissionSelect"/>
+                   :step2-selected-permission-id-list="selectedPermissionIdList"
+                   @step2-permission-select="onPermissionSelect"/>
       </transition>
     </el-card>
     <el-row type="flex" justify="center">
@@ -54,7 +55,7 @@ export default {
       componentName: 'Step1',
       selectedRoles: [],
       selectedPermissionScopes: [],
-      selectedPermissions: []
+      selectedPermissionIdList: []
     }
   },
   methods: {
@@ -90,7 +91,7 @@ export default {
           this.componentName = 'Step2'
           return
         case 2:
-          if (this.selectedPermissions.length === 0) {
+          if (this.selectedPermissionIdList.length === 0) {
             this.activeStep--
             this.$message.warning('To choose permission is undone')
             return
@@ -108,8 +109,8 @@ export default {
     onPermissionScopesSelect (selectedPermissionScopes) {
       this.selectedPermissionScopes = selectedPermissionScopes
     },
-    onPermissionSelect (selectedPermissions) {
-      this.selectedPermissions = selectedPermissions
+    onPermissionSelect (selectedPermissionIdList) {
+      this.selectedPermissionIdList = selectedPermissionIdList
     }
   }
 }
