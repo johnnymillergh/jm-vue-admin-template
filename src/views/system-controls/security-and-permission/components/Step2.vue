@@ -129,34 +129,29 @@ export default {
       }
       SecurityAndPermission.getPermissions(params).then(response => {
         this.permissionDetailList = response.data.controllerList
-      }).then(() => {
-        this.toggleSelectedPermissions()
       })
       // TODO: if only selected one role, then should check the APIs that have been authorized to it.
     },
-    toggleSelectedPermissions () {
-      if (this.$refs.apiList instanceof Array) {
-
-        return
-      }
-    },
     onClickInvoke (index) {
-      if (this.$refs.apiList instanceof Array) {
-        this.permissionDetailList[index].apiList.forEach(item => {
-          this.$refs.apiList[index].toggleRowSelection(item)
-        })
-        return
-      }
       this.permissionDetailList[index].apiList.forEach(item => {
-        this.$refs.apiList.toggleRowSelection(item)
+        const permissionId = this.selectedPermissions.find(permissionId => {
+          return permissionId === item.permissionId
+        })
+        if (!permissionId) {
+          this.selectedPermissions.push(item.permissionId)
+        }
       })
     },
     onClickRevoke (index) {
-      if (this.$refs.apiList instanceof Array) {
-        this.$refs.apiList[index].clearSelection()
-        return
-      }
-      this.$refs.apiList.clearSelection()
+      this.permissionDetailList[index].apiList.forEach(item => {
+        const permissionId = this.selectedPermissions.find(permissionId => {
+          return permissionId === item.permissionId
+        })
+        if (permissionId) {
+          const index = this.selectedPermissions.indexOf(permissionId)
+          this.selectedPermissions.splice(index, 1)
+        }
+      })
     }
   },
   mounted () {
