@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import AuthUtil, { TokenKey } from '@/utils/auth'
-import UniversalStatus from '@/constants/system/universal-status'
+import HttpStatus from '@/constants/system/http-status'
 import { MessageBox, Notification } from 'element-ui'
 
 // 1. Create an axios instance
@@ -57,15 +57,15 @@ service.interceptors.response.use(
     console.log('Response-Handling error', error.response)
     const resp = error.response.data
     switch (error.response.status) {
-      case UniversalStatus.FAILURE.code:
+      case HttpStatus.FAILURE.code:
         return Promise.reject(resp.message)
-      case UniversalStatus.WARNING.code:
+      case HttpStatus.WARNING.code:
         return Promise.reject(resp.message)
-      case UniversalStatus.TOKEN_EXPIRED.code:
+      case HttpStatus.TOKEN_EXPIRED.code:
         return onLogout(resp)
-      case UniversalStatus.TOKEN_PARSE_ERROR.code:
+      case HttpStatus.TOKEN_PARSE_ERROR.code:
         return onLogout(resp)
-      case UniversalStatus.TOKEN_OUT_OF_CONTROL.code:
+      case HttpStatus.TOKEN_OUT_OF_CONTROL.code:
         return onLogout(resp)
       default:
         return Promise.reject(resp)
