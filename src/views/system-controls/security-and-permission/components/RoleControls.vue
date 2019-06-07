@@ -3,12 +3,10 @@
     <heading text="Role List"/>
     <el-row type="flex">
       <el-col :span="18">
-        <el-input class="search-input" placeholder="Enter role name to search"
-                  v-model="searchText"
-                  clearable/>
+        <el-input v-model="searchText" placeholder="Enter role name to search" clearable/>
       </el-col>
       <el-col :span="6">
-        <el-button-group>
+        <el-button-group class="button-group">
           <el-button type="primary" icon="el-icon-search" @click="onClickSearch">Search</el-button>
           <el-button type="primary" icon="el-icon-edit-outline" @click="onClickCreateRole">Create Role</el-button>
         </el-button-group>
@@ -226,8 +224,8 @@ export default {
 
 <style lang="scss" scoped>
 .role-controls-container {
-  .search-input {
-    padding-right: 10px;
+  .button-group {
+    margin-left: 10px;
   }
 }
 </style>
