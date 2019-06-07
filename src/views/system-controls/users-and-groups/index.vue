@@ -53,7 +53,8 @@ export default {
       searchText: null,
       userList: null,
       userListLoading: false,
-      currentPage: 1
+      currentPage: 1,
+      pageSize: 10
     }
   },
   methods: {
