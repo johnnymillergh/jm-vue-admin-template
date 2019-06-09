@@ -68,6 +68,14 @@ const componentDemoRouter = {
       meta: {
         title: 'Markdown'
       }
+    },
+    {
+      path: 'animation-demo',
+      name: 'AnimationDemo',
+      component: () => import('@/views/component-demo/animation-demo'),
+      meta: {
+        title: 'Animation Demo'
+      }
     }
   ]
 }
