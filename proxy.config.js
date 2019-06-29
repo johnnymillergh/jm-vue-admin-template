@@ -19,5 +19,12 @@ module.exports = {
     pathRewrite: {
       '^/role': `/${process.env.VUE_APP_BASE_API}/role`
     }
+  },
+  '/user': {
+    target: `${process.env.VUE_APP_BASE_URL}`,
+    changeOrigin: true,
+    pathRewrite: {
+      '^/user': `/${process.env.VUE_APP_BASE_API}/user`
+    }
   }
 }
