@@ -68,7 +68,7 @@
           <el-input v-model.trim="userForm.cellphone" clearable/>
         </el-form-item>
         <el-form-item prop="fullName" label="Full name">
-          <el-input v-model.trim="userForm.fullName" clearable/>
+          <el-input v-model="userForm.fullName" clearable/>
         </el-form-item>
         <el-form-item prop="birthday" label="Birthday">
           <el-date-picker v-model="userForm.birthday"
