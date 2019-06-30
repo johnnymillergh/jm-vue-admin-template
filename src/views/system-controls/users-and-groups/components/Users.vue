@@ -3,7 +3,7 @@
     <heading text="Users"/>
     <el-row type="flex">
       <el-col :span="18">
-        <el-input v-model="searchText" placeholder="Enter username to search" clearable/>
+        <el-input v-model.trim="searchText" placeholder="Enter username to search" clearable/>
       </el-col>
       <el-col :span="6">
         <el-button-group class="button-group">
@@ -170,6 +170,18 @@ export default {
   },
   methods: {
     onClickSearch () {
+      if (StringUtil.isBlank(this.searchText)) {
+        this.getUserPageList()
+        return
+      }
+      const params = {
+        username: this.searchText
+      }
+      SecurityAndPermission.searchUser(params).then(response => {
+        this.userList = [response.data]
+      }).catch(error => {
+        this.$message.error(error)
+      })
     },
     onClickCreateRole () {
     },
@@ -274,8 +286,6 @@ export default {
 
 <style lang="scss" scoped>
 .users-container {
-  padding: 20px;
-
   .button-group {
     margin-left: 10px;
   }
