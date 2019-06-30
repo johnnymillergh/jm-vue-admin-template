@@ -89,6 +89,16 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="Assigned Role">
+          <el-card class="selected-role-container" shadow="never" :body-style="{ padding: '10px' }">
+            <el-tag v-show="checkUsersRolesIsEmpty()" type="danger">Not assigned any role</el-tag>
+            <template v-for="(item,index) in usersRoles">
+              <el-tooltip :key="index" class="item" effect="dark" :content="item.roleDescription" placement="top-start">
+                <el-tag class="role-item" :type="getTagType(item)">{{item.roleName}}</el-tag>
+              </el-tooltip>
+            </template>
+          </el-card>
+        </el-form-item>
       </el-form>
       <el-row type="flex" justify="end">
         <el-button type="primary" icon="el-icon-success" @click="onClickSubmit" v-click-control>Submit</el-button>
@@ -150,10 +160,12 @@ export default {
         gender: null,
         status: null
       },
+      usersRoles: null,
       userFormRules: {
         cellphone: [{ required: false, validator: validateCellphone, trigger: 'change' }],
         fullName: [{ required: false, validator: validateFullName, trigger: 'blur' }]
-      }
+      },
+      tagTypes: ['', 'success', 'info', 'warning', 'danger']
     }
   },
   methods: {
@@ -211,9 +223,16 @@ export default {
         this.userForm.gender = response.data.gender
         this.userForm.gender = response.data.gender
         this.userForm.status = response.data.status
+        this.usersRoles = response.data.usersRoles
       }).finally(() => {
         this.userDialogLoading = false
       })
+    },
+    checkUsersRolesIsEmpty () {
+      if (this.usersRoles === null) {
+        return true
+      }
+      return this.usersRoles.length === 0
     },
     onClickDeleteUser (userId) {
       console.log('userId', userId)
@@ -227,7 +246,7 @@ export default {
     onClickSubmit () {
       SecurityAndPermission.editUserBasicInfo(this.userForm).then(response => {
         this.userDialogVisible = false
-        this.$refs['userForm'].resetFields()
+        this.clearFields()
         this.$message.success(response.message)
         this.getUserPageList()
       }).catch(error => {
@@ -237,7 +256,14 @@ export default {
     },
     onClickDiscard () {
       this.userDialogVisible = false
+      this.clearFields()
+    },
+    clearFields () {
       this.$refs['userForm'].resetFields()
+      this.usersRoles = null
+    },
+    getTagType (item) {
+      return this.tagTypes[item.roleId % 5]
     }
   },
   mounted () {
@@ -252,6 +278,10 @@ export default {
 
   .button-group {
     margin-left: 10px;
+  }
+
+  .role-item {
+    margin: 2px;
   }
 }
 </style>
