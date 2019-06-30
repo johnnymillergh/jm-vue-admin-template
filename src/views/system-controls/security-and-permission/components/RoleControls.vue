@@ -44,11 +44,7 @@
                @close="onClickCancel"
                width="500px"
                :close-on-click-modal="false">
-      <el-form ref="roleForm"
-               :model="roleForm"
-               :rules="createRoleFormRules"
-               class="create-role-form"
-               label-width="120px">
+      <el-form ref="roleForm" :model="roleForm" :rules="createRoleFormRules" label-width="120px">
         <el-form-item prop="name" label="Name">
           <el-input v-model="roleForm.name" placeholder="Enter name" clearable/>
         </el-form-item>
