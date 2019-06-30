@@ -59,19 +59,17 @@ const Gender = {
    */
   GENDER_QUESTIONING: new Enum('Gender Questioning', 'Gender questioning'),
   /**
-   * Gender Variant: Behavior or gender expression by an individual that does not match masculine and feminine gender
-   * norms
+   * Gender Variant: Behavior or gender expression by an individual that does not match masculine and feminine gender norms
    */
   GENDER_VARIANT: new Enum('Gender Variant',
-    'Behavior or gender expression by an individual that does not match masculine and feminine gender ' +
-    'norms'),
+    'Behavior or gender expression by an individual that does not match masculine and feminine gender norms'),
   /**
    * Genderqueer: An umbrella term with a similar meaning to non-binary
    */
   GENDERQUEER: new Enum('Genderqueer', 'An umbrella term with a similar meaning to non-binary'),
   /**
-   * Intersex: An intersex person has sex characteristics e.g.sexual anatomy, reproductive organs, and/or chromosome
-   * patterns that do not fit the typical definition of male or female
+   * Intersex: An intersex person has sex characteristics e.g.sexual anatomy, reproductive organs,
+   * and/or chromosome patterns that do not fit the typical definition of male or female
    */
   INTERSEX: new Enum('Intersex',
     'An intersex person has sex characteristics e.g.sexual anatomy, reproductive organs, and/or chromosome ' +
@@ -102,8 +100,7 @@ const Gender = {
    */
   PANGENDER: new Enum('Pangender',
     'A non-binary gender identity which refers to a vast and diverse multiplicity of genders in the same ' +
-    'individual that can extend infinitely, always within the person\'s own culture and life ' +
-    'experience'),
+    'individual that can extend infinitely, always within the person\'s own culture and life experience'),
   /**
    * Transfeminine: A term used to describe transgender people who were assigned male at birth, but identify with
    * femininity to a greater extent than with masculinity
@@ -143,8 +140,7 @@ const Gender = {
    */
   TWO_SPIRIT: new Enum('Two-Spirit',
     'A culturally distinct gender that describes Indigenous North Americans who fulfils one of many mixed ' +
-    'gender roles found traditionally among many Native Americans and Canadian First Nations ' +
-    'indigenous groups'),
+    'gender roles found traditionally among many Native Americans and Canadian First Nations indigenous groups'),
   /**
    * Get array of gender
    * @return {Array} an array of gender
