@@ -25,7 +25,7 @@
       <el-table-column prop="gender" label="Gender" width="160" align="center"/>
       <el-table-column prop="status" label="Status" width="120" align="center">
         <template slot-scope="scope">
-          <el-tag :type="handleUserStatusTagType(scope.row.status)" disable-transitions>
+          <el-tag :type="handleUserStatusTagType(scope.row.status)" effect="dark" disable-transitions>
             {{ formatUserStatus(scope.row.status) }}
           </el-tag>
         </template>
@@ -94,7 +94,7 @@
             <el-tag v-show="checkUsersRolesIsEmpty()" type="danger">Not assigned any role</el-tag>
             <template v-for="(item,index) in usersRoles">
               <el-tooltip :key="index" class="item" effect="dark" :content="item.roleDescription" placement="top-start">
-                <el-tag class="role-item" :type="getTagType(item)">{{item.roleName}}</el-tag>
+                <el-tag class="role-item" :type="getTagType(item)" effect="dark">{{item.roleName}}</el-tag>
               </el-tooltip>
             </template>
           </el-card>

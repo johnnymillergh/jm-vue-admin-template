@@ -23,6 +23,7 @@
                     :type="getTagType(item)"
                     @close="onCloseTag(index)"
                     @click="onClickTag(item)"
+                    effect="dark"
                     closable>
               {{item.name}}
             </el-tag>
