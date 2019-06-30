@@ -43,6 +43,31 @@ StringUtil.isNotEmpty = function (targetString) {
 }
 
 /**
+ * Check if a string is blank.
+ * e.g. if a string's value is ``, `  `, null or undefined, then the string is blank
+ * @param targetString{string} target string
+ * @return {boolean} true - blank, false - not blank
+ */
+StringUtil.isBlank = function (targetString) {
+  const isEmpty = StringUtil.isEmpty(targetString)
+  if (isEmpty) {
+    return isEmpty
+  }
+  const regExp = /^\s*$/
+  return regExp.test(targetString)
+}
+
+/**
+ * Check if a string is not blank.
+ * e.g. if a string's value is ``, `  `, null or undefined, then the string is blank
+ * @param targetString{string} target string
+ * @return {boolean} true - not blank, false - blank
+ */
+StringUtil.isNotBlank = function (targetString) {
+  return !StringUtil.isBlank(targetString)
+}
+
+/**
  * Check if length of a string is less than threshold value.
  * @param {string} targetString target string
  * @param {number} threshold threshold value
