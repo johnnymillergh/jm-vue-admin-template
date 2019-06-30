@@ -62,9 +62,9 @@ const HttpStatus = {
    */
   PARAM_NOT_NULL: new Status(461, 'Param not null.'),
   /**
-   * Param invalid
+   * Invalid param
    */
-  PARAM_INVALID: new Status(462, 'Param invalid.'),
+  INVALID_PARAM: new Status(462, 'Invalid param'),
   /**
    * User disabled
    */
