@@ -18,7 +18,8 @@ const SecurityAndPermission = {
   getUserPageList: params => get('/user/get-user-page-list', params),
   searchUser: params => get('/user/search-user', params),
   getUserInfo: params => get('/user/get-user-info', params),
-  editUserBasicInfo: params => post('/user/edit-user-basic-info', params)
+  editUserBasicInfo: params => post('/user/edit-user-basic-info', params),
+  getUserListForSelection: params => get('/user/get-user-list-for-selection', params)
 }
 
 export default SecurityAndPermission
