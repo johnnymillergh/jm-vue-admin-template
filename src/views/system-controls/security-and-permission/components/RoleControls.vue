@@ -23,7 +23,7 @@
       <el-table-column prop="description" label="Description"/>
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
-      <el-table-column fixed="right" label="Operations" width="120">
+      <el-table-column label="Operations" width="120" align="center">
         <template slot-scope="scope">
           <el-button @click="onClickEditRole(scope.row)" type="text" size="small">Edit</el-button>
           <el-button @click="onClickDeleteRole(scope.row.id)" type="text" size="small">Delete</el-button>
