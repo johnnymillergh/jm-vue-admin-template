@@ -247,7 +247,7 @@ export default {
       return this.usersRoles.length === 0
     },
     onClickDeleteUser (userId) {
-      console.log('userId', userId)
+      this.$message.info(`This feature is under construction and coming soon. Delete user ${userId}`)
     },
     /**
      * v-el-drag-dialog onDrag callback function

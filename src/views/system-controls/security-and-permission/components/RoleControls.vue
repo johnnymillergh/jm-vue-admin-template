@@ -169,7 +169,7 @@ export default {
       this.gmtModified = row.gmtModified
     },
     onClickDeleteRole (id) {
-      console.log('id', id)
+      this.$message.info(`This feature is under construction and coming soon. Delete role ${id}`)
     },
     // v-el-drag-dialog onDrag callback function
     handleDrag () {
@@ -194,7 +194,7 @@ export default {
           this.getRoleList()
         }).catch(error => {
           this.$message.error(error)
-          console.log('Error occurred when creating role', error)
+          console.error('Error occurred when creating role', error)
         })
         return
       }
@@ -205,7 +205,7 @@ export default {
         this.getRoleList()
       }).catch(error => {
         this.$message.error(error)
-        console.log('Error occurred when creating role', error)
+        console.error('Error occurred when creating role', error)
       })
     },
     onClickCancel () {

@@ -54,7 +54,7 @@ service.interceptors.response.use(
     return Promise.resolve(resp)
   },
   error => {
-    console.log('Response-Handling error', error.response)
+    console.error('Error occurred when handle response.', error.response)
     const resp = error.response.data
     switch (error.response.status) {
       case HttpStatus.FAILURE.code:
