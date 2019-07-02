@@ -60,11 +60,13 @@
       <el-col align="right">
         <el-button type="danger"
                    @click="onClickEnableAll"
-                   :disabled="enableAllButtonDisabled()">Enable all
+                   :disabled="enableAllButtonDisabled()"
+                   v-click-control>Enable all
         </el-button>
         <el-button type="warning"
                    @click="onClickSetApiInUse"
-                   :disabled="apiStatus === ApiStatus.IN_USE.status">Set API in Use
+                   :disabled="apiStatus === ApiStatus.IN_USE.status"
+                   v-click-control>Set API in Use
         </el-button>
       </el-col>
     </el-row>
@@ -97,17 +99,18 @@
               height="450"
               highlight-current-row
               stripe>
-      <el-table-column prop="url" width="300">
-        <template slot="header" slot-scope="scope">
-          <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search"/>
+      <el-table-column prop="url" width="350">
+        <!-- FIXME: cannot delete slot-scope property, or search function will not work! -->
+        <template slot="header" slot-scope="/* eslint-disable vue/no-unused-vars */scope">
+          <el-input v-model="searchApiText" size="mini" placeholder="Type URL to search" clearable/>
         </template>
       </el-table-column>
       <el-table-column prop="method" label="HTTP Method" width="120" align="center"/>
-      <el-table-column prop="description" label="Description" width="180"/>
+      <el-table-column prop="description" label="Description"/>
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
       <el-table-column fixed="right" label="Operations" width="120">
-        <template slot-scope="scope">
+        <template>
           <el-button @click="onClickApiDetail" type="text" size="small">Detail</el-button>
           <el-button @click="onClickEditApi" type="text" size="small">Edit</el-button>
         </template>
@@ -217,7 +220,7 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getApiList(params).then(response => {
-        this.apiDetailList = response.data
+        this.apiDetailList = response.data.apiList
       }).catch(error => {
         console.error(error)
         this.$message.error(error)

@@ -63,7 +63,7 @@
 <script>
 import Join from '@/api/auth/join'
 import StringUtil from '@/utils/string'
-import UniversalStatus from '@/constants/system/universal-status'
+import HttpStatus from '@/constants/system/http-status'
 
 export default {
   name: 'Join',
@@ -139,7 +139,7 @@ export default {
         return
       }
       const response = await Join.resister(this.registerForm)
-      if (response.status !== UniversalStatus.SUCCESS.code) {
+      if (response.status !== HttpStatus.SUCCESS.code) {
         this.createAccountLoading = false
         return
       }
