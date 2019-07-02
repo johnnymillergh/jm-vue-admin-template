@@ -9,11 +9,12 @@
           <el-select class="role-select"
                      v-model="selectedUser"
                      v-lazy-select="lazyLoadUser"
+                     :disabled="submitDisabled"
                      value-key="id"
                      placeholder="Select"
                      collapse-tags
                      filterable>
-            <el-option v-for="(item,index) in userList" :key="index" :label="item.username" :value="item.id"/>
+            <el-option v-for="(item,index) in userList" :key="index" :label="item.username" :value="item"/>
           </el-select>
         </el-row>
         <el-row type="flex" justify="center">
@@ -31,6 +32,7 @@
           <el-select class="role-select"
                      v-model="selectedRoles"
                      v-lazy-select="lazyLoadRole"
+                     :disabled="submitDisabled"
                      value-key="id"
                      placeholder="Select"
                      multiple
@@ -58,7 +60,9 @@
       </el-col>
     </el-row>
     <el-row type="flex" justify="center">
-      <el-button class="submit-button" type="success" @click="onClickSubmit">Assign role(s) to user</el-button>
+      <el-button class="submit-button" type="success" @click="onClickSubmit" :disabled="submitDisabled">
+        Assign role(s) to user
+      </el-button>
     </el-row>
   </div>
 </template>
@@ -83,7 +87,8 @@ export default {
       limitReachedForUser: false,
       limitReachedForRole: false,
       activeUserKeyframes: '',
-      activeRoleKeyframes: ''
+      activeRoleKeyframes: '',
+      submitDisabled: false
     }
   },
   mounted () {
@@ -167,8 +172,49 @@ export default {
       this.selectedRoles.splice(index, 1)
     },
     onClickSubmit () {
-      this.activeUserKeyframes = this.activeUserKeyframes === '' ? 'play-user-keyframes' : ''
-      this.activeRoleKeyframes = this.activeRoleKeyframes === '' ? 'play-role-keyframes' : ''
+      if (!this.selectedUser) {
+        this.$message.warning('Select one user')
+        return
+      }
+      if (this.selectedRoles.length === 0) {
+        this.$message.warning('Select role(s)')
+        return
+      }
+      this.submitDisabled = true
+      this.activeUserKeyframes = 'play-user-keyframes'
+      this.activeRoleKeyframes = 'play-role-keyframes'
+      const params = {
+        username: this.selectedUser.username,
+        userId: this.selectedUser.id,
+        roleIdList: this.selectedRoles.map(role => {
+          return role.id
+        })
+      }
+      setTimeout(() => {
+        SecurityAndPermission.assignRoleToUser(params).then(response => {
+          this.$message.success(response.message)
+          this.clearSelection()
+        }).catch(error => {
+          this.$message.error(error)
+          console.error('Error occurred when assign role(s) to user', error)
+        }).finally(() => {
+          this.restorePage()
+        })
+      }, 1800)
+    },
+    /**
+     * Restore page to initial state when error occurred, delayed 2 s
+     */
+    restorePage () {
+      setTimeout(() => {
+        this.submitDisabled = false
+        this.activeUserKeyframes = 'play-user-keyframes-restore'
+        this.activeRoleKeyframes = 'play-role-keyframes-restore'
+      }, 2000)
+    },
+    clearSelection () {
+      this.selectedUser = null
+      this.selectedRoles = []
     }
   }
 }
@@ -190,6 +236,21 @@ export default {
   }
 }
 
+@keyframes user-animation-restore {
+  0% {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    z-index: 2;
+  }
+  100% {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+}
+
 @keyframes role-animation {
   0% {
     position: absolute;
@@ -203,6 +264,23 @@ export default {
     top: 0;
     right: 25%;
     opacity: 0;
+    z-index: 1;
+  }
+}
+
+@keyframes role-animation-restore {
+  1% {
+    position: absolute;
+    top: 0;
+    right: 25%;
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 1;
     z-index: 1;
   }
 }
@@ -225,6 +303,16 @@ export default {
 
   .play-role-keyframes {
     animation: role-animation 1.8s ease;
+    animation-fill-mode: forwards;
+  }
+
+  .play-user-keyframes-restore {
+    animation: user-animation-restore 1.8s ease;
+    animation-fill-mode: forwards;
+  }
+
+  .play-role-keyframes-restore {
+    animation: role-animation-restore 1.8s ease;
     animation-fill-mode: forwards;
   }
 
