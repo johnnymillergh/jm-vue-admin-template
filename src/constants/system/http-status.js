@@ -88,9 +88,9 @@ const HttpStatus = {
    */
   ROLE_NOT_FOUND: new Status(552, 'Role not found.'),
   /**
-   * Username or password error
+   * Username or password is not correct or account error
    */
-  USERNAME_OR_PASSWORD_ERROR: new Status(553, 'Username or password error.'),
+  BAD_CREDENTIALS: new Status(553, 'Username or password is not correct or account error.'),
   /**
    * Token expired
    */
