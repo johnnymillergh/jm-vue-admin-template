@@ -1,4 +1,55 @@
-## 1.0.3 (2019-05-25)
+## [1.0.4](https://github.com/johnnymillergh/jm-vue-admin-template/compare/v1.0.3...v1.0.4) (2019-07-02)
+
+
+### Bug Fixes
+
+* **$Authorization, Step 2:** update table column name ([bc3848a](https://github.com/johnnymillergh/jm-vue-admin-template/commit/bc3848a))
+* **$Role:** fix ugly UI ([0bbfe1f](https://github.com/johnnymillergh/jm-vue-admin-template/commit/0bbfe1f))
+* **$Template:** remove slot-scope property ([ebfba91](https://github.com/johnnymillergh/jm-vue-admin-template/commit/ebfba91))
+
+
+### Code Refactoring
+
+* **$HTTPStatus:** rename universal-status.js to http-status.js ([7829107](https://github.com/johnnymillergh/jm-vue-admin-template/commit/7829107))
+
+
+### Features
+
+* **$AssignRole:** add super awesome animation ([6a66399](https://github.com/johnnymillergh/jm-vue-admin-template/commit/6a66399))
+* **$Authorization, Step 2:** complete button `Invoke` & `Revoke` ([bad60ae](https://github.com/johnnymillergh/jm-vue-admin-template/commit/bad60ae))
+* **$Authorization, Step 3:** complete Step 3 ([1eb3360](https://github.com/johnnymillergh/jm-vue-admin-template/commit/1eb3360))
+* **$Directive:** add click control directive (registered globally) ([c98d30d](https://github.com/johnnymillergh/jm-vue-admin-template/commit/c98d30d))
+* **$Gender:** add gender enumeration ([6dacc8c](https://github.com/johnnymillergh/jm-vue-admin-template/commit/6dacc8c))
+* **$Login:** display error toast ([0a19dbd](https://github.com/johnnymillergh/jm-vue-admin-template/commit/0a19dbd))
+* **$StringUtil:** add new function to check whether a string is blank ([0ca829f](https://github.com/johnnymillergh/jm-vue-admin-template/commit/0ca829f))
+* **$UI:** add disability for previous and next button ([ae8abf2](https://github.com/johnnymillergh/jm-vue-admin-template/commit/ae8abf2))
+* **$UI:** add new page `Animation Demo` ([3458708](https://github.com/johnnymillergh/jm-vue-admin-template/commit/3458708))
+* **$UI:** complete Step 1 - Choose Role ([be9c00d](https://github.com/johnnymillergh/jm-vue-admin-template/commit/be9c00d))
+* **$UI:** complete Step 2 - Choose Permission ([c410afd](https://github.com/johnnymillergh/jm-vue-admin-template/commit/c410afd))
+* **$UI:** complete Step 2 - toggleSelectedPermissions ([52fb4f5](https://github.com/johnnymillergh/jm-vue-admin-template/commit/52fb4f5))
+* **$UI:** complete User and Groups' UI ([eb0c485](https://github.com/johnnymillergh/jm-vue-admin-template/commit/eb0c485))
+* **$UI:** complete User and Groups' UI 2 ([a22f18f](https://github.com/johnnymillergh/jm-vue-admin-template/commit/a22f18f))
+* **$UI:** display permissions in Authorization tab ([e498c5e](https://github.com/johnnymillergh/jm-vue-admin-template/commit/e498c5e))
+* **$UI:** display tooltip when mouse hovering role's tag ([4518320](https://github.com/johnnymillergh/jm-vue-admin-template/commit/4518320))
+* **$UI:** draw UI - assign role to user ([7735439](https://github.com/johnnymillergh/jm-vue-admin-template/commit/7735439))
+* **$UI:** update CSS ([7948261](https://github.com/johnnymillergh/jm-vue-admin-template/commit/7948261))
+* **$User:** complete feature - assign role(s) to user ([bddd54b](https://github.com/johnnymillergh/jm-vue-admin-template/commit/bddd54b))
+* **$User:** complete feature - edit user ([b5cf62b](https://github.com/johnnymillergh/jm-vue-admin-template/commit/b5cf62b))
+* **$User:** complete feature - search user ([d071fdd](https://github.com/johnnymillergh/jm-vue-admin-template/commit/d071fdd))
+* **$User:** display user page list ([3d76882](https://github.com/johnnymillergh/jm-vue-admin-template/commit/3d76882))
+* **$User:** display user's role ([38534bc](https://github.com/johnnymillergh/jm-vue-admin-template/commit/38534bc))
+* **$User:** not trim user's full name ([e7db689](https://github.com/johnnymillergh/jm-vue-admin-template/commit/e7db689))
+* **$User:** split user's page into components ([d3fd306](https://github.com/johnnymillergh/jm-vue-admin-template/commit/d3fd306))
+
+
+### BREAKING CHANGES
+
+* **$StringUtil:** add new function to check whether a string is blank
+* **$HTTPStatus:** rename universal-status.js to http-status.js
+
+
+
+## [1.0.3](https://github.com/johnnymillergh/jm-vue-admin-template/compare/0433b6a...v1.0.3) (2019-05-25)
 
 
 ### Bug Fixes
