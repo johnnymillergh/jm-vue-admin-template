@@ -15,27 +15,22 @@ class Status {
 }
 
 /**
- * Universal Status Enumerations.
+ * <h1>HttpStatus</h1>
+ * <p>Hypertext Transfer Protocol (HTTP) Status Code</p>
  * @author Johnny Miller (鍾俊), e-mail: johnnysviva@outlook.com
  * @date 2019-03-30
  * @time 12:15
+ * @see <a href="https://www.iana.org/assignments/http-status-codes">HTTP Status Code Registry</a>
+ * @see <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">List of HTTP status codes</a>
  */
-const UniversalStatus = {
-  // Successful
+const HttpStatus = {
+  // 2xx Success
   /**
    * Success
    */
-  SUCCESS: new Status(200, 'Success'),
-  /**
-   * Failure
-   */
-  FAILURE: new Status(250, 'Failure'),
-  /**
-   * Warning
-   */
-  WARNING: new Status(251, 'Warning'),
+  SUCCESS: new Status(200, 'Success. The standard response for successful HTTP requests.'),
 
-  // Client error
+  // --- 4xx Client Error ---
   /**
    * Unauthorized
    */
@@ -67,15 +62,23 @@ const UniversalStatus = {
    */
   PARAM_NOT_NULL: new Status(461, 'Param not null.'),
   /**
-   * Param invalid
+   * Invalid param
    */
-  PARAM_INVALID: new Status(462, 'Param invalid.'),
+  INVALID_PARAM: new Status(462, 'Invalid param'),
   /**
    * User disabled
    */
   USER_DISABLED: new Status(463, 'User disabled.'),
+  /**
+   * Failure
+   */
+  FAILURE: new Status(464, 'Failure. Business failure or operation failure.'),
+  /**
+   * Warning
+   */
+  WARNING: new Status(465, 'Warning. Operation may by possible danger or trouble.'),
 
-  // Server error
+  // --- 5xx Server Error ---
   /**
    * Error or failure
    */
@@ -85,9 +88,9 @@ const UniversalStatus = {
    */
   ROLE_NOT_FOUND: new Status(552, 'Role not found.'),
   /**
-   * Username or password error
+   * Username or password is not correct or account error
    */
-  USERNAME_OR_PASSWORD_ERROR: new Status(553, 'Username or password error.'),
+  BAD_CREDENTIALS: new Status(553, 'Username or password is not correct or account error.'),
   /**
    * Token expired
    */
@@ -112,9 +115,9 @@ const UniversalStatus = {
    */
   getStatusByCode: code => {
     let status = null
-    Object.keys(UniversalStatus).forEach(statusKey => {
-      if (typeof UniversalStatus[statusKey] !== 'function' && UniversalStatus[statusKey].code === code) {
-        status = UniversalStatus[statusKey]
+    Object.keys(HttpStatus).forEach(statusKey => {
+      if (typeof HttpStatus[statusKey] !== 'function' && HttpStatus[statusKey].code === code) {
+        status = HttpStatus[statusKey]
       }
     })
     if (!status) {
@@ -124,5 +127,5 @@ const UniversalStatus = {
   }
 }
 
-Object.freeze(UniversalStatus)
-export default UniversalStatus
+Object.freeze(HttpStatus)
+export default HttpStatus

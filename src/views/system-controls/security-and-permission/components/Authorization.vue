@@ -8,13 +8,27 @@
     </el-steps>
     <el-card class="step-detail" shadow="never">
       <transition mode="out-in">
-        <component :is="componentName"/>
+        <component :is="componentName" ref="step"
+                   :step1-selected-roles="selectedRoles" @step1-role-select="onRoleSelect"
+                   :step2-selected-permission-scopes="selectedPermissionScopes"
+                   @step2-permission-scopes-select="onPermissionScopesSelect"
+                   :step2-selected-permission-id-list="selectedPermissionIdList"
+                   @step2-permission-select="onPermissionSelect"/>
       </transition>
     </el-card>
     <el-row type="flex" justify="center">
       <el-button-group>
-        <el-button @click="onClickPrevious" icon="el-icon-arrow-left" style="width: 120px">Previous</el-button>
-        <el-button @click="onClickNext" style="width: 120px">Next<i class="el-icon-arrow-right" style="margin-left: 5px"></i>
+        <el-button class="previous-next-button"
+                   @click="onClickPrevious"
+                   :disabled="previousButtonDisabled()"
+                   icon="el-icon-arrow-left">
+          Previous
+        </el-button>
+        <el-button class="previous-next-button"
+                   @click="onClickNext"
+                   :disabled="nextButtonDisabled()"
+                   style="width: 120px">
+          Next<i class="el-icon-arrow-right" style="margin-left: 5px"></i>
         </el-button>
       </el-button-group>
     </el-row>
@@ -38,11 +52,10 @@ export default {
   data () {
     return {
       activeStep: 0,
-      showStep1: true,
-      showStep2: false,
-      showStep3: false,
-      showStep4: false,
-      componentName: 'Step1'
+      componentName: 'Step1',
+      selectedRoles: [],
+      selectedPermissionScopes: [],
+      selectedPermissionIdList: []
     }
   },
   methods: {
@@ -52,11 +65,17 @@ export default {
       }
       this.showStep()
     },
+    previousButtonDisabled () {
+      return this.activeStep === 0
+    },
     onClickNext () {
       if (this.activeStep++ >= 3) {
         this.activeStep = 3
       }
       this.showStep()
+    },
+    nextButtonDisabled () {
+      return this.activeStep === 3
     },
     showStep () {
       switch (this.activeStep) {
@@ -64,15 +83,37 @@ export default {
           this.componentName = 'Step1'
           return
         case 1:
+          if (this.selectedRoles.length === 0) {
+            this.activeStep--
+            this.$message.warning('To choose role is undone')
+            return
+          }
           this.componentName = 'Step2'
           return
         case 2:
+          if (this.selectedPermissionIdList.length === 0) {
+            this.activeStep--
+            this.$message.warning('To choose permission is undone')
+            return
+          }
           this.componentName = 'Step3'
+          setTimeout(() => {
+            this.$refs.step.startProcessing()
+          }, 2000)
           return
         case 3:
           this.componentName = 'Step4'
           return
       }
+    },
+    onRoleSelect (selectedRoles) {
+      this.selectedRoles = selectedRoles
+    },
+    onPermissionScopesSelect (selectedPermissionScopes) {
+      this.selectedPermissionScopes = selectedPermissionScopes
+    },
+    onPermissionSelect (selectedPermissionIdList) {
+      this.selectedPermissionIdList = selectedPermissionIdList
     }
   }
 }
@@ -94,8 +135,12 @@ export default {
   }
 
   .step-detail {
-    height: 400px;
+    height: 550px;
     margin-bottom: 10px;
+  }
+
+  .previous-next-button {
+    width: 120px
   }
 }
 </style>

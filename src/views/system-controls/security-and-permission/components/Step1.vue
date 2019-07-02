@@ -12,19 +12,22 @@
                  multiple
                  collapse-tags
                  filterable>
-        <el-option v-for="(item,index) in roleList" :key="index" :label="item.roleName" :value="item"/>
+        <el-option v-for="(item,index) in roleList" :key="index" :label="item.name" :value="item"/>
       </el-select>
     </el-row>
     <el-row type="flex" justify="center">
       <el-card class="selected-role-container" shadow="hover">
         <template v-for="(item,index) in selectedRoles">
-          <el-tag class="selected-role-item"
-                  :type="getTagType(item)"
-                  @close="onCloseTag(index)"
-                  :key="index"
-                  closable>
-            {{item.roleName}}
-          </el-tag>
+          <el-tooltip :key="index" class="item" effect="dark" :content="item.description" placement="top-start">
+            <el-tag class="selected-role-item"
+                    :type="getTagType(item)"
+                    @close="onCloseTag(index)"
+                    @click="onClickTag(item)"
+                    effect="dark"
+                    closable>
+              {{item.name}}
+            </el-tag>
+          </el-tooltip>
         </template>
       </el-card>
     </el-row>
@@ -33,42 +36,85 @@
 
 <script>
 import LazySelect from '@/directives/lazy-select'
+import SecurityAndPermission from '@/api/system-controls/security-and-permission'
 
 export default {
   name: 'Step1',
   directives: { LazySelect },
+  props: {
+    step1SelectedRoles: { type: Array, require: true }
+  },
+  watch: {
+    selectedRoles: {
+      deep: true,
+      handler (val) {
+        this.$emit('step1-role-select', val)
+      }
+    },
+    step1SelectedRoles: {
+      deep: true,
+      handler (val) {
+        this.selectedRoles = val
+      }
+    }
+  },
   data () {
     return {
-      roleList: [{
-        id: 1,
-        roleName: 'Option1'
-      }, {
-        id: 2,
-        roleName: 'Option2'
-      }, {
-        id: 3,
-        roleName: 'Option3'
-      }, {
-        id: 4,
-        roleName: 'Option4'
-      }, {
-        id: 5,
-        roleName: 'Option5'
-      }],
+      roleList: [],
       selectedRoles: [],
-      tagTypes: ['', 'success', 'info', 'warning', 'danger']
+      tagTypes: ['', 'success', 'info', 'warning', 'danger'],
+      currentPage: 1,
+      pageSize: 10,
+      limitReached: false
     }
   },
   methods: {
+    getRoleList () {
+      const params = {
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      }
+      SecurityAndPermission.getRoles(params).then(response => {
+        this.roleList = [...this.roleList, ...response.data.roleList]
+      }).catch(error => {
+        this.$message.error(error)
+        console.error('Error occurred.', error)
+      })
+    },
     lazyLoad () {
-      console.log('lazy-select')
+      if (this.limitReached) {
+        return
+      }
+      const params = {
+        currentPage: ++this.currentPage,
+        pageSize: this.pageSize
+      }
+      SecurityAndPermission.getRoles(params).then(response => {
+        if (response.data.roleList.length > 0) {
+          this.roleList = [...this.roleList, ...response.data.roleList]
+        } else {
+          this.limitReached = true
+        }
+      }).catch(error => {
+        this.$message.error(error)
+        console.error('Error occurred.', error)
+      })
     },
     getTagType (selectedRole) {
       return this.tagTypes[selectedRole.id % 5]
     },
+    onClickTag (selectedRole) {
+      // TODO: need to add click event to open a dialog showing the permissions which has been authorized to the role
+      console.error('need to add click event to open a dialog showing the permissions which has been authorized to the role',
+        selectedRole)
+    },
     onCloseTag (index) {
       this.selectedRoles.splice(index, 1)
     }
+  },
+  mounted () {
+    this.selectedRoles = this.step1SelectedRoles
+    this.getRoleList()
   }
 }
 </script>
@@ -76,8 +122,6 @@ export default {
 <style lang="scss" scoped>
 .step1-container {
   .heading-text {
-    /*display: block;*/
-    /*width: 300px;*/
     margin: 10px auto;
     font-size: 48px;
     font-weight: lighter;
@@ -88,9 +132,9 @@ export default {
   }
 
   .selected-role-container {
-    margin: 10px;
+    margin-top: 40px;
     width: 600px;
-    height: 230px;
+    height: 330px;
   }
 
   .selected-role-item {

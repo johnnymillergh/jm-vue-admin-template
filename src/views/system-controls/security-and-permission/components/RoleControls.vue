@@ -3,12 +3,10 @@
     <heading text="Role List"/>
     <el-row type="flex">
       <el-col :span="18">
-        <el-input class="search-input" placeholder="Enter role name to search"
-                  v-model="searchText"
-                  clearable/>
+        <el-input v-model="searchText" placeholder="Enter role name to search" clearable/>
       </el-col>
       <el-col :span="6">
-        <el-button-group>
+        <el-button-group class="button-group">
           <el-button type="primary" icon="el-icon-search" @click="onClickSearch">Search</el-button>
           <el-button type="primary" icon="el-icon-edit-outline" @click="onClickCreateRole">Create Role</el-button>
         </el-button-group>
@@ -25,7 +23,7 @@
       <el-table-column prop="description" label="Description"/>
       <el-table-column prop="gmtCreated" label="Created" width="180"/>
       <el-table-column prop="gmtModified" label="Modified" width="180"/>
-      <el-table-column fixed="right" label="Operations" width="120">
+      <el-table-column label="Operations" width="120" align="center">
         <template slot-scope="scope">
           <el-button @click="onClickEditRole(scope.row)" type="text" size="small">Edit</el-button>
           <el-button @click="onClickDeleteRole(scope.row.id)" type="text" size="small">Delete</el-button>
@@ -46,11 +44,7 @@
                @close="onClickCancel"
                width="500px"
                :close-on-click-modal="false">
-      <el-form ref="roleForm"
-               :model="roleForm"
-               :rules="createRoleFormRules"
-               class="create-role-form"
-               label-width="120px">
+      <el-form ref="roleForm" :model="roleForm" :rules="createRoleFormRules" label-width="120px">
         <el-form-item prop="name" label="Name">
           <el-input v-model="roleForm.name" placeholder="Enter name" clearable/>
         </el-form-item>
@@ -65,7 +59,7 @@
         </el-form-item>
       </el-form>
       <el-row type="flex" justify="end">
-        <el-button type="primary" icon="el-icon-success" @click="onClickSave">Save</el-button>
+        <el-button type="primary" icon="el-icon-success" @click="onClickSave" v-click-control>Save</el-button>
         <el-button icon="el-icon-error" @click="onClickCancel">Cancel</el-button>
       </el-row>
     </el-dialog>
@@ -141,7 +135,7 @@ export default {
         pageSize: this.pageSize
       }
       SecurityAndPermission.getRoleList(params).then(response => {
-        this.roleList = response.data
+        this.roleList = response.data.roleList
       }).catch(error => {
         this.$message.error(error)
         console.error('!!!!!', error)
@@ -175,7 +169,7 @@ export default {
       this.gmtModified = row.gmtModified
     },
     onClickDeleteRole (id) {
-      console.log('id', id)
+      this.$message.info(`This feature is under construction and coming soon. Delete role ${id}`)
     },
     // v-el-drag-dialog onDrag callback function
     handleDrag () {
@@ -200,7 +194,7 @@ export default {
           this.getRoleList()
         }).catch(error => {
           this.$message.error(error)
-          console.log('Error occurred when creating role', error)
+          console.error('Error occurred when creating role', error)
         })
         return
       }
@@ -211,7 +205,7 @@ export default {
         this.getRoleList()
       }).catch(error => {
         this.$message.error(error)
-        console.log('Error occurred when creating role', error)
+        console.error('Error occurred when creating role', error)
       })
     },
     onClickCancel () {
@@ -226,8 +220,8 @@ export default {
 
 <style lang="scss" scoped>
 .role-controls-container {
-  .search-input {
-    padding-right: 10px;
+  .button-group {
+    margin-left: 10px;
   }
 }
 </style>
