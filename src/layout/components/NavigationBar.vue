@@ -20,7 +20,7 @@
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item>
-            Your Profile
+            Profile
           </el-dropdown-item>
           <el-dropdown-item>
             Settings
@@ -175,12 +175,13 @@ export default {
 
 .user-status {
   display: block;
-  padding: 0 20px;
-  margin: 10px 0;
-  width: 176px;
+  margin: 10px 20px 10px 20px;
+  padding: 4px;
+  width: 136px;
   font-size: 12px;
   color: #24292e;
   text-overflow: ellipsis;
+  border: 1px solid #e1e4e8;
 }
 
 .line-separator {
