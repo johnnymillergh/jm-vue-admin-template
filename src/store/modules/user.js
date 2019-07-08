@@ -4,7 +4,8 @@ import AuthUtil from '@/utils/auth'
 const user = {
   state: {
     token: AuthUtil.getToken(),
-    fullName: '',
+    username: AuthUtil.getUsername(),
+    fullName: AuthUtil.getFullName(),
     avatar: '',
     roles: []
   },
@@ -15,6 +16,9 @@ const user = {
     },
     SET_TOKEN_TYPE: (state, tokenType) => {
       state.tokenType = tokenType
+    },
+    SET_USERNAME: (state, username) => {
+      state.username = username
     },
     SET_FULL_NAME: (state, fullName) => {
       state.fullName = fullName
@@ -32,9 +36,15 @@ const user = {
       return new Promise((resolve, reject) => {
         Login.login(params).then(response => {
           const token = response.data.tokenType + ' ' + response.data.token
+          const username = response.data.username
+          console.log(username)
+          const fullName = response.data.fullName
           AuthUtil.setToken(token)
+          AuthUtil.setUsername(username)
+          AuthUtil.setFullName(fullName)
           commit('SET_TOKEN', token)
-          commit('SET_FULL_NAME', response.data.fullName)
+          commit('SET_USERNAME', username)
+          commit('SET_FULL_NAME', fullName)
           resolve()
         }).catch(error => {
           reject(error)

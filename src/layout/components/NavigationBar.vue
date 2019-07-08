@@ -6,7 +6,7 @@
       <search id="header-search" class="right-menu-item"/>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/avatar/man.png" class="user-avatar">
+          <img :src="avatarUrl" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="width: 178px;" class="dropdown-list">
@@ -39,6 +39,8 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Search from '@/components/HeaderSearch'
+import User from '@/resource-api/user'
+import StringUtil from '@/utils/string'
 
 export default {
   components: {
@@ -48,15 +50,23 @@ export default {
   },
   data () {
     return {
-      username: 'Johnny Miller\'s Testing Username'
+      resourceBaseApi: process.env.VUE_APP_RESOURCE_BASE_API,
+      User: User
     }
   },
   computed: {
     ...mapGetters([
+      'username',
       'fullName',
       'sidebar',
       'avatar'
-    ])
+    ]),
+    avatarUrl () {
+      if (StringUtil.isBlank(this.username)) {
+        return '@/assets/avatar/man.png'
+      }
+      return this.User.getAvatar + this.username
+    }
   },
   methods: {
     toggleSideBar () {
@@ -79,7 +89,7 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   .hamburger-container {
     line-height: 58px;
