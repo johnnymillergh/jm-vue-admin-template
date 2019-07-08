@@ -1,4 +1,5 @@
 import Login from '@/api/auth/login'
+import Logout from '@/api/auth/logout'
 import AuthUtil from '@/utils/auth'
 
 const user = {
@@ -69,10 +70,13 @@ const user = {
     // 登出
     LogOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
-        AuthUtil.removeToken()
-        resolve()
+        Logout.logout({}).then(response => {
+          console.info(response.message)
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          AuthUtil.removeToken()
+          resolve()
+        })
       })
     },
 
