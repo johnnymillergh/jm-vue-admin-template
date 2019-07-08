@@ -18,7 +18,7 @@
           </el-select>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-avatar class="user-avatar" :size="256" fit="fill" :src="avatarUrl" @error="handleError"/>
+          <img class="user-avatar" :src="avatarUrl" alt="User's avatar"/>
         </el-row>
       </el-col>
       <el-col :span="12" :class="activeRoleKeyframes">
@@ -67,9 +67,7 @@
 <script>
 import LazySelect from '@/directives/lazy-select'
 import SecurityAndPermission from '@/api/system-controls/security-and-permission'
-import { mapGetters } from 'vuex'
 import User from '@/resource-api/user'
-import StringUtil from '@/utils/string'
 
 export default {
   name: 'AssignRole',
@@ -93,14 +91,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'username'
-    ]),
     avatarUrl () {
-      if (StringUtil.isBlank(this.username)) {
-        return '@/assets/avatar/man.png'
+      if (this.selectedUser) {
+        return this.User.getAvatar + this.selectedUser.username
       }
-      return this.User.getAvatar + this.username
+      return ''
     }
   },
   mounted () {
@@ -227,11 +222,6 @@ export default {
     clearSelection () {
       this.selectedUser = null
       this.selectedRoles = []
-    },
-    handleError (event) {
-      console.error('Error loading user\'s avatar', event)
-      this.avatarUrl = '@/assets/avatar/man.png'
-      return true
     }
   }
 }
@@ -311,6 +301,10 @@ export default {
 
   .user-avatar {
     margin-top: 40px;
+    height: 256px;
+    width: 256px;
+    border-radius: 128px;
+    filter: drop-shadow(5px 5px 5px #aeaeae);
   }
 
   .play-user-keyframes {
