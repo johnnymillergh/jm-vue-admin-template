@@ -307,6 +307,14 @@ export default {
     filter: drop-shadow(5px 5px 5px #aeaeae);
   }
 
+  .user-avatar:hover {
+    transform: rotate(666turn);
+    transition-delay: 1s;
+    transition-property: all;
+    transition-duration: 59s;
+    transition-timing-function: cubic-bezier(.34, 0, .84, 1);
+  }
+
   .play-user-keyframes {
     animation: user-animation 1.8s ease;
     animation-fill-mode: forwards;
