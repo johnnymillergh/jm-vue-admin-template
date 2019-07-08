@@ -18,10 +18,7 @@
           </el-select>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-avatar class="user-avatar"
-                     :size="256"
-                     fit="fill"
-                     src="/jm-vue-admin-template-dev/static/img/man.f0b3abf1.png"/>
+          <el-avatar class="user-avatar" :size="256" fit="fill" :src="avatarUrl" @error="handleError"/>
         </el-row>
       </el-col>
       <el-col :span="12" :class="activeRoleKeyframes">
@@ -70,6 +67,9 @@
 <script>
 import LazySelect from '@/directives/lazy-select'
 import SecurityAndPermission from '@/api/system-controls/security-and-permission'
+import { mapGetters } from 'vuex'
+import User from '@/resource-api/user'
+import StringUtil from '@/utils/string'
 
 export default {
   name: 'AssignRole',
@@ -88,7 +88,19 @@ export default {
       limitReachedForRole: false,
       activeUserKeyframes: '',
       activeRoleKeyframes: '',
-      submitDisabled: false
+      submitDisabled: false,
+      User: User
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'username'
+    ]),
+    avatarUrl () {
+      if (StringUtil.isBlank(this.username)) {
+        return '@/assets/avatar/man.png'
+      }
+      return this.User.getAvatar + this.username
     }
   },
   mounted () {
@@ -215,6 +227,11 @@ export default {
     clearSelection () {
       this.selectedUser = null
       this.selectedRoles = []
+    },
+    handleError (event) {
+      console.error('Error loading user\'s avatar', event)
+      this.avatarUrl = '@/assets/avatar/man.png'
+      return true
     }
   }
 }

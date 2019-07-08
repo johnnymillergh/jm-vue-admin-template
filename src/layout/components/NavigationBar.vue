@@ -6,7 +6,7 @@
       <search id="header-search" class="right-menu-item"/>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatarUrl" class="user-avatar">
+          <el-avatar class="user-avatar" fit="fill" :src="avatarUrl"/>
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="width: 178px;" class="dropdown-list">
@@ -137,7 +137,7 @@ export default {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          /*border-radius: 10px;*/
         }
 
         .el-icon-caret-bottom {
