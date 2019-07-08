@@ -37,7 +37,6 @@ const user = {
         Login.login(params).then(response => {
           const token = response.data.tokenType + ' ' + response.data.token
           const username = response.data.username
-          console.log(username)
           const fullName = response.data.fullName
           AuthUtil.setToken(token)
           AuthUtil.setUsername(username)
