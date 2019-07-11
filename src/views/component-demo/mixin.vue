@@ -9,9 +9,10 @@
     <heading text="Heading 1"/>
     <heading text="Heading 2" :level="2"/>
     <image-cropper v-show="showImageCropper"
+                   :file-name="fileName"
                    :key="imageCropperKey"
-                   :width="300"
-                   :height="300"
+                   :width="512"
+                   :height="512"
                    url="https://localhost:8443/jm-spring-boot-template-dev/user/update-avatar"
                    lang-type="en"
                    @close="close"
@@ -49,11 +50,13 @@ export default {
       imageCropperKey: 0,
       params: {
         username: null
-      }
+      },
+      fileName: null
     }
   },
   mounted () {
     this.params.username = this.username
+    this.fileName = `${this.username}-avatar`
   },
   methods: {
     cropSuccess (resData) {
