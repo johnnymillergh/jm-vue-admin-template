@@ -67,11 +67,14 @@ const user = {
       })
     },
 
-    // 登出
+    // Sign out
     LogOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
         Logout.logout({}).then(response => {
           console.info(response.message)
+        }).catch(error => {
+          console.error('Error occurred when sign out.', error)
+        }).finally(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           AuthUtil.removeToken()
@@ -80,7 +83,7 @@ const user = {
       })
     },
 
-    // 前端 登出
+    // Sign out for front end
     FedLogOut ({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
