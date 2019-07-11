@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/johnnymillergh/jm-vue-admin-template.svg?branch=master)](https://travis-ci.org/johnnymillergh/jm-vue-admin-template)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/johnnymillergh/jm-vue-admin-template/blob/master/LICENSE)
 [![Vue.js](https://img.shields.io/badge/vue-2.6.10-brightgreen.svg)](https://github.com/vuejs/vue)
-[![Element UI](https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg)](https://github.com/ElemeFE/element)
+[![Element UI](https://img.shields.io/badge/element--ui-2.10.0-brightgreen.svg)](https://github.com/ElemeFE/element)
 
 > A minimal vue admin template with Element UI & axios & iconfont & permission control & lint.
 
