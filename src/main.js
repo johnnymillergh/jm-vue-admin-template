@@ -19,6 +19,7 @@ import '@/icons'
 // Permission control
 import '@/permission'
 import ClickControl from '@/directives/click-control'
+
 // Simulation data
 /**
  * This project originally used easy-mock to simulate data,
