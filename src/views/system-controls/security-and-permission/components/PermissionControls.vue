@@ -2,7 +2,7 @@
   <div>
     <heading text="API Glance"/>
     <el-row :gutter="5">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
         <el-card shadow="never" style="height: 290px" :body-style="{padding: '0'}">
           <div slot="header" class="clearfix">
             <div style="margin-bottom: 5px">Controller List</div>
@@ -25,7 +25,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="16">
+      <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
         <el-card shadow="never" style="height: 290px">
           <el-form ref="setApiInUseForm"
                    :model="setApiInUseForm"
@@ -71,11 +71,11 @@
       </el-col>
     </el-row>
     <heading text="API Analysis"/>
-    <el-row type="flex" justify="space-between" style="height: 320px" v-loading="apiAnalysisLoading">
-      <el-col :span="9">
+    <el-row :gutter="20" v-loading="apiAnalysisLoading">
+      <el-col :span="9" :xs="24" :sm="24" :md="24" :lg="9" :xl="9">
         <pie-chart :pie-chart-data="pieChartData"/>
       </el-col>
-      <el-col :span="15">
+      <el-col :span="15" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
         <div style="margin-bottom: 10px">Change scope to view different report.</div>
         <el-form label-width="120px" v-loading="apiSelectFormLoading">
           <el-form-item label="Scope">
