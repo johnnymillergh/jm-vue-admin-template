@@ -11,8 +11,8 @@
       <el-step title="Step 3" description="Some description"/>
     </el-steps>
     <div class="register-container">
-      <el-row type="flex" justify="center">
-        <el-col :span="16">
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
           <h1 class="heading1">Create your personal account</h1>
           <el-form ref="registerForm"
                    :model="registerForm"
@@ -30,7 +30,7 @@
             </el-form-item>
           </el-form>
         </el-col>
-        <el-col :span="8">
+        <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
           <el-card shadow="hover" style="border: 1px solid #dcdfe6;">
             <div slot="header" class="clearfix">
               <h2 class="heading2">You’ll love {{ appName }}</h2>
