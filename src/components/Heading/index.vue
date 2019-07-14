@@ -46,7 +46,7 @@ export default {
 .heading-container-level2 {
   color: #007DFF;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 14px;
   font-weight: bolder;
   border-left: 4px solid #007DFF;
   padding-left: 16px;
