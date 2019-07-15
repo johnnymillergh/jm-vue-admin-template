@@ -13,7 +13,7 @@
                    :key="imageCropperKey"
                    :width="512"
                    :height="512"
-                   url="https://localhost:8443/jm-spring-boot-template-dev/user/update-avatar"
+                   :url="UserResource.uploadAvatar"
                    lang-type="en"
                    @close="close"
                    :params="params"
@@ -27,6 +27,7 @@ import waves from '@/directives/waves/index'
 import Heading from '@/components/Heading'
 import ImageCropper from '@/components/ImageCropper'
 import { mapGetters } from 'vuex'
+import User from '@/resource-api/user'
 
 export default {
   name: 'Mixin',
@@ -51,7 +52,8 @@ export default {
       params: {
         username: null
       },
-      fileName: null
+      fileName: null,
+      UserResource: User
     }
   },
   mounted () {

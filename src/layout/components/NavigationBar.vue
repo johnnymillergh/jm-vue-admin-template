@@ -19,9 +19,11 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <el-dropdown-item>
-            Profile
-          </el-dropdown-item>
+          <router-link class="inlineBlock" to="/profile/index">
+            <el-dropdown-item>
+              Profile
+            </el-dropdown-item>
+          </router-link>
           <el-dropdown-item>
             Settings
           </el-dropdown-item>
