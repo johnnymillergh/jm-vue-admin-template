@@ -17,6 +17,9 @@ export default {
       'roles',
       'token'
     ])
+  },
+  mounted () {
+    console.log()
   }
 }
 </script>
