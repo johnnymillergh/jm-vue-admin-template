@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Layout from '../layout/index'
 import systemControlsRouter from './modules/system-controls'
 import componentDemoRouter from './modules/component-demo'
+import subWindowRouter from './modules/sub-window'
 
 Vue.use(Router)
 
@@ -84,7 +85,8 @@ export const constantRouterMap = [
         meta: { title: 'Profile', icon: 'user', noCache: false }
       }
     ]
-  }
+  },
+  ...subWindowRouter
 ]
 
 /**
