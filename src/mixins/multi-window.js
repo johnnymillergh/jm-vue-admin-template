@@ -73,7 +73,6 @@ export default {
       }
       // Check whether opener's callback is valid
       if (openerCallBack && typeof windowOpener.$vue[openerCallBack] === 'function') {
-        console.log('callback', arguments)
         windowOpener.$vue[openerCallBack](...arguments)
       }
       if (delayClosingWindow === true) {
