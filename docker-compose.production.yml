@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  jm-vue-admin-template:
+    container_name: jm-vue-admin-template
+    image: "ijohnnymiller/jm-vue-admin-template:${TAG}"
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        ENV: prod
+    ports:
+      - 8081:80
