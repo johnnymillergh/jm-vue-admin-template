@@ -11,3 +11,10 @@ services:
         ENV: dev_dkr
     ports:
       - 8081:80
+    networks:
+      jm-spring-boot-template_jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.14
+
+networks:
+  jm-spring-boot-template_jm_spring_boot_and_vue_template_network:
+    external: true
