@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
       context: .
       args:
-        ENV: prod
+        ENV: production
+        ENV_ALIAS: prod
     ports:
       - 8081:80

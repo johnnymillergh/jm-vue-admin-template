@@ -8,7 +8,8 @@ services:
       dockerfile: Dockerfile
       context: .
       args:
-        ENV: dev_dkr
+        ENV: development_docker
+        ENV_ALIAS: dev_dkr
     ports:
       - 8081:80
     networks:

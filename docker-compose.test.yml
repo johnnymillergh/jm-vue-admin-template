@@ -9,5 +9,6 @@ services:
       context: .
       args:
         ENV: test
+        ENV_ALIAS: test
     ports:
       - 8081:80

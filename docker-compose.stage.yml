@@ -9,5 +9,6 @@ services:
       context: .
       args:
         ENV: stage
+        ENV_ALIAS: stage
     ports:
       - 8081:80
