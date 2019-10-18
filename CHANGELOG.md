@@ -1,3 +1,60 @@
+## [1.0.5](https://github.com/johnnymillergh/jm-vue-admin-template/compare/1.0.4...1.0.5) (2019-10-18)
+
+
+### Bug Fixes
+
+* **$API:** correct static resource API ([cee0a98](https://github.com/johnnymillergh/jm-vue-admin-template/commit/cee0a98))
+* **$axios:** export service ([1013962](https://github.com/johnnymillergh/jm-vue-admin-template/commit/1013962))
+* **$Breadcrumb:** fix a bug that `Dashboard` redirection doesn't work ([86f24cb](https://github.com/johnnymillergh/jm-vue-admin-template/commit/86f24cb))
+* **$NGINX:** update API and URL ([e6f16ce](https://github.com/johnnymillergh/jm-vue-admin-template/commit/e6f16ce))
+* **$package.json:** add necessary fields ([e753905](https://github.com/johnnymillergh/jm-vue-admin-template/commit/e753905))
+
+
+### Build System
+
+* **$package.json:** upgrade version to 1.0.5-canary ([48c9d1e](https://github.com/johnnymillergh/jm-vue-admin-template/commit/48c9d1e))
+
+
+### Features
+
+* **$AssignRole:** display alternative text `User's avatar` ([d65ac8f](https://github.com/johnnymillergh/jm-vue-admin-template/commit/d65ac8f))
+* **$AssignRole:** display user's avatar ([5269a93](https://github.com/johnnymillergh/jm-vue-admin-template/commit/5269a93))
+* **$AssignRole:** rotate user's avatar when mouse hovers ([732e64a](https://github.com/johnnymillergh/jm-vue-admin-template/commit/732e64a))
+* **$Logout:** complete logout process ([61aeea6](https://github.com/johnnymillergh/jm-vue-admin-template/commit/61aeea6))
+* **$MultiWindow:** support multi window interaction ([e6cd446](https://github.com/johnnymillergh/jm-vue-admin-template/commit/e6cd446))
+* **$Profile:** draw profile page's UI ([bdaacfe](https://github.com/johnnymillergh/jm-vue-admin-template/commit/bdaacfe))
+* **$Theme:** add element theme variables ([7aa7110](https://github.com/johnnymillergh/jm-vue-admin-template/commit/7aa7110))
+* **$Title:** set document title dynamically ([af0d63d](https://github.com/johnnymillergh/jm-vue-admin-template/commit/af0d63d))
+* **$UI:** pin top-left logo ([315e459](https://github.com/johnnymillergh/jm-vue-admin-template/commit/315e459))
+* **$UI:** refine user status ([f0a4aed](https://github.com/johnnymillergh/jm-vue-admin-template/commit/f0a4aed))
+* **$User:** load user's avatar picture from backend server ([7b1ce27](https://github.com/johnnymillergh/jm-vue-admin-template/commit/7b1ce27))
+* **$UserAvatar:** complete feature - upload user's avatar ([767c18b](https://github.com/johnnymillergh/jm-vue-admin-template/commit/767c18b))
+
+
+### Performance Improvements
+
+* **$Docker:** communicate with back end server ([813c765](https://github.com/johnnymillergh/jm-vue-admin-template/commit/813c765))
+* **$Docker:** docker enhancement; support multi environment ([f25c3f9](https://github.com/johnnymillergh/jm-vue-admin-template/commit/f25c3f9))
+* **$Docker:** simplify Dockerfile building procedure ([0318d30](https://github.com/johnnymillergh/jm-vue-admin-template/commit/0318d30))
+* **$NGINX:** switch on Gzip feature ([678b9e4](https://github.com/johnnymillergh/jm-vue-admin-template/commit/678b9e4))
+* **$NGINX:** use NGINX to redirect request in proxy reverse way ([3dd8ee8](https://github.com/johnnymillergh/jm-vue-admin-template/commit/3dd8ee8))
+* **$UI:** enhance join page's layout - support responsive layout ([f2a1c93](https://github.com/johnnymillergh/jm-vue-admin-template/commit/f2a1c93))
+* **$UI:** enhance permission controls page's layout - support responsive layout ([ee3f1a7](https://github.com/johnnymillergh/jm-vue-admin-template/commit/ee3f1a7))
+* **$UI:** enhance role controls page's layout - support responsive layout ([c09f6df](https://github.com/johnnymillergh/jm-vue-admin-template/commit/c09f6df))
+* **$UI:** enhance user page's layout - support responsive layout ([3ad3314](https://github.com/johnnymillergh/jm-vue-admin-template/commit/3ad3314))
+* **$UI:** improve mobile interaction ([908ce6f](https://github.com/johnnymillergh/jm-vue-admin-template/commit/908ce6f))
+* **$UI:** update line height ([552b206](https://github.com/johnnymillergh/jm-vue-admin-template/commit/552b206))
+
+
+### BREAKING CHANGES
+
+* **$MultiWindow:** support multi window interaction
+* **$package.json:** SFTP integration
+
+Closes https://app.clickup.com/t/162p5b
+
+
+
 ## [1.0.4](https://github.com/johnnymillergh/jm-vue-admin-template/compare/v1.0.3...v1.0.4) (2019-07-02)
 
 
