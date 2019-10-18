@@ -34,21 +34,21 @@ export default {
 }
 
 .heading-container-level1 {
-  color: #409eff;
+  color: #007DFF;
   font-size: 18px;
   line-height: 16px;
   font-weight: bolder;
-  border-left: 4px solid #409eff;
+  border-left: 4px solid #007DFF;
   padding-left: 16px;
   margin: 8px 16px 8px 0;
 }
 
 .heading-container-level2 {
-  color: #409eff;
+  color: #007DFF;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 14px;
   font-weight: bolder;
-  border-left: 4px solid #409eff;
+  border-left: 4px solid #007DFF;
   padding-left: 16px;
   margin: 8px 16px 8px 0;
 }

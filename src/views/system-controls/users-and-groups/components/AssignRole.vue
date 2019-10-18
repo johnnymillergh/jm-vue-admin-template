@@ -18,10 +18,7 @@
           </el-select>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-avatar class="user-avatar"
-                     :size="256"
-                     fit="fill"
-                     src="/jm-vue-admin-template-dev/static/img/man.f0b3abf1.png"/>
+          <img class="user-avatar" :src="avatarUrl" alt="User's avatar"/>
         </el-row>
       </el-col>
       <el-col :span="12" :class="activeRoleKeyframes">
@@ -70,6 +67,7 @@
 <script>
 import LazySelect from '@/directives/lazy-select'
 import SecurityAndPermission from '@/api/system-controls/security-and-permission'
+import User from '@/resource-api/user'
 
 export default {
   name: 'AssignRole',
@@ -88,7 +86,16 @@ export default {
       limitReachedForRole: false,
       activeUserKeyframes: '',
       activeRoleKeyframes: '',
-      submitDisabled: false
+      submitDisabled: false,
+      User: User
+    }
+  },
+  computed: {
+    avatarUrl () {
+      if (this.selectedUser) {
+        return this.User.getAvatar + this.selectedUser.username
+      }
+      return ''
     }
   },
   mounted () {
@@ -294,6 +301,18 @@ export default {
 
   .user-avatar {
     margin-top: 40px;
+    height: 256px;
+    width: 256px;
+    border-radius: 128px;
+    filter: drop-shadow(5px 5px 5px #aeaeae);
+  }
+
+  .user-avatar:hover {
+    transform: rotate(666turn);
+    transition-delay: 1s;
+    transition-property: all;
+    transition-duration: 59s;
+    transition-timing-function: cubic-bezier(.34, 0, .84, 1);
   }
 
   .play-user-keyframes {

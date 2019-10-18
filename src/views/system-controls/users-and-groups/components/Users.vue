@@ -1,11 +1,11 @@
 <template>
   <div class="users-container">
     <heading text="Users"/>
-    <el-row type="flex">
-      <el-col :span="18">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <el-input v-model.trim="searchText" placeholder="Enter username to search" clearable/>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <el-button-group class="button-group">
           <el-button type="primary" icon="el-icon-search" @click="onClickSearch" v-click-control>Search</el-button>
           <el-button type="primary" icon="el-icon-edit-outline" @click="onClickCreateRole" v-click-control>Create User

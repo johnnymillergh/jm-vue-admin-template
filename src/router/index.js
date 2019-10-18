@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Layout from '../layout/index'
 import systemControlsRouter from './modules/system-controls'
 import componentDemoRouter from './modules/component-demo'
+import subWindowRouter from './modules/sub-window'
 
 Vue.use(Router)
 
@@ -70,7 +71,22 @@ export const constantRouterMap = [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  }
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'Profile', icon: 'user', noCache: false }
+      }
+    ]
+  },
+  ...subWindowRouter
 ]
 
 /**

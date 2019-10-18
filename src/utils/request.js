@@ -161,3 +161,5 @@ export function legacyPost (url, params) {
       })
   })
 }
+
+export default service

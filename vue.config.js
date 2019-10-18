@@ -25,15 +25,19 @@ function generatePublicPath () {
   // FIXME: ATTENTION: Relative path prefix should start with a dot './'
   //  DON'T add the dot when the environment is development, or browser will throw en error like this:
   //  Uncaught SyntaxError: Unexpected token <
-  const pathPrefix = '/'
-  const env = process.env.VUE_APP_ENV
-  if (env === 'prod') {
+  const runOnDocker = process.env.VUE_APP_RUN_ON_DOCKER
+  console.error(`This application is running on Docker: ${runOnDocker}, type of runOnDocker: ${typeof runOnDocker}`)
+  const pathPrefix = runOnDocker === 'true' ? './' : '/'
+  const env = process.env.NODE_ENV
+  if (env === 'production') {
+    console.error(`pathPrefix: ${pathPrefix}`)
     return pathPrefix
   }
   const applicationName = JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON)).name
   if (applicationName) {
     return applicationName ? pathPrefix.concat(applicationName, '-', env, '/') : pathPrefix
   }
+  console.error(`pathPrefix: ${pathPrefix}`)
   return pathPrefix
 }
 
