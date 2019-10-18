@@ -76,6 +76,19 @@ const componentDemoRouter = {
       meta: {
         title: 'Animation Demo'
       }
+    },
+    {
+      path: 'multi-window',
+      name: 'MultiWindow',
+      component: () => import('@/views/component-demo/multi-window'),
+      meta: { title: 'Multi Window' }
+    },
+    {
+      path: 'sub-window',
+      name: 'SubWindow',
+      hidden: true,
+      component: () => import('@/views/component-demo/sub-window'),
+      meta: { title: 'Sub Window' }
     }
   ]
 }

@@ -1,16 +1,26 @@
 import router from './router'
 import store from './store'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
+// progress bar
+import NProgress from 'nprogress'
+// progress bar style
+import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
-import AuthUtil from '@/utils/auth' // getToken from cookie
+// getToken from cookie
+import AuthUtil from '@/utils/auth'
+import getPageTitle from '@/utils/get-page-title'
 
-NProgress.configure({ showSpinner: false })// NProgress configuration
+// NProgress configuration
+NProgress.configure({ showSpinner: false })
 
 // White list of page that won't be redirected.
 const whiteList = ['/login', '/join']
 router.beforeEach((to, from, next) => {
+  // start progress bar
   NProgress.start()
+
+  // set page title
+  document.title = getPageTitle(to.meta.title)
+
   if (AuthUtil.getToken()) {
     if (to.path === '/login') {
       next({ path: '/' })

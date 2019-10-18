@@ -49,13 +49,13 @@ export default {
   },
   methods: {
     handleClickOutside () {
-      this.$store.dispatch('closeSideBar', { withoutAnimation: false })
+      this.$store.dispatch('CloseSideBar', { withoutAnimation: false })
     }
   }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 @import "~@/styles/variables.scss";
 
@@ -92,5 +92,9 @@ export default {
 
 .hideSidebar .fixed-header {
   width: calc(100% - 54px)
+}
+
+.mobile .fixed-header {
+  width: 100%;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="role-controls-container">
     <heading text="Role List"/>
-    <el-row type="flex">
-      <el-col :span="18">
+    <el-row :gutter="20">
+      <el-col :span="18" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-input v-model="searchText" placeholder="Enter role name to search" clearable/>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="6" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-button-group class="button-group">
           <el-button type="primary" icon="el-icon-search" @click="onClickSearch">Search</el-button>
           <el-button type="primary" icon="el-icon-edit-outline" @click="onClickCreateRole">Create Role</el-button>

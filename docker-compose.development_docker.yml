@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  jm-vue-admin-template:
+    container_name: jm-vue-admin-template
+    image: "ijohnnymiller/jm-vue-admin-template-dev_dkr:${TAG}"
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        ENV: development_docker
+        ENV_ALIAS: dev_dkr
+    ports:
+      - 8081:80
+    networks:
+      jm-spring-boot-template_jm_spring_boot_and_vue_template_network:
+        ipv4_address: 172.16.238.14
+
+networks:
+  jm-spring-boot-template_jm_spring_boot_and_vue_template_network:
+    external: true

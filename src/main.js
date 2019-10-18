@@ -4,6 +4,7 @@ import 'normalize.css/normalize.css'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './styles/element-variables.scss'
 // Language (i18n)
 import locale from 'element-ui/lib/locale/lang/en'
 import i18n from './lang'
@@ -18,6 +19,7 @@ import '@/icons'
 // Permission control
 import '@/permission'
 import ClickControl from '@/directives/click-control'
+
 // Simulation data
 /**
  * This project originally used easy-mock to simulate data,
