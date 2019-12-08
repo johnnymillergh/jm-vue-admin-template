@@ -7,7 +7,7 @@
       <div class="username text-center">@{{ username }}</div>
       <el-row type="flex" justify="center">
         <el-button class="upload-button" @click="onClickUpload">Upload<i class="el-icon-camera-solid el-icon-right"
-                                                                         style="margin-left: 10px"></i></el-button>
+                                                                         style="margin-left: 10px"/></el-button>
       </el-row>
       <el-row type="flex" justify="center">
         <el-input class="user-status-text" v-model="userStatusText"/>

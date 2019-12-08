@@ -59,8 +59,8 @@ COPY dist/ /usr/share/nginx/html/
 ARG ENV
 RUN echo ${ENV}
 
-# 1.4 copy custom NGINX configuration to cover its default one
-COPY nginx/default-${ENV}.conf /etc/nginx/conf.d/default.conf
+# 1.4 copy custom NGINX configuration
+COPY nginx/nginx-${ENV}.conf /etc/nginx/nginx.conf
 
 # 1.5 expose port
 EXPOSE 80
