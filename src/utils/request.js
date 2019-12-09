@@ -54,7 +54,7 @@ service.interceptors.response.use(
     return Promise.resolve(resp)
   },
   error => {
-    console.error('Error occurred when handle response.', error.response)
+    console.error('[axios] Error occurred when handling response.', error.response)
     const resp = error.response.data
     switch (error.response.status) {
       case HttpStatus.FAILURE.code:
@@ -72,7 +72,7 @@ service.interceptors.response.use(
     }
     // Notification({
     //   title: 'Response-Handling Error',
-    //   message: 'Error occurred when handle response. ' + error.message,
+    //   message: '[axios] Error occurred when handling response. ' + error.message,
     //   type: 'error',
     //   duration: 5 * 1000,
     //   showClose: true
