@@ -61,6 +61,7 @@ RUN echo ${ENV}
 
 # 1.4 copy custom NGINX configuration
 COPY nginx/nginx-${ENV}.conf /etc/nginx/nginx.conf
+COPY nginx/mime.types /etc/nginx/mime.types
 
 # 1.5 expose port
 EXPOSE 80
